@@ -34,12 +34,10 @@
         }
 
         .chapter-content h3 {
-            color: #f8fafc;
             font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 2rem;
             padding-bottom: 0.5rem;
-            border-bottom: 1px solid #334155;
         }
 
         .system-msg {
@@ -66,21 +64,40 @@
         #sidebar {
             transition: transform 0.3s ease-in-out;
         }
+
+        /* 明體字型選項 */
+        .font-serif {
+            font-family: 'Noto Serif TC', 'PMingLiU', serif;
+        }
+
+        /* --- 閱讀區主題設定 --- */
+        .theme-dark { background-color: #020617; color: #cbd5e1; }
+        .theme-dark .chapter-content h3 { color: #f8fafc; border-bottom: 1px solid #334155; }
+        .theme-dark .divider-line { border-color: #1e293b; }
+
+        .theme-sepia { background-color: #f4ecd8; color: #5c4b37; }
+        .theme-sepia .chapter-content h3 { color: #3e2723; border-bottom: 1px solid #d7ccc8; }
+        .theme-sepia .divider-line { border-color: #d7ccc8; }
+        .theme-sepia .system-msg { background-color: rgba(211, 47, 47, 0.05); color: #d32f2f; border-left-color: #d32f2f; }
+        .theme-sepia .thought-msg { color: #795548; }
+
+        .theme-light { background-color: #ffffff; color: #334155; }
+        .theme-light .chapter-content h3 { color: #0f172a; border-bottom: 1px solid #e2e8f0; }
+        .theme-light .divider-line { border-color: #e2e8f0; }
+        .theme-light .system-msg { background-color: rgba(220, 38, 38, 0.05); color: #dc2626; border-left-color: #dc2626; }
+        .theme-light .thought-msg { color: #64748b; }
     </style>
 </head>
-<body class="flex h-screen overflow-hidden antialiased">
+<body class="flex h-screen overflow-hidden antialiased text-base font-sans" id="body-container">
 
-    <!-- 手機版選單遮罩 -->
     <div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden md:hidden" onclick="toggleSidebar()"></div>
 
-    <!-- 側邊欄 (導航) -->
     <aside id="sidebar" class="w-64 bg-slate-900 border-r border-slate-800 flex flex-col h-full absolute md:relative z-30 transform -translate-x-full md:translate-x-0">
         <div class="p-6 border-b border-slate-800 flex justify-between items-center">
             <div>
                 <h1 class="text-xl font-bold text-white tracking-wider">深淵狼人殺</h1>
                 <p class="text-xs text-slate-500 mt-1">Abyss Werewolf</p>
             </div>
-            <!-- 手機版關閉按鈕 -->
             <button onclick="toggleSidebar()" class="md:hidden text-slate-400 hover:text-white">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -103,6 +120,9 @@
                 <button onclick="showChapter('ch3')" id="btn-ch3" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-colors duration-150">
                     第三章：所謂的絕對多數暴力
                 </button>
+                <button onclick="showChapter('ch4')" id="btn-ch4" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-colors duration-150">
+                    第四章：抓到你了，躲在暗處的小狼崽
+                </button>
             </nav>
         </div>
         <div class="p-4 border-t border-slate-800 text-xs text-slate-500 text-center">
@@ -110,81 +130,244 @@
         </div>
     </aside>
 
-    <!-- 主內容區 -->
-    <main class="flex-1 flex flex-col h-full bg-slate-950 relative">
-        <!-- 頂部導航列 (手機版顯示選單按鈕) -->
-        <header class="h-16 border-b border-slate-800 bg-slate-900/80 backdrop-blur-sm flex items-center px-4 sticky top-0 z-10 shadow-sm">
-            <button onclick="toggleSidebar()" class="md:hidden p-2 mr-3 text-slate-400 hover:text-white rounded focus:outline-none focus:bg-slate-800">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-            </button>
-            <h2 id="header-title" class="text-lg font-medium text-slate-200 truncate">作品簡介</h2>
-        </header>
-
-        <!-- 閱讀區域 -->
-        <div id="read-area" class="flex-1 overflow-y-auto p-4 sm:p-8 md:p-12 scroll-smooth">
-            <div class="max-w-3xl mx-auto chapter-content" id="content-container">
-                <!-- 內容會由 JS 動態注入 -->
+    <!-- 個人資料設定彈窗 -->
+    <div id="profile-modal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center backdrop-blur-sm transition-opacity">
+        <div class="bg-slate-900 border border-slate-700 rounded-xl shadow-2xl w-11/12 max-w-md p-6">
+            <div class="flex justify-between items-center mb-6 border-b border-slate-800 pb-3">
+                <h3 class="text-xl font-bold text-white tracking-wider">修復者檔案</h3>
+                <button onclick="closeProfile()" class="text-slate-400 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
             </div>
             
-            <!-- 底部翻頁按鈕 -->
-            <div class="max-w-3xl mx-auto mt-8 pt-6 border-t border-slate-800 flex justify-between items-center" id="pagination-container">
-                <button id="btn-prev" onclick="navigateChapter('prev')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded hover:bg-slate-700 hover:text-white transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+            <div class="flex flex-col items-center gap-4 mb-6">
+                <div class="relative group cursor-pointer" onclick="document.getElementById('avatar-upload').click()">
+                    <div class="w-24 h-24 rounded-full overflow-hidden border-2 border-slate-700 bg-slate-800 flex items-center justify-center shadow-inner">
+                        <img id="profile-avatar-preview" src="" alt="Avatar" class="w-full h-full object-cover hidden">
+                        <span id="profile-avatar-fallback" class="text-slate-400 font-bold text-3xl">匿</span>
+                    </div>
+                    <div class="absolute inset-0 bg-black/60 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    </div>
+                </div>
+                <input type="file" id="avatar-upload" accept="image/*" class="hidden" onchange="handleAvatarUpload(event)">
+                <p class="text-xs text-slate-500">點擊更換專屬大頭貼</p>
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-slate-400 mb-2">顯示名稱 (代號)</label>
+                <input type="text" id="profile-name-input" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-slate-200 focus:outline-none focus:border-sky-500 shadow-inner" placeholder="請輸入您的代號...">
+            </div>
+
+            <button onclick="saveProfile()" class="w-full py-3 bg-sky-600 hover:bg-sky-500 text-white font-bold rounded-lg transition-colors shadow-md">
+                儲存設定
+            </button>
+        </div>
+    </div>
+
+    <!-- 自動閱讀控制列 -->
+    <div id="autoscroll-panel" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-slate-800/95 border border-slate-600 text-white px-6 py-3 rounded-full shadow-2xl backdrop-blur flex items-center gap-6 hidden z-50 transition-all duration-300 translate-y-20">
+        <button onclick="changeScrollSpeed(-0.5)" class="text-slate-300 hover:text-white transition-colors" title="減速">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </button>
+        <button onclick="togglePauseScroll()" id="btn-pause-scroll" class="text-sky-400 hover:text-sky-300 flex items-center gap-1 font-bold" title="暫停/繼續">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span id="scroll-status-text">閱讀中</span>
+        </button>
+        <button onclick="stopAutoScroll()" class="text-rose-400 hover:text-rose-300 font-medium" title="停止">
+            停止
+        </button>
+        <button onclick="changeScrollSpeed(0.5)" class="text-slate-300 hover:text-white transition-colors" title="加速">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </button>
+    </div>
+
+    <main class="flex-1 flex flex-col h-full bg-slate-950 relative overflow-hidden">
+        <header class="h-16 border-b border-slate-800 bg-slate-900/80 backdrop-blur-sm flex items-center justify-between px-4 sticky top-0 z-20 shadow-sm flex-shrink-0">
+            <div class="flex items-center overflow-hidden">
+                <button onclick="toggleSidebar()" class="md:hidden p-2 mr-3 text-slate-400 hover:text-white rounded focus:outline-none focus:bg-slate-800 flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+                <h2 id="header-title" class="text-lg font-medium text-slate-200 truncate">作品簡介</h2>
+            </div>
+            
+            <div class="flex items-center gap-2">
+                <!-- 個人資料按鈕 -->
+                <button onclick="openProfile()" class="p-2 text-slate-400 hover:text-white rounded focus:outline-none hover:bg-slate-800 transition-colors flex-shrink-0" title="個人檔案設定">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                </button>
+                
+                <!-- 閱讀設定按鈕 -->
+                <button onclick="toggleSettings()" class="p-2 text-slate-400 hover:text-white rounded focus:outline-none hover:bg-slate-800 transition-colors flex-shrink-0" title="閱讀設定">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- 閱讀進度條 -->
+        <div class="h-1 bg-slate-800 w-full z-10 flex-shrink-0">
+            <div id="reading-progress" class="h-full bg-sky-500 w-0 transition-all duration-150 ease-out"></div>
+        </div>
+
+        <!-- 閱讀設定面板 -->
+        <div id="settings-panel" class="hidden absolute top-16 right-4 w-72 bg-slate-800 border border-slate-700 rounded-lg shadow-2xl z-50 p-5 transform transition-all">
+            <h3 class="text-white font-bold mb-4 border-b border-slate-700 pb-2">閱讀設定</h3>
+            
+            <!-- 背景主題 -->
+            <div class="mb-5">
+                <p class="text-slate-400 text-xs mb-2 tracking-wider">背景主題</p>
+                <div class="flex gap-2">
+                    <button onclick="changeTheme('theme-dark')" class="flex-1 py-1.5 bg-[#020617] hover:ring-2 hover:ring-sky-500 rounded text-sm text-slate-300 border border-slate-600 transition-all">深色</button>
+                    <button onclick="changeTheme('theme-sepia')" class="flex-1 py-1.5 bg-[#f4ecd8] hover:ring-2 hover:ring-sky-500 rounded text-sm text-[#5c4b37] border border-slate-400 transition-all">護眼</button>
+                    <button onclick="changeTheme('theme-light')" class="flex-1 py-1.5 bg-white hover:ring-2 hover:ring-sky-500 rounded text-sm text-slate-800 border border-slate-300 transition-all">明亮</button>
+                </div>
+            </div>
+
+            <!-- 字體大小 -->
+            <div class="mb-5">
+                <p class="text-slate-400 text-xs mb-2 tracking-wider">字體大小</p>
+                <div class="flex gap-2">
+                    <button onclick="changeFontSize('text-sm')" class="flex-1 py-1.5 bg-slate-900 hover:bg-slate-700 rounded text-sm text-slate-300 border border-slate-700 transition-colors">小</button>
+                    <button onclick="changeFontSize('text-base')" class="flex-1 py-1.5 bg-slate-900 hover:bg-slate-700 rounded text-base text-slate-300 border border-slate-700 transition-colors">中</button>
+                    <button onclick="changeFontSize('text-lg')" class="flex-1 py-1.5 bg-slate-900 hover:bg-slate-700 rounded text-lg text-slate-300 border border-slate-700 transition-colors">大</button>
+                </div>
+            </div>
+            
+            <!-- 字體樣式 -->
+            <div class="mb-5">
+                <p class="text-slate-400 text-xs mb-2 tracking-wider">字體樣式</p>
+                <div class="flex gap-2">
+                    <button onclick="changeFontFamily('font-sans')" class="flex-1 py-1.5 bg-slate-900 hover:bg-slate-700 rounded text-sm text-slate-300 border border-slate-700 transition-colors font-sans">黑體</button>
+                    <button onclick="changeFontFamily('font-serif')" class="flex-1 py-1.5 bg-slate-900 hover:bg-slate-700 rounded text-sm text-slate-300 border border-slate-700 transition-colors font-serif">明體</button>
+                </div>
+            </div>
+
+            <!-- 自動閱讀 -->
+            <div class="border-t border-slate-700 pt-4 mt-2">
+                <button onclick="startAutoScroll()" class="w-full flex items-center justify-center gap-2 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-colors font-bold shadow-md">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                    開始自動閱讀
+                </button>
+            </div>
+        </div>
+
+        <div id="read-area" class="flex-1 overflow-y-auto p-4 sm:p-8 md:p-12 scroll-smooth theme-dark transition-colors duration-300">
+            <div class="max-w-3xl mx-auto chapter-content" id="content-container">
+            </div>
+            
+            <div class="max-w-3xl mx-auto mt-8 pt-6 border-t divider-line flex justify-between items-center" id="pagination-container">
+                <button id="btn-prev" onclick="navigateChapter('prev')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded hover:bg-slate-700 hover:text-white transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed border border-slate-700 shadow-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
                     上一章
                 </button>
-                <button id="btn-next" onclick="navigateChapter('next')" class="px-4 py-2 bg-sky-600 text-white rounded hover:bg-sky-500 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                <button id="btn-next" onclick="navigateChapter('next')" class="px-4 py-2 bg-sky-600 text-white rounded hover:bg-sky-500 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-md">
                     下一章
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
                 </button>
             </div>
+
+            <!-- 互動區域 (按讚與留言) -->
+            <div class="max-w-3xl mx-auto mt-8 pt-8 border-t divider-line" id="interaction-container">
+                <!-- 按讚區 -->
+                <div class="flex justify-center mb-8">
+                    <button id="btn-like" onclick="toggleLike()" class="flex items-center gap-2 px-8 py-3 bg-slate-800/50 rounded-full hover:bg-slate-700 transition-all text-slate-400 border border-slate-700 shadow-sm">
+                        <svg id="like-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                        <span class="font-medium">喜歡 <span id="like-count" class="ml-1 font-bold">0</span></span>
+                    </button>
+                </div>
+
+                <!-- 留言區 -->
+                <div class="bg-black/10 p-6 rounded-xl border divider-line">
+                    <div class="flex justify-between items-center mb-6">
+                        <h4 class="text-lg font-bold flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                            </svg>
+                            讀者留言
+                        </h4>
+                        <!-- 分享按鈕 -->
+                        <button onclick="shareChapter()" class="flex items-center gap-1 text-sm bg-slate-800 text-slate-300 hover:text-white px-3 py-1.5 rounded-md transition-colors border border-slate-700">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
+                            分享章節
+                        </button>
+                    </div>
+                    
+                    <!-- 留言輸入框 -->
+                    <div class="mb-8 flex gap-3">
+                        <div id="comment-user-avatar-container" class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center flex-shrink-0 text-slate-300 font-bold shadow-inner overflow-hidden border border-slate-600">
+                            <img id="comment-user-avatar" src="" alt="Avatar" class="w-full h-full object-cover hidden">
+                            <span id="comment-user-fallback" class="text-sm">匿</span>
+                        </div>
+                        <div class="flex-1 flex flex-col gap-3">
+                            <textarea id="comment-input" rows="2" class="w-full bg-black/20 border border-slate-700/50 rounded-lg p-3 text-sm focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 resize-none transition-colors shadow-inner placeholder-slate-500" placeholder="留下你的想法..."></textarea>
+                            <div class="flex justify-between items-center">
+                                <span id="comment-user-name" class="text-xs opacity-70">以 匿名讀者 身分留言</span>
+                                <button onclick="submitComment()" class="px-5 py-2 bg-sky-600 text-white font-medium text-sm rounded-md hover:bg-sky-500 transition-colors shadow-md">發佈留言</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 留言列表 -->
+                    <div id="comment-list" class="space-y-4">
+                        <!-- 留言會由 JS 動態載入 -->
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
-    <!-- 小說內容資料庫 -->
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
         const novelData = {
             'intro': {
                 title: '作品簡介',
                 html: `
                     <h3>關於《深淵狼人殺》</h3>
-                    <div class="bg-slate-900 p-6 rounded-lg border border-slate-800 shadow-xl">
+                    <div class="bg-black/20 p-6 rounded-lg border border-slate-700/30 shadow-xl">
                         <p class="mb-4"><strong>類型：</strong> 懸疑、智鬥、科幻生存、輕小說</p>
                         
                         <p class="mb-3"><strong>雙主角設定：</strong></p>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                            <!-- 凌晏 角色卡 -->
-                            <div class="bg-slate-800 rounded-lg overflow-hidden border border-slate-700 shadow-md">
+                            <div class="bg-black/30 rounded-lg overflow-hidden border border-slate-700/50 shadow-md">
                                 <div class="h-64 bg-slate-700 relative group overflow-hidden">
-                                    <img src="" alt="凌晏" class="object-cover w-full h-full opacity-80 group-hover:opacity-100 transition-opacity duration-300">
-                                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-slate-900 to-transparent p-4 pt-12">
+                                    <img src="https://placehold.co/400x500/0f172a/38bdf8?text=Ling+Yan" alt="" class="object-cover w-full h-full opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+                                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 to-transparent p-4 pt-12">
                                         <h4 class="text-xl font-bold text-sky-400">凌晏 <span class="text-sm font-normal text-slate-300 ml-2">代號：白夜</span></h4>
                                     </div>
                                 </div>
                                 <div class="p-4">
-                                    <p class="text-sm text-slate-300">24歲，犯罪心理學副教授。高智商、冷靜理智、善於觀察與操弄人心。體能普通，但在遊戲中憑藉極致的智力與邏輯碾壓對手。</p>
+                                    <p class="text-sm">24歲，犯罪心理學副教授。高智商、冷靜理智、善於觀察與操弄人心。體能普通，但在遊戲中憑藉極致的智力與邏輯碾壓對手。</p>
                                 </div>
                             </div>
                             
-                            <!-- 楚戈 角色卡 -->
-                            <div class="bg-slate-800 rounded-lg overflow-hidden border border-slate-700 shadow-md">
+                            <div class="bg-black/30 rounded-lg overflow-hidden border border-slate-700/50 shadow-md">
                                 <div class="h-64 bg-slate-700 relative group overflow-hidden">
-                                    <img src="" alt="楚戈" class="object-cover w-full h-full opacity-80 group-hover:opacity-100 transition-opacity duration-300">
-                                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-slate-900 to-transparent p-4 pt-12">
+                                    <img src="https://placehold.co/400x500/0f172a/fb7185?text=Chu+Ge" alt="" class="object-cover w-full h-full opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+                                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 to-transparent p-4 pt-12">
                                         <h4 class="text-xl font-bold text-rose-400">楚戈 <span class="text-sm font-normal text-slate-300 ml-2">代號：破軍</span></h4>
                                     </div>
                                 </div>
                                 <div class="p-4">
-                                    <p class="text-sm text-slate-300">武力值天花板，身手恐怖。性格直率單純，充滿野獸般的直覺，對凌晏有著近乎病態的依賴與絕對的保護欲。</p>
+                                    <p class="text-sm">武力值天花板，身手恐怖。性格直率單純，充滿野獸般的直覺，對凌晏有著近乎病態的依賴與絕對的保護欲。</p>
                                 </div>
                             </div>
                         </div>
 
-                        <p class="mb-2"><strong>故事背景：</strong></p>
-                        <p>2000名在各領域達到極限值的人類菁英，被神秘力量綁架到一個名為「深淵方舟」的封閉設施中，被迫參與一場真實的死亡狼人殺遊戲。</p>
-                        <p>人類中隱藏著可以偽裝成人類的怪物「潛伏者」。人類必須透過尋找線索、物理戰鬥，或是透過殘酷的「全體裁決會議」投票機制，將怪物找出並抹殺。</p>
-                        <p class="mt-6 text-center text-slate-500 italic">「在資訊極度不對等且無法反抗的環境下，猜忌鏈一旦形成，人類根本不需要怪物動手，自己體內的群體恐慌與獵巫本能就會在最短的時間內把同類票死。」</p>
+                        <p class="mb-2"><strong>故事背景與方舟地形：</strong></p>
+                        <p>2000名在各領域達到極限值的人類菁英，被神秘力量綁架到一個名為「深淵方舟」的巨大封閉設施中，被迫參與一場真實的死亡狼人殺遊戲。</p>
+                        <p>這艘方舟並非單純的金屬船艦，其內部透過超高科技劃分為多個廣袤的<strong>「生態模擬地形」</strong>（如：迷霧森林、赤紅惡地、極寒冰原、廢土都市等）。玩家不僅要對抗潛伏在人群中的怪物，還要適應各種極端地形的生存挑戰與環境災害。</p>
+                        <p class="mt-6 text-center opacity-70 italic">「在資訊極度不對等且無法反抗的環境下，猜忌鏈一旦形成，人類根本不需要怪物動手，自己體內的群體恐慌與獵巫本能就會在最短的時間內把同類票死。」</p>
                     </div>
                 `
             },
@@ -207,18 +390,19 @@
 
                     <p>淡藍色的光幕開始滾動出繁複的文字，將這場遊戲的殘酷輪廓與「趣味規則」緩緩勾勒出來。</p>
                     
-                    <div class="bg-slate-900 border border-slate-700 p-4 rounded mb-6">
-                        <h4 class="text-white font-bold mb-2">【演繹規則：正統深淵狼人殺】</h4>
-                        <ul class="list-disc pl-5 space-y-1 text-sm text-slate-400">
-                            <li><strong class="text-slate-300">陣營配置：</strong> 分為【好人陣營】（神職與平民）與【狼人陣營】（潛伏者）。</li>
-                            <li><strong class="text-slate-300">狼人特性：</strong> 潛伏者常態下可完美複製人類的外貌與記憶。進入「黑夜模式」後可化身為<strong>深淵狼人</strong>進行肉體獵殺。部分高階怪物擁有特殊的<strong>突變種類</strong>（例如：死亡時可引爆周圍引發範圍傷害的【白狼王】、能散發神經毒素魅惑玩家的【狼美人】等）。</li>
-                            <li><strong class="text-slate-300">修復者天賦系統：</strong>
+                    <div class="bg-black/20 border border-slate-700/50 p-5 rounded-lg mb-6 shadow-sm">
+                        <h4 class="font-bold mb-3 border-b border-slate-700/50 pb-2">【演繹規則：正統深淵狼人殺】</h4>
+                        <ul class="list-disc pl-5 space-y-2 text-sm opacity-90">
+                            <li><strong>陣營配置：</strong> 分為【好人陣營】（神職與平民）與【狼人陣營】（潛伏者）。</li>
+                            <li><strong>狼人特性：</strong> 潛伏者常態下可完美複製人類的外貌與記憶。進入「黑夜模式」後可化身為<strong>深淵狼人</strong>進行肉體獵殺。部分高階怪物擁有特殊的<strong>突變種類</strong>（例如：死亡時可引爆周圍引發範圍傷害的【白狼王】、能散發神經毒素魅惑玩家的【狼美人】等）。</li>
+                            <li><strong>極端地形機制：</strong> 方舟內部劃分為「迷霧森林」、「赤紅惡地」等多種模擬地形板塊。不同地形將定時觸發專屬的環境災害與隱藏物資。</li>
+                            <li><strong>修復者天賦系統：</strong>
                                 <ul class="list-circle pl-5 mt-1 space-y-1">
                                     <li>每位玩家體內皆潛伏著與正統狼人殺對應的<strong>【專屬天賦】</strong>（例如：預言家、女巫、獵人、守衛等）。</li>
                                     <li><strong>覺醒條件極度嚴苛：</strong> 所有人的初始天賦皆處於「未覺醒狀態」。需在極端生死危機中突破人體極限，或消耗 <strong>10,000 點方舟積分</strong> 於販賣機購買「基因覺醒劑」方可解鎖。</li>
                                 </ul>
                             </li>
-                            <li><strong class="text-slate-300">全體裁決會議：</strong> 拍響各區的「警報終端」將強制召開會議。全艦進入絕對安全模式，所有人透過手環進行公共頻道辯論。得票最高者，手環將立刻注射神經毒素，執行<strong>即時抹殺</strong>。</li>
+                            <li><strong>全體裁決會議：</strong> 拍響各區的「警報終端」將強制召開會議。全艦進入絕對安全模式，所有人透過手環進行公共頻道辯論。得票最高者，手環將立刻注射神經毒素，執行即時抹殺。</li>
                         </ul>
                     </div>
 
@@ -299,12 +483,12 @@
                     <p>楚戈站在一地殘骸中，胸膛劇烈起伏。但他轉頭看向凌晏時，那股殺氣瞬間消失得無影無蹤，取而代之的是震驚與狂熱：「老大……你算準了牠會撞上電線？你太厲害了！」</p>
                     <p>「利用野獸的直線撲咬慣性而已。物理學，不是什麼魔法。」凌晏抽出西裝口袋裡的純白手帕，面無表情地遞了過去，「擦臉。去前面找找物資販賣機。」</p>
                     <p>十五分鐘後。兩人來到了一個較為寬敞的十字路口，找到了系統提到的【物資販賣機】。<br>這是一台充滿賽博龐克風格的黑色金屬機器。螢幕上顯示著：</p>
-                    <ul class="list-disc pl-5 mb-4 text-slate-300">
+                    <ul class="list-disc pl-5 mb-4 opacity-90">
                         <li><strong>【初級補給盲盒】</strong> - 售價：100 積分</li>
                         <li><strong>【指定基因覺醒劑】</strong> - 售價：10,000 積分</li>
                     </ul>
                     <p>看著那高達一萬積分的覺醒劑，凌晏微微挑眉。看來在遊戲初期，想要覺醒神職天賦完全是痴人說夢。</p>
-                    <p>「盲盒本質上是利用人類的賭徒心理，但在資訊嚴重匱乏的開局，我們必須購買。」凌晏冷靜地下達指令，「我們有300積分，買兩個初級盲盒，剩下的100積分作為應急備用。」</p>
+                    <p>「盲盒本質上是利用人類的賭徒心理，但在資訊嚴重匱乏的開局，我們必須購買。」凌晏冷靜下達指令，「我們有300積分，買兩個初級盲盒，剩下的100積分作為應急備用。」</p>
                     <p>楚戈立刻按下按鈕，機器的出口處滾出兩個銀色金屬球。<br>楚戈捏碎第一個。白光一閃，手裡多了一包東西。</p>
                     <p><strong>【獲得物品：極效除菌濕紙巾（100抽）】</strong><br><span class="thought-msg">物品描述：能瞬間擦除任何頑固血漬。請做個愛乾淨的乖孩子。</span></p>
                     <p>「……」楚戈舉著濕紙巾，委屈地看向凌晏，「老大，這機器是不是在嘲諷我？」<br>「不，它很有戰略眼光。把你身上那些會暴露位置的血腥味擦乾淨。」</p>
@@ -314,7 +498,7 @@
                     <p>他將單片鏡戴在左眼上，視野中立刻出現了淡綠色的數據網格。他抬頭看向楚戈——在熱成像下，楚戈整個人簡直像是一個熊熊燃燒的火爐，生命體徵旺盛得令人髮指，絕對是個純種人類。</p>
                     <p>「走吧，我們去人多的地方。」凌晏推了推單片鏡，嘴角勾起一抹冰冷的笑意，「遊戲，才剛開始。」</p>
 
-                    <p class="text-center my-8 text-slate-600">---</p>
+                    <div class="text-center my-8 opacity-40">❖ ❖ ❖</div>
 
                     <p>幾分鐘後，兩人穿過一道沉重的氣壓隔離門，來到了一處類似室內生態園區的巨大中庭。</p>
                     <p>這裡的空間極其開闊，頭頂是高達數十米的巨大半球形防爆玻璃穹頂。穹頂之外，是翻滾著黑色雷雲的絕海風暴，偶爾閃過的慘白閃電，照亮了這座漂浮在無盡深淵上的鋼鐵巨獸。中庭內部則生長著許多不符合地球常理的變異植物，粗壯的藤蔓如同血管般攀爬在周圍的金屬支柱上，散發著微弱的螢光。</p>
@@ -370,11 +554,11 @@
                     <p>「不想死的話，現在立刻打開你們的手環，把票投給【灰燼】。我只給你們十秒鐘。」</p>
                     <p>這句話如同深海裡的氧氣瓶，瞬間喚醒了這群大腦宕機的玩家。<br>沒有人再懷疑凌晏的判斷。在絕對的恐懼與鐵證如山的「物理驗人」面前，凌晏展現出的從容與智商，成為了他們此刻唯一能抓住的救命稻草。</p>
                     <p>「投他！快投那隻怪物！」<br>「我投了！我投了！」</p>
-                    <p>所有人都瘋狂地戳擊著手環上的投票介面。那個被彈飛在地的狼人似乎也意識到了什麼，牠發出絕望而憤怒的嘶吼，拚命抓撓著那層看不見的系統護盾，試圖衝出來把這些投票的人類撕碎，卻無濟於事。</p>
+                    <p>所有人都瘋狂地戳擊著手環上的投票介面。那個被彈飛在地的狼人似乎也意識到了什麼，牠發出絕望而憤怒的嘶吼，拚命抓撓著那層看不見的系統護盾，試圖衝出來把投票的人類撕碎，卻無濟於事。</p>
 
                     <div class="system-msg">
                         「叮咚！投票時間結束。結果統計中……」<br>
-                        「修復者【灰燼】獲得最高票數：14 票。決議通過。」<br>
+                        "修復者【灰燼】獲得最高票數：14 票。決議通過。"<br>
                         「現在執行：即時抹殺。」
                     </div>
 
@@ -399,7 +583,8 @@
                     <p>他轉過身，連多看這群人一眼的興趣都沒有，徑直朝著中庭廣場另一側的幽暗通道走去。<br>楚戈立刻像隻得勝的猛犬一樣，乖巧地跟在凌晏身後，臨走前還不忘對著那群人呲了呲牙，發出警告的低吼。</p>
                     <p>兩人重新走入冰冷深邃的金屬走廊。</p>
                     <p>「老大，我們接下來去哪？」楚戈透過小隊語音問道，語氣裡滿是期待。</p>
-                    <p>凌晏看著單片鏡裡不斷閃爍的區域地圖，眼神深邃。<br>「去『動力室』。」凌晏冷靜地分析，「黑夜模式已經持續了快半個小時，怪物的活動頻率卻沒有減少。這艘方舟的能源供給一定有問題。要想掌控這場遊戲的節奏，我們必須先拿到整艘船的硬體控制權。」</p>
+                    <p>凌晏看著單片鏡裡不斷閃爍的區域地圖。這艘「深淵方舟」的廣闊程度遠超常理，全息地圖上不僅標示著他們目前所在的『金屬工業板塊』，周圍更拼接著大片標記為『迷霧森林』、『赤紅惡地』、『極寒冰原』等廣袤的生態模擬地形。</p>
+                    <p>他眼神深邃。<br>「去『動力室』。」凌晏冷靜地分析，「黑夜模式已經持續了快半個小時，怪物的活動頻率卻沒有減少。這艘方舟的能源供給一定有問題。要想掌控這場遊戲的節奏，我們必須先拿到整艘船的硬體控制權。」</p>
                     <p>就在這時，凌晏的手環突然震動了一下。<br>一條只有他能看見的血紅色私人訊息，突兀地彈射在半空中：</p>
                     
                     <div class="system-msg">
@@ -408,7 +593,7 @@
 
                     <p>凌晏的腳步微微一頓。鏡片後的眼神，瞬間變得無比危險。</p>
 
-                    <p class="text-center my-8 text-slate-600">---</p>
+                    <div class="text-center my-8 opacity-40">❖ ❖ ❖</div>
 
                     <p>「老大，怎麼了？」楚戈立刻停下腳步，敏銳地察覺到凌晏周身氣壓的轉變，右手本能地握緊了那根沾血的鐵管。</p>
                     <p>「沒什麼，一隻自以為躲在暗處的狼，試圖用資訊差來製造猜忌。」凌晏修長的手指在虛空中一劃，冷漠地將這條血紅色的訊息拉入屏蔽名單。他嘴角勾起一抹玩味的弧度，「不過，這條挑釁訊息倒是幫我證實了這場遊戲更底層的『人數機制』。」</p>
@@ -423,7 +608,7 @@
                     <p>說話間，兩人已經穿過了兩道厚重的氣壓隔離門，周遭的環境變得愈發壓抑。</p>
                     <p>這裡已經脫離了上層乾淨的甲板，進入了方舟底層的「機艙整備區」。腳下鋪設著帶有防滑紋路的鋼格柵板，透過縫隙可以看見下方幾十米深處、正瘋狂運轉的巨大齒輪與暗沉的機油池。兩側的牆壁上佈滿了如同血管般錯綜複雜的重工業管道，正不斷發出「嘶嘶」的高壓蒸汽洩漏聲。</p>
                     <p>突然，凌晏停下了腳步。<br>單片鏡的熱成像視野裡，前方一間名為「分控調度室」的艙房內，正散發著大片怪異的暗藍色冷光。</p>
-                    <p>「老大，有血腥味。很新鮮，不是怪物的，是人類的。」楚戈抽了抽鼻子，身體瞬間緊繃成一塊隨時準備彈射的鋼板，橫移半步擋在凌晏身前。</p>
+                    <p>「老大，有血腥味。很新鮮，不是怪物的，是人類的。」楚戈抽了吹鼻子，身體瞬間緊繃成一塊隨時準備彈射的鋼板，橫移半步擋在凌晏身前。</p>
                     <p>凌晏透過艙門上那面龜裂的厚重防彈玻璃往裡看去。<br>調度室內一片狼藉，三具人類的屍體橫七豎八地倒在血泊中。然而詭異的是，這些屍體上沒有狼人那種粗暴的撕裂傷或爪痕，反而全是被銳利的利器一刀割喉，或是被近距離用鈍器砸碎了頭顱。</p>
                     <p>這是人類之間的自相殘殺。</p>
                     <p>「看來，在其他我們看不到的區域，『獵巫恐慌』已經蔓延開了。」凌晏面不改色地推開沉重的舱門，跨過地上的血泊，徑直走到調度室中央那一面巨大的電子監控主機前。</p>
@@ -447,46 +632,638 @@
                     <p>凌晏轉過頭，看向控制室外那條通往最底層、宛如巨獸食道般幽暗不見底的垂直通道。</p>
                     <p>「楚戈，拿好你的武器。」凌晏冷笑了一聲，鏡片後的雙眸亮得驚人，「留給我們的時間不多了。既然那些怪物想玩，那我們就去動力室，把牠們的硬體開關……親手砸碎。」</p>
                 `
+            },
+            'ch4': {
+                title: '第四章：抓到你了，躲在暗處的小狼崽',
+                html: `
+                    <h3>第四章：抓到你了，躲在暗處的小狼崽</h3>
+                    <p>寒風如刀。</p>
+                    <p>當主動力室的厚重金屬隔離門向著兩側緩緩滑開時，迎面而來的並非大型機械運轉該有的滾燙熱浪，而是夾雜著密集冰屑的刺骨寒流。</p>
+                    <p>原本應該有高壓蒸汽流動的粗壯管線，此刻表面全被敷上了一層厚厚的白霜。動力室最中央那座高達十幾公尺、泛著幽藍光芒的核心能源爐，此時正發出猶如野獸瀕死般的沉悶轟鳴，運轉頻率正以肉眼可見的速度往下掉。</p>
+                    <p>「老大，這裡冷得不正常。溫度絕對在零下十五度以下。」楚戈哈出大口大口的白霧，寬闊的肩膀微微沉下，手中的血腥鋼管被他握得劈啪作響。</p>
+                    <p>凌晏面不改色，只是冷靜地撥動了左眼上的熱成像單片鏡。視野中的世界瞬間化為一片深淺不一的深藍色極寒領域，然而，在控制台最上方的鋼結構平台上，卻突兀地佇立著一個不合常理的死灰色人影。</p>
+                    <p>那個人影體溫低得嚇人，心跳節奏緩慢、且帶著非人的沉重力量感。</p>
+                    <p>「啪、啪、啪。」<br>寂靜而空曠的動力室內，突然響起了富有節奏的緩慢掌聲。</p>
+                    <p>「不愧是代號『白夜』的犯罪心理學教授。在全艦被獵巫恐慌席捲的時候，你竟然還有心思帶著你的看門狗，一路摸到這裡來。」</p>
+                    <p>平台上的人影緩緩走到護欄邊，居高臨下地俯視著底部的兩人。那是一張在幾十分鐘前面熟的面孔——中庭廣場上，那個唯唯諾諾躲在西裝男趙大偉身後、看似膽小怕事的眼鏡女學生。</p>
+                    <p>但此刻，她已經摘下了眼鏡，原本怯懦的雙眸盛滿了殘忍與嘲弄。她手裡拋玩著一塊被暴力拆卸下來的核心電路板，冷笑道：<br>「你用物理常識戳破了那個蠢貨的偽裝，確實精彩。但可惜，你來晚了。主冷卻閥已經被我徹底熔毀，動力爐在十分鐘內就會完全停機。這艘方舟，很快就會變成一具漂流在深淵裡的真空冰棺。」</p>
+                    <p>她，就是那個發匿名血色訊息挑釁凌晏的第二隻狼。</p>
+                    
+                    <p class="thought-msg font-medium">
+                        看著在平台上侃侃而談的女學生，凌晏腦海中忽然閃過一個先前提及初階狼人時忽略的關鍵問題——「狼人為什麼會說話？」
+                    </p>
+                    <p>
+                        在第一章手環給予的規則裡提到，潛伏者常態下能完美複製人類的外貌、聲音，甚至是記憶。
+                        但先前在走廊裡襲擊他們的三隻狼人，在進入黑夜模式、顯露出暴虐型態後，便徹底淪為了野獸，只會發出憤怒、痛苦的嘶吼與低鳴，完全喪失了語言功能。
+                    </p>
+                    <p>
+                        然而，眼前這個女學生，即使此時身體骨骼正發出異變的脆響，額頭隱現血色殘月，卻依然能口齒清晰地用人類的語言冷嘲熱諷。
+                    </p>
+                    <p class="thought-msg font-medium">
+                        這其中的差異，本質上是演化階級與智商的斷層。
+                    </p>
+                    <p>
+                        「答案很簡單。」凌晏在心中冷靜地推導出結論：普通的潛伏者在變身後大腦會被殺戮本能吞噬；而眼前這隻，能夠在變身狀態下保持人類智慧與語言能力的，只有一種可能——她是高人一等的<strong>「高階突變種狼人」</strong>。
+                    </p>
+
+                    <p>「來晚了？」凌晏雙手優雅地插在休閒西裝褲的口袋裡，微微仰頭看著她，鏡片後的墨色眼眸平靜得沒有泛起一絲波瀾。</p>
+
+                    <p>「在犯罪心理學中，一個人越是缺乏底氣，就越喜歡在言語和姿態上過度強調自己的主導權。」凌晏語速平緩，字字如刀：<br>「你故意熔毀閥門、發訊息引我過來，甚至在這裡等著我，不就證明了你在恐懼嗎？你恐懼下一次裁決會議召開時，我會再度用你無法預防的邏輯，把你也送上斷頭台。所以你急著在黑夜模式結束前，親手抹殺我這個最大的威脅。」</p>
+                    <p>平台上的女學生笑容瞬間僵硬在臉上，眼中閃過一抹被看穿的惱羞成怒。</p>
+                    <p>「而且，誰告訴你我是來修閥門的？」凌晏嘴角勾起一抹極度冰冷的譏諷弧度，「我只是來……物理超渡你的。」</p>
+                    <p>「找死！！」<br>女學生嘴裡發出一聲尖銳的唳嘯，她的身體突然以一種恐怖的幅度膨脹、扭曲！鋼針一般的銀灰色毛髮瞬間刺穿了她的皮膚，雙手暴長出將近半公尺長的倒鉤利爪，額頭中央，更隱隱浮現出一道散發著血光的殘月印記！</p>
+
+                    <div class="system-msg">
+                        「警告！戰術小隊已遭遇特殊突變種狼人：【白狼王】（階段性小Boss型態）！」<br>
+                        「白狼王特性：除具備極高的敏捷與防禦外，瀕死時將觸發被動技能『白狼自爆』，引爆體內核心引發毀滅性的範圍傷害！」
+                    </div>
+
+                    <p>「吼——！！」<br>化身為巨型銀色狼人的白狼王從十公尺高的平台上悍然躍下，龐大的身軀在半空中化作了一道肉眼難辨的銀色閃電，直撲下方的凌晏！</p>
+                    <p>「動我老大？你這隻雜毛狗配嗎？！」<br>楚戈一聲暴吼，腳下步法踏碎地面，整個人如同一發點燃的重型砲彈迎面撞了上去，手中的鋼管帶著破空爆音橫掃而出！</p>
+                    <p>「砰——！」<br>火花四濺！白狼王在空中精準地用利爪盪開了鋼管。而就在雙方落地的瞬間，白狼王的身形鬼魅般一晃，爆發出了極其恐怖的運動速度！</p>
+                    <p>太快了！
+                        在極寒的永夜環境中，這隻敏捷型 Boss 的移動速度被催化到了物理極限。空中拉開密密麻麻的銀灰色殘影，破空聲尖銳得幾乎要刺穿耳膜。楚戈甚至連視野都無法捕捉到怪物的實體，作戰服便在火光電石間被風壓刮出數道細密的裂口！
+                    </p>
+                    <p>「楚戈，閉眼！交出肉體控制權，聽我音節！」<br>凌晏冷澈骨髓的指令在通訊頻道中炸響。然而在這種電光石火的超高速戰鬥中，人類聲帶發聲的物理延遲，竟然成為了最致命的瓶頸——哪怕是凌晏預判到了軌跡，若說出一句完整的指令，等楚戈大腦接收時，也早已成了怪物的爪下亡魂！</p>
+                    <p class="thought-msg font-medium">
+                        大腦的預判跟得上，但說話的速度跟不上！
+                    </p>
+                    <p>
+                        「好！」楚戈在生死關頭，毫不猶豫地緊閉雙眼！
+                    </p>
+                    <p>
+                        既然語言會延遲，那就放棄所有的廢話！凌晏一瞬間將大腦的計算率壓榨到極致，左眼單片鏡的運算格網幾乎化為一片綠色洪流。他不再說出任何具有語法的句子，而是將戰術推演直接凝聚成極限的「單音節發音」！
+                    </p>
+                    <p>
+                        零點一秒的預判，零點零一秒的單字吐息。
+                    </p>
+                    <p>
+                        「左！」<br>
+                        凌晏聲音未落，楚戈的身體甚至比他的自主意識更快，純靠肌肉記憶往左方一個暴烈側移。呼嘯的利爪擦著他的耳側刮過，帶落幾根黑髮。
+                    </p>
+                    <p>
+                        「挑！」<br>
+                        楚戈雙手握緊鐵管，由下至上瘋狂掀起。白狼王快到拉出殘影的身軀，竟然精準無誤地在空中被這一記鐵管重重撩中了腹部，發出一聲沉悶的重擊聲！
+                    </p>
+                    <p>
+                        然而怪物在空中強行扭轉關節，長爪以不可思議的角度反向抓向楚戈的喉嚨。
+                    </p>
+                    <p>
+                        「矮！」<br>
+                        楚戈雙膝猛然跪地滑行，險之又險地從白狼王冰冷的利爪下避過。
+                    </p>
+                    <p>
+                        白狼王在地面上輕盈一落，連百分之一秒的停頓都沒有，身形在極限速度中化作一道銀色圓弧，企圖繞到楚戈的視覺死角。
+                    </p>
+                    <p>
+                        「九！砸！」<br>
+                        凌晏的單字吐字如機槍掃射般精準而急促！
+                    </p>
+                    <p>
+                        楚戈根本來不及思考「九」是代表九點鐘方向還是別的。他的身體在盲目信任的驅使下，本能地朝著左側全力旋身，手中的精鋼長管帶著萬鈞之勢、如同泰山壓頂般悍然砸下！
+                    </p>
+                    <p>
+                        「咔嚓——轟！」<br>
+                        一聲令人牙酸的碎裂聲暴烈炸開。白狼王快如閃電的殘影在一瞬間被迫凝實——牠的右腿膝蓋，竟然在超高速移動中，被楚戈這一記不講道理的盲目重擊精準無比地砸成了粉碎！
+                    </p>
+                    <p>
+                        龐大的狼軀失去平衡，猛地翻滾出去，重重砸在大理石地面上。
+                    </p>
+                    <p>
+                        白狼王掙扎著想爬起來，滿眼都是不可置信的驚恐。牠不明白，為什麼這個人類閉著眼睛，卻能像一具被精準操縱的戰鬥兵器，每一次出手都卡在牠移動軌跡的唯一死角上？！
+                    </p>
+                    <p>
+                        楚戈這才睜開眼，重重吐出一口帶血的濁氣，踩在怪物的胸口上，露出兩排白燦燦的牙齒：「雜毛狗，這就叫降維打擊。」
+                    </p>
+                    <p>
+                        凌晏緩步走到奄奄一息的白狼王面前，語氣依舊毫無波瀾：<br>
+                        「資訊差確實是個好東西。但你忘了一件事——在絕對的力量與完美的指揮面前，任何陰謀詭計，都只不過是臨死前的無效掙扎。」
+                    </p>
+                    <p>
+                        就在楚戈準備揮下鋼管給予致命一擊時，凌晏左眼單片鏡中的畫面突然發出刺眼的紅光警報。白狼王胸腔內的深藍色熱源，正以指數級的速度瘋狂飆升，轉眼間化作極度危險的亮白色！
+                    </p>
+                    <p>
+                        白狼王的嘴角咧開一抹瘋狂且同歸於盡的獰笑，牠的身體像充氣的皮球般開始劇烈膨脹，皮下透出耀眼的毀滅性光芒。
+                    </p>
+                    <p>
+                        「楚戈！踢開牠！是『白狼自爆』！」凌晏猛地厲聲喝道。
+                    </p>
+                    <p>
+                        楚戈的反應快到了極致。他沒有絲毫猶豫，放棄了補刀，腰部猛然爆發出恐怖的力量，一腳狠狠踹在白狼王的腹部！
+                    </p>
+                    <p>
+                        「砰！」龐大的狼軀猶如炮彈般被踹飛，直指砸向動力室最深處的厚重金屬廢料堆。
+                    </p>
+                    <p>
+                        「轟隆——！！！」
+                    </p>
+                    <p>
+                        震耳欲聾的爆炸聲響徹整個動力室，狂暴的衝擊波夾雜著高溫火焰席捲而來。楚戈一個飛撲將凌晏死死護在身下，背後的作戰服被飛濺的金屬碎片劃出數道焦痕。
+                    </p>
+                    <p>
+                        當一切歸於平靜，白狼王自爆的中心已經被炸出了一個直徑數公尺的焦黑大坑，連帶周圍的金屬牆壁都被高溫熔化變形。若不是躲避及時，那威力足以讓兩人在瞬間汽化。
+                    </p>
+
+                    <div class="system-msg">
+                        「叮咚！恭喜戰術小隊成功挺過自爆並擊殺【白狼王】（突變種Boss）！」<br>
+                        "獲得方舟積分：3000 點！獲得關鍵劇情道具：【冷卻核心修復模組】×1。"<br>
+                        「檢測到突變種死亡，全艦核心主線任務提前引導發布——」
+                    </div>
+
+                    <div class="bg-red-950/20 border border-red-900/50 p-5 rounded-lg mt-4 shadow-sm">
+                        <h4 class="text-red-500 font-bold mb-3 border-b border-red-900/30 pb-2">【全艦主線任務：第一夜的生存演繹】</h4>
+                        <p class="text-sm opacity-80">目前全艦剩餘人數：1641人。底層動力段暖氣已由戰術小隊成功鎖定修復。下一個安全期將在十分鐘後結束。</p>
+                        <p class="text-sm text-red-500 font-bold mt-3 bg-red-900/10 inline-block px-3 py-1 rounded">請所有存活的修復者於十分鐘內前往『中央甲板廣場』，真正的『第一夜狼人獵殺與神職判定』即將全面開啟……</p>
+                    </div>
+                `
             }
         };
 
-        // 章節順序陣列，用於翻頁邏輯
-        const chapterOrder = ['intro', 'ch1', 'ch2', 'ch3'];
+        const chapterOrder = ['intro', 'ch1', 'ch2', 'ch3', 'ch4'];
         let currentChapterIndex = 0;
+
+        let app, auth, db, appId;
+        let currentUser = null;
+        let unsubscribeChapter = null;
+        
+        try {
+            const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+            if(firebaseConfig) {
+                app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+                appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+            }
+        } catch(e) { console.error("Firebase init failed", e); }
+
+        const initialInteractions = {
+            'intro': { likes: 128, comments: [{ user: '路人甲', text: '這雙主角設定太帶感了！', time: '2026-06-08 10:00' }] },
+            'ch1': { likes: 95, comments: [{ user: '純愛戰士', text: '楚戈真的是大狗狗屬性！', time: '2026-06-08 11:30' }] },
+            'ch2': { likes: 142, comments: [] },
+            'ch3': { likes: 215, comments: [{ user: '邏輯推演者', text: '凌晏好帥啊啊啊！這算計太強了。', time: '2026-06-08 14:30' }] },
+            'ch4': { likes: 388, comments: [{ user: '戰鬥狂', text: '楚戈盲打那段畫面感好強！', time: '2026-06-08 16:45' }] }
+        };
+
+        let interactionsData = { ...initialInteractions }; 
+        let userSettings = { fontSize: 'text-base', fontFamily: 'font-sans', theme: 'theme-dark', likedChapters: {}, userName: '', avatar: '' };
+        let lastRead = 'intro';
+
+        // --- 自動閱讀變數 ---
+        let autoScrollInterval = null;
+        let scrollSpeed = 1; // 捲動速度
+        let isPaused = false;
+        let exactScrollTop = 0; // 用於高精度平滑滾動的位置追蹤
 
         const contentContainer = document.getElementById('content-container');
         const headerTitle = document.getElementById('header-title');
         const sidebar = document.getElementById('sidebar');
         const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const bodyContainer = document.getElementById('body-container');
+        const readArea = document.getElementById('read-area');
 
-        // 切換章節功能
+        window.toggleSidebar = toggleSidebar;
+        window.showChapter = showChapter;
+        window.navigateChapter = navigateChapter;
+        window.toggleSettings = toggleSettings;
+        window.changeFontSize = changeFontSize;
+        window.changeFontFamily = changeFontFamily;
+        window.changeTheme = changeTheme;
+        window.toggleLike = toggleLike;
+        window.submitComment = submitComment;
+        window.openProfile = openProfile;
+        window.closeProfile = closeProfile;
+        window.saveProfile = saveProfile;
+        window.handleAvatarUpload = handleAvatarUpload;
+        window.startAutoScroll = startAutoScroll;
+        window.stopAutoScroll = stopAutoScroll;
+        window.togglePauseScroll = togglePauseScroll;
+        window.changeScrollSpeed = changeScrollSpeed;
+        window.shareChapter = shareChapter;
+
+        function initSettings() {
+            bodyContainer.classList.remove('text-sm', 'text-base', 'text-lg', 'font-sans', 'font-serif');
+            bodyContainer.classList.add(userSettings.fontSize, userSettings.fontFamily);
+            
+            readArea.classList.remove('theme-dark', 'theme-sepia', 'theme-light');
+            readArea.classList.add(userSettings.theme || 'theme-dark');
+        }
+
         function showChapter(chapterId) {
-            // 更新目前章節索引
+            lastRead = chapterId;
+            saveUserSettings();
             currentChapterIndex = chapterOrder.indexOf(chapterId);
 
-            // 更新內容
-            contentContainer.innerHTML = novelData[chapterId].html;
+            let contentHtml = novelData[chapterId].html;
+            const pureText = contentHtml.replace(/<[^>]*>?/gm, '').replace(/\s+/g, ''); 
+            const wordCount = pureText.length;
+            const readTime = Math.max(1, Math.ceil(wordCount / 400));
+            
+            const statsHtml = `
+                <div class="flex items-center gap-4 text-xs opacity-60 mb-6 pb-4 border-b divider-line">
+                    <span class="flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                        約 ${wordCount} 字
+                    </span>
+                    <span class="flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        需時 ${readTime} 分鐘
+                    </span>
+                </div>`;
+            
+            contentHtml = contentHtml.replace(/(<\/h3>)/i, `$1${statsHtml}`);
+
+            contentContainer.innerHTML = contentHtml;
             headerTitle.textContent = novelData[chapterId].title;
 
-            // 更新按鈕樣式
             document.querySelectorAll('.nav-link').forEach(btn => {
                 btn.classList.remove('active');
             });
             document.getElementById(`btn-${chapterId}`).classList.add('active');
 
-            // 更新翻頁按鈕狀態
             updatePaginationButtons();
+            setupChapterListener(chapterId);
+            renderInteractions(chapterId);
 
-            // 滾動回頂部
-            document.getElementById('read-area').scrollTo(0, 0);
+            readArea.scrollTo(0, 0);
+            document.getElementById('reading-progress').style.width = '0%';
+            
+            // 換章節時停止自動閱讀
+            stopAutoScroll();
 
-            // 如果在手機版，切換章節後自動收起側邊欄
             if (window.innerWidth < 768) {
                 toggleSidebar();
             }
         }
 
-        // 翻頁邏輯
+        readArea.addEventListener('scroll', () => {
+            const scrollTop = readArea.scrollTop;
+            const scrollHeight = readArea.scrollHeight - readArea.clientHeight;
+            const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+            document.getElementById('reading-progress').style.width = `${progress}%`;
+        });
+
+        // --- 閱讀設定邏輯 ---
+        function toggleSettings() {
+            const panel = document.getElementById('settings-panel');
+            panel.classList.toggle('hidden');
+        }
+
+        function changeFontSize(sizeClass) {
+            bodyContainer.classList.remove('text-sm', 'text-base', 'text-lg');
+            bodyContainer.classList.add(sizeClass);
+            userSettings.fontSize = sizeClass;
+            localStorage.setItem('novelSettings', JSON.stringify(userSettings));
+        }
+
+        function changeFontFamily(familyClass) {
+            bodyContainer.classList.remove('font-sans', 'font-serif');
+            bodyContainer.classList.add(familyClass);
+            userSettings.fontFamily = familyClass;
+            localStorage.setItem('novelSettings', JSON.stringify(userSettings));
+        }
+
+        function changeTheme(themeClass) {
+            readArea.classList.remove('theme-dark', 'theme-sepia', 'theme-light');
+            readArea.classList.add(themeClass);
+            userSettings.theme = themeClass;
+            localStorage.setItem('novelSettings', JSON.stringify(userSettings));
+        }
+
+        document.addEventListener('click', (e) => {
+            const panel = document.getElementById('settings-panel');
+            const header = document.querySelector('header');
+            if (!panel.classList.contains('hidden') && !panel.contains(e.target) && !header.contains(e.target)) {
+                panel.classList.add('hidden');
+            }
+        });
+
+        // --- 自動閱讀功能 ---
+        function startAutoScroll() {
+            toggleSettings(); // 關閉設定面板
+            if (autoScrollInterval) return;
+            
+            const panel = document.getElementById('autoscroll-panel');
+            panel.classList.remove('hidden');
+            setTimeout(() => panel.classList.remove('translate-y-20'), 10);
+            
+            isPaused = false;
+            document.getElementById('scroll-status-text').textContent = '閱讀中';
+
+            // 關鍵修正：關閉 CSS 的 scroll-smooth，避免與 JS 動畫衝突導致抖動
+            readArea.classList.remove('scroll-smooth');
+            
+            // 關鍵修正：記錄精確的初始小數點位置
+            exactScrollTop = readArea.scrollTop;
+
+            const step = () => {
+                if (!isPaused) {
+                    exactScrollTop += scrollSpeed;
+                    
+                    // 若使用者手動大幅度滾動，重新同步追蹤位置避免拉扯
+                    if (Math.abs(readArea.scrollTop - exactScrollTop) > Math.max(scrollSpeed * 5, 5)) {
+                        exactScrollTop = readArea.scrollTop;
+                    }
+
+                    // 強制賦予精確數值
+                    readArea.scrollTop = exactScrollTop;
+                    
+                    // 偵測是否到底部
+                    if (readArea.scrollTop + readArea.clientHeight >= readArea.scrollHeight - 2) {
+                        stopAutoScroll();
+                        return;
+                    }
+                }
+                autoScrollInterval = requestAnimationFrame(step);
+            };
+            autoScrollInterval = requestAnimationFrame(step);
+        }
+
+        function stopAutoScroll() {
+            if (autoScrollInterval) {
+                cancelAnimationFrame(autoScrollInterval);
+                autoScrollInterval = null;
+            }
+            
+            // 恢復 CSS 的平滑滾動特性 (用於翻頁時的滑順感)
+            readArea.classList.add('scroll-smooth');
+
+            const panel = document.getElementById('autoscroll-panel');
+            panel.classList.add('translate-y-20');
+            setTimeout(() => panel.classList.add('hidden'), 300);
+        }
+
+        function togglePauseScroll() {
+            isPaused = !isPaused;
+            document.getElementById('scroll-status-text').textContent = isPaused ? '已暫停' : '閱讀中';
+        }
+
+        function changeScrollSpeed(delta) {
+            // 將速度範圍擴大到 0.2x ~ 5.0x，並保留小數點第一位
+            scrollSpeed = Math.max(0.2, Math.min(5.0, Number((scrollSpeed + delta).toFixed(1))));
+            
+            // 給予速度反饋的 Toast (簡易版)
+            document.getElementById('scroll-status-text').textContent = `速度 ${scrollSpeed.toFixed(1)}x`;
+            if(!isPaused) {
+                setTimeout(() => { if(!isPaused) document.getElementById('scroll-status-text').textContent = '閱讀中'; }, 1000);
+            }
+        }
+
+        // --- 分享功能 ---
+        function shareChapter() {
+            const url = window.location.href.split('#')[0] + '#' + chapterOrder[currentChapterIndex];
+            
+            // 由於沙盒環境限制，使用備用輸入框方式複製
+            const tempInput = document.createElement("input");
+            tempInput.value = `我正在看《深淵狼人殺》的 ${novelData[chapterOrder[currentChapterIndex]].title}，超好看！推薦給你：${url}`;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            
+            // 彈出提示
+            const toast = document.createElement('div');
+            toast.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 bg-sky-500 text-white px-4 py-2 rounded shadow-lg z-50 transition-opacity';
+            toast.textContent = '✅ 已複製分享連結！快去貼給朋友吧！';
+            document.body.appendChild(toast);
+            setTimeout(() => { toast.classList.add('opacity-0'); setTimeout(()=>toast.remove(), 300); }, 2000);
+        }
+
+        // --- Firebase 與 互動功能 ---
+        async function loadUserSettings() {
+            if(!currentUser || !db) return;
+            try {
+                const userRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'settings', 'preferences');
+                const docSnap = await getDoc(userRef);
+                if(docSnap.exists()) {
+                    const data = docSnap.data();
+                    if(data.fontSize) userSettings.fontSize = data.fontSize;
+                    if(data.fontFamily) userSettings.fontFamily = data.fontFamily;
+                    if(data.theme) userSettings.theme = data.theme;
+                    if(data.likedChapters) userSettings.likedChapters = data.likedChapters;
+                    if(data.userName) userSettings.userName = data.userName;
+                    if(data.avatar) userSettings.avatar = data.avatar;
+                    if(data.lastRead) lastRead = data.lastRead;
+                }
+            } catch(e) { console.error(e); }
+        }
+
+        async function saveUserSettings() {
+            try {
+                localStorage.setItem('novelSettings', JSON.stringify(userSettings));
+                localStorage.setItem('novelLastRead', lastRead);
+
+                if(!currentUser || !db) return;
+                const userRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'settings', 'preferences');
+                await setDoc(userRef, {
+                    fontSize: userSettings.fontSize,
+                    fontFamily: userSettings.fontFamily,
+                    theme: userSettings.theme,
+                    likedChapters: userSettings.likedChapters,
+                    userName: userSettings.userName,
+                    avatar: userSettings.avatar,
+                    lastRead: lastRead
+                }, { merge: true });
+            } catch(e) { console.error(e); }
+        }
+
+        function setupChapterListener(chapterId) {
+            if(!currentUser || !db) return;
+            if(unsubscribeChapter) unsubscribeChapter();
+
+            const chapRef = doc(db, 'artifacts', appId, 'public', 'data', 'chapters', chapterId);
+            unsubscribeChapter = onSnapshot(chapRef, (docSnap) => {
+                if(docSnap.exists()) {
+                    interactionsData[chapterId] = docSnap.data();
+                } else {
+                    if(!interactionsData[chapterId]) {
+                        interactionsData[chapterId] = { likes: 0, comments: [] };
+                    }
+                    setDoc(chapRef, interactionsData[chapterId]).catch(console.error);
+                }
+                renderInteractions(chapterId);
+            }, (error) => console.error("Snapshot error:", error));
+        }
+
+        async function saveInteractions(chapterId) {
+            try {
+                localStorage.setItem('novelInteractions', JSON.stringify(interactionsData));
+
+                if(!currentUser || !db) return;
+                const chapRef = doc(db, 'artifacts', appId, 'public', 'data', 'chapters', chapterId);
+                await setDoc(chapRef, interactionsData[chapterId], {merge:true});
+            } catch(e) { console.error(e); }
+        }
+
+        function renderInteractions(chapterId) {
+            const data = interactionsData[chapterId] || { likes: 0, comments: [] };
+            const isLiked = userSettings.likedChapters[chapterId] || false;
+            
+            const likeBtn = document.getElementById('btn-like');
+            const likeCount = document.getElementById('like-count');
+            const likeIcon = document.getElementById('like-icon');
+
+            likeCount.textContent = data.likes;
+            if (isLiked) {
+                likeBtn.classList.add('text-rose-500');
+                likeIcon.setAttribute('fill', 'currentColor');
+                likeIcon.classList.add('text-rose-500');
+            } else {
+                likeBtn.classList.remove('text-rose-500');
+                likeIcon.setAttribute('fill', 'none');
+                likeIcon.classList.remove('text-rose-500');
+            }
+
+            const commentList = document.getElementById('comment-list');
+            commentList.innerHTML = '';
+            const comments = data.comments || [];
+            if (comments.length > 0) {
+                comments.forEach(comment => {
+                    const avatarHtml = comment.avatar 
+                        ? `<img src="${comment.avatar}" class="w-8 h-8 rounded-full object-cover border border-slate-600">`
+                        : `<div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-slate-400 text-xs font-bold border border-slate-600">${comment.user.substring(0,1)}</div>`;
+
+                    commentList.innerHTML += `
+                        <div class="bg-black/10 p-4 rounded-lg border border-slate-700/30 shadow-sm flex gap-3">
+                            <div class="flex-shrink-0 mt-1">${avatarHtml}</div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="font-bold text-sky-500 text-sm">${comment.user}</span>
+                                    <span class="text-xs opacity-50">${comment.time}</span>
+                                </div>
+                                <p class="text-sm whitespace-pre-wrap leading-relaxed opacity-90">${comment.text}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                commentList.innerHTML = '<p class="opacity-50 text-sm text-center py-6 bg-black/5 rounded-lg border border-slate-700/50 border-dashed">目前還沒有留言，快來搶頭香吧！</p>';
+            }
+        }
+
+        function toggleLike() {
+            const chapterId = chapterOrder[currentChapterIndex];
+            if (!interactionsData[chapterId]) interactionsData[chapterId] = { likes: 0, comments: [] };
+            
+            const isLiked = userSettings.likedChapters[chapterId] || false;
+            if (isLiked) {
+                interactionsData[chapterId].likes = Math.max(0, interactionsData[chapterId].likes - 1);
+                userSettings.likedChapters[chapterId] = false;
+            } else {
+                interactionsData[chapterId].likes++;
+                userSettings.likedChapters[chapterId] = true;
+            }
+            
+            saveUserSettings();
+            saveInteractions(chapterId);
+            renderInteractions(chapterId);
+            
+            const icon = document.getElementById('like-icon');
+            icon.classList.add('scale-125', '-translate-y-1');
+            setTimeout(() => icon.classList.remove('scale-125', '-translate-y-1'), 200);
+        }
+
+        function submitComment() {
+            const input = document.getElementById('comment-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const chapterId = chapterOrder[currentChapterIndex];
+            if (!interactionsData[chapterId]) interactionsData[chapterId] = { likes: 0, comments: [] };
+
+            const now = new Date();
+            const timeString = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+            
+            const defaultName = currentUser ? `修復者 ${currentUser.uid.substring(0,4).toUpperCase()}` : '匿名讀者';
+            const userName = userSettings.userName || defaultName;
+            const avatar = userSettings.avatar || '';
+
+            interactionsData[chapterId].comments.push({ user: userName, avatar: avatar, text: text, time: timeString });
+
+            saveInteractions(chapterId);
+            input.value = '';
+            renderInteractions(chapterId);
+        }
+
+        // --- 個人資料邏輯 ---
+        function openProfile() {
+            document.getElementById('profile-modal').classList.remove('hidden');
+            document.getElementById('profile-name-input').value = userSettings.userName || '';
+            updateProfileAvatarUI(userSettings.avatar);
+        }
+        
+        function closeProfile() {
+            document.getElementById('profile-modal').classList.add('hidden');
+        }
+
+        function saveProfile() {
+            userSettings.userName = document.getElementById('profile-name-input').value.trim();
+            saveUserSettings();
+            updateCurrentUserUI();
+            closeProfile();
+        }
+
+        function handleAvatarUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    
+                    const MAX_SIZE = 150;
+                    const size = Math.min(img.width, img.height);
+                    const startX = (img.width - size) / 2;
+                    const startY = (img.height - size) / 2;
+
+                    canvas.width = MAX_SIZE;
+                    canvas.height = MAX_SIZE;
+                    ctx.drawImage(img, startX, startY, size, size, 0, 0, MAX_SIZE, MAX_SIZE);
+                    
+                    const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+                    userSettings.avatar = dataUrl;
+                    updateProfileAvatarUI(dataUrl);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function updateProfileAvatarUI(avatarBase64) {
+            const img = document.getElementById('profile-avatar-preview');
+            const fallback = document.getElementById('profile-avatar-fallback');
+            if(avatarBase64) {
+                img.src = avatarBase64;
+                img.classList.remove('hidden');
+                fallback.classList.add('hidden');
+            } else {
+                img.classList.add('hidden');
+                fallback.classList.remove('hidden');
+            }
+        }
+
+        function updateCurrentUserUI() {
+            const defaultName = currentUser ? `修復者 ${currentUser.uid.substring(0,4).toUpperCase()}` : '匿名讀者';
+            const displayName = userSettings.userName || defaultName;
+            
+            document.getElementById('comment-user-name').textContent = `以 ${displayName} 身分留言`;
+            
+            const avatarImg = document.getElementById('comment-user-avatar');
+            const avatarFallback = document.getElementById('comment-user-fallback');
+            
+            if (userSettings.avatar) {
+                avatarImg.src = userSettings.avatar;
+                avatarImg.classList.remove('hidden');
+                avatarFallback.classList.add('hidden');
+            } else {
+                avatarImg.classList.add('hidden');
+                avatarFallback.classList.remove('hidden');
+                avatarFallback.textContent = displayName.substring(0,1);
+            }
+        }
+
         function navigateChapter(direction) {
             if (direction === 'prev' && currentChapterIndex > 0) {
                 showChapter(chapterOrder[currentChapterIndex - 1]);
@@ -495,7 +1272,6 @@
             }
         }
 
-        // 更新翻頁按鈕可用狀態
         function updatePaginationButtons() {
             const btnPrev = document.getElementById('btn-prev');
             const btnNext = document.getElementById('btn-next');
@@ -504,7 +1280,6 @@
             btnNext.disabled = currentChapterIndex === chapterOrder.length - 1;
         }
 
-        // 手機版側邊欄開關
         function toggleSidebar() {
             const isClosed = sidebar.classList.contains('-translate-x-full');
             if (isClosed) {
@@ -516,8 +1291,48 @@
             }
         }
 
-        // 初始化顯示簡介
-        showChapter('intro');
+        async function bootApp() {
+            const localInteractions = localStorage.getItem('novelInteractions');
+            if(localInteractions) interactionsData = JSON.parse(localInteractions);
+            
+            const localSettings = localStorage.getItem('novelSettings');
+            if(localSettings) userSettings = JSON.parse(localSettings);
+            
+            // 讀取 URL Hash 來決定要跳轉到哪一章 (用於分享連結)
+            const hashChapter = window.location.hash.replace('#', '');
+            if (chapterOrder.includes(hashChapter)) {
+                lastRead = hashChapter;
+            } else {
+                lastRead = localStorage.getItem('novelLastRead') || 'intro';
+            }
+
+            initSettings();
+            updateCurrentUserUI();
+
+            if(auth) {
+                try {
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                } catch(e) { console.error("Auth error", e); }
+
+                onAuthStateChanged(auth, async (user) => {
+                    if(user) {
+                        currentUser = user;
+                        await loadUserSettings();
+                        initSettings();
+                        updateCurrentUserUI();
+                        showChapter(lastRead);
+                    }
+                });
+            } else {
+                showChapter(lastRead);
+            }
+        }
+
+        bootApp();
     </script>
 </body>
 </html>
