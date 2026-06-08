@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《深淵狼人殺》小說閱讀</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+            background-color: #0f172a; /* Slate 900 */
+            color: #cbd5e1; /* Slate 300 */
+            line-height: 1.8;
+        }
+
+        /* 自定義捲軸 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #475569; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b; 
+        }
+
+        .chapter-content p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .chapter-content h3 {
+            color: #f8fafc;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #334155;
+        }
+
+        .system-msg {
+            background-color: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid #ef4444;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            color: #fca5a5;
+            font-style: italic;
+        }
+
+        .thought-msg {
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        .nav-link.active {
+            background-color: #1e293b;
+            color: #38bdf8;
+            border-left: 3px solid #38bdf8;
+        }
+        
+        /* 側邊欄過渡動畫 */
+        #sidebar {
+            transition: transform 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden antialiased">
+
+    <!-- 手機版選單遮罩 -->
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden md:hidden" onclick="toggleSidebar()"></div>
+
+    <!-- 側邊欄 (導航) -->
+    <aside id="sidebar" class="w-64 bg-slate-900 border-r border-slate-800 flex flex-col h-full absolute md:relative z-30 transform -translate-x-full md:translate-x-0">
+        <div class="p-6 border-b border-slate-800 flex justify-between items-center">
+            <div>
+                <h1 class="text-xl font-bold text-white tracking-wider">深淵狼人殺</h1>
+                <p class="text-xs text-slate-500 mt-1">Abyss Werewolf</p>
+            </div>
+            <!-- 手機版關閉按鈕 -->
+            <button onclick="toggleSidebar()" class="md:hidden text-slate-400 hover:text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        
+        <div class="p-4 flex-1 overflow-y-auto">
+            <h2 class="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-4 px-3">目錄</h2>
+            <nav class="space-y-1">
+                <button onclick="showChapter('intro')" id="btn-intro" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-colors duration-150 active">
+                    作品簡介
+                </button>
+                <button onclick="showChapter('ch1')" id="btn-ch1" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-colors duration-150">
+                    第一章：請勿在狼人殺裡飼養大型犬
+                </button>
+                <button onclick="showChapter('ch2')" id="btn-ch2" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-colors duration-150">
+                    第二章：請不要用體溫挑戰理科生
+                </button>
+                <button onclick="showChapter('ch3')" id="btn-ch3" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-colors duration-150">
+                    第三章：所謂的絕對多數暴力
+                </button>
+            </nav>
+        </div>
+        <div class="p-4 border-t border-slate-800 text-xs text-slate-500 text-center">
+            &copy; 2026 深淵方舟記錄檔
+        </div>
+    </aside>
+
+    <!-- 主內容區 -->
+    <main class="flex-1 flex flex-col h-full bg-slate-950 relative">
+        <!-- 頂部導航列 (手機版顯示選單按鈕) -->
+        <header class="h-16 border-b border-slate-800 bg-slate-900/80 backdrop-blur-sm flex items-center px-4 sticky top-0 z-10 shadow-sm">
+            <button onclick="toggleSidebar()" class="md:hidden p-2 mr-3 text-slate-400 hover:text-white rounded focus:outline-none focus:bg-slate-800">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+            <h2 id="header-title" class="text-lg font-medium text-slate-200 truncate">作品簡介</h2>
+        </header>
+
+        <!-- 閱讀區域 -->
+        <div id="read-area" class="flex-1 overflow-y-auto p-4 sm:p-8 md:p-12 scroll-smooth">
+            <div class="max-w-3xl mx-auto chapter-content" id="content-container">
+                <!-- 內容會由 JS 動態注入 -->
+            </div>
+            
+            <!-- 底部翻頁按鈕 -->
+            <div class="max-w-3xl mx-auto mt-8 pt-6 border-t border-slate-800 flex justify-between items-center" id="pagination-container">
+                <button id="btn-prev" onclick="navigateChapter('prev')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded hover:bg-slate-700 hover:text-white transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                    上一章
+                </button>
+                <button id="btn-next" onclick="navigateChapter('next')" class="px-4 py-2 bg-sky-600 text-white rounded hover:bg-sky-500 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                    下一章
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- 小說內容資料庫 -->
+    <script>
+        const novelData = {
+            'intro': {
+                title: '作品簡介',
+                html: `
+                    <h3>關於《深淵狼人殺》</h3>
+                    <div class="bg-slate-900 p-6 rounded-lg border border-slate-800 shadow-xl">
+                        <p class="mb-4"><strong>類型：</strong> 懸疑、智鬥、科幻生存、輕小說</p>
+                        
+                        <p class="mb-3"><strong>雙主角設定：</strong></p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <!-- 凌晏 角色卡 -->
+                            <div class="bg-slate-800 rounded-lg overflow-hidden border border-slate-700 shadow-md">
+                                <div class="h-64 bg-slate-700 relative group overflow-hidden">
+                                    <img src="" alt="凌晏" class="object-cover w-full h-full opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+                                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-slate-900 to-transparent p-4 pt-12">
+                                        <h4 class="text-xl font-bold text-sky-400">凌晏 <span class="text-sm font-normal text-slate-300 ml-2">代號：白夜</span></h4>
+                                    </div>
+                                </div>
+                                <div class="p-4">
+                                    <p class="text-sm text-slate-300">24歲，犯罪心理學副教授。高智商、冷靜理智、善於觀察與操弄人心。體能普通，但在遊戲中憑藉極致的智力與邏輯碾壓對手。</p>
+                                </div>
+                            </div>
+                            
+                            <!-- 楚戈 角色卡 -->
+                            <div class="bg-slate-800 rounded-lg overflow-hidden border border-slate-700 shadow-md">
+                                <div class="h-64 bg-slate-700 relative group overflow-hidden">
+                                    <img src="" alt="楚戈" class="object-cover w-full h-full opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+                                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-slate-900 to-transparent p-4 pt-12">
+                                        <h4 class="text-xl font-bold text-rose-400">楚戈 <span class="text-sm font-normal text-slate-300 ml-2">代號：破軍</span></h4>
+                                    </div>
+                                </div>
+                                <div class="p-4">
+                                    <p class="text-sm text-slate-300">武力值天花板，身手恐怖。性格直率單純，充滿野獸般的直覺，對凌晏有著近乎病態的依賴與絕對的保護欲。</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="mb-2"><strong>故事背景：</strong></p>
+                        <p>2000名在各領域達到極限值的人類菁英，被神秘力量綁架到一個名為「深淵方舟」的封閉設施中，被迫參與一場真實的死亡狼人殺遊戲。</p>
+                        <p>人類中隱藏著可以偽裝成人類的怪物「潛伏者」。人類必須透過尋找線索、物理戰鬥，或是透過殘酷的「全體裁決會議」投票機制，將怪物找出並抹殺。</p>
+                        <p class="mt-6 text-center text-slate-500 italic">「在資訊極度不對等且無法反抗的環境下，猜忌鏈一旦形成，人類根本不需要怪物動手，自己體內的群體恐慌與獵巫本能就會在最短的時間內把同類票死。」</p>
+                    </div>
+                `
+            },
+            'ch1': {
+                title: '第一章：請勿在狼人殺裡飼養大型犬',
+                html: `
+                    <h3>第一章：請勿在狼人殺裡飼養大型犬</h3>
+                    <p>冰冷。<br>這是一種毫無人情味、彷彿連靈魂都能凍結的機體冷覺，正順著脊椎一路往大腦皮層竄。</p>
+                    <p>當凌晏恢復意識時，視網膜首先捕捉到的是一片黏稠的、宛如凝固血液般的暗紅色應急燈光。他沒有立刻坐起身，甚至連呼吸的頻率都沒有發生任何改變。在完全陌生的環境中，暴露出自己已經清醒，是只有低等獵物才會犯的愚蠢錯誤。</p>
+                    <p>他躺在帶有細微磨砂感的銀灰色金屬地板上，閉上眼睛，冷靜地記下周圍風扇運轉的低頻共振聲，同時在大腦中高速回溯自己失去意識前的最後畫面。</p>
+                    <p>今年二十四歲的凌晏，是國內最年輕的犯罪心理學副教授，同時也是特聘的重案組戰略顧問。失去意識前，他正坐在自己那間堆滿卷宗的辦公室裡，研究著近期在全球範圍內引發恐慌的「黑盒子事件」。</p>
+                    <p>過去三個月裡，世界各地陸續發生了離奇的失蹤案。失蹤者都是在某個領域達到了人類極限值的菁英。而就在午夜十一點四十五分，一個憑空出現的完美黑色幾何立方體吞噬了凌晏。沒有失重感，也沒有痛覺，只是一瞬間的絕對黑暗，他便來到了這裡。</p>
+                    <p>凌晏睜開眼坐起身。這是一個大約三坪大的封閉金屬艙室，四周的牆壁呈現出冷硬的鐵灰色，表面佈滿了猶如鱗片般的銲接痕跡與斑駁的暗紅色鐵鏽。天花板極低，給人一種強烈的幽閉恐懼感，角落裡甚至還有幾根裸露的粗大管線，正往外滲著黏稠的防鏽油。他拍了拍白襯衫上沾染的微塵，低頭看向自己的左手腕。那裡被扣上了一個黑色金屬手環。</p>
+                    <p>突然，手環螢幕亮起，投射出一道淡藍色的全息光幕。與此同時，整個艙室內響起了一道經過多重電子合成、分不出性別的歡快聲音。</p>
+                    
+                    <div class="system-msg">
+                        「叮咚！歡迎，第1742號觀測樣本，代號『白夜』，凌晏。」<br>
+                        「你已被選中進入『深淵方舟』。這是一場為了取悅偉大『觀測者』而舉辦的生存演繹。此時此刻，共有2000名人類菁英共同登入本場遊戲。」
+                    </div>
+
+                    <p>淡藍色的光幕開始滾動出繁複的文字，將這場遊戲的殘酷輪廓與「趣味規則」緩緩勾勒出來。</p>
+                    
+                    <div class="bg-slate-900 border border-slate-700 p-4 rounded mb-6">
+                        <h4 class="text-white font-bold mb-2">【演繹規則：正統深淵狼人殺】</h4>
+                        <ul class="list-disc pl-5 space-y-1 text-sm text-slate-400">
+                            <li><strong class="text-slate-300">陣營配置：</strong> 分為【好人陣營】（神職與平民）與【狼人陣營】（潛伏者）。</li>
+                            <li><strong class="text-slate-300">狼人特性：</strong> 潛伏者常態下可完美複製人類的外貌與記憶。進入「黑夜模式」後可化身為<strong>深淵狼人</strong>進行肉體獵殺。部分高階怪物擁有特殊的<strong>突變種類</strong>（例如：死亡時可引爆周圍引發範圍傷害的【白狼王】、能散發神經毒素魅惑玩家的【狼美人】等）。</li>
+                            <li><strong class="text-slate-300">修復者天賦系統：</strong>
+                                <ul class="list-circle pl-5 mt-1 space-y-1">
+                                    <li>每位玩家體內皆潛伏著與正統狼人殺對應的<strong>【專屬天賦】</strong>（例如：預言家、女巫、獵人、守衛等）。</li>
+                                    <li><strong>覺醒條件極度嚴苛：</strong> 所有人的初始天賦皆處於「未覺醒狀態」。需在極端生死危機中突破人體極限，或消耗 <strong>10,000 點方舟積分</strong> 於販賣機購買「基因覺醒劑」方可解鎖。</li>
+                                </ul>
+                            </li>
+                            <li><strong class="text-slate-300">全體裁決會議：</strong> 拍響各區的「警報終端」將強制召開會議。全艦進入絕對安全模式，所有人透過手環進行公共頻道辯論。得票最高者，手環將立刻注射神經毒素，執行<strong>即時抹殺</strong>。</li>
+                        </ul>
+                    </div>
+
+                    <p>凌晏看著眼前的規則，嘴角勾起一抹極度冰冷的嘲諷弧度。</p>
+                    <p>高達一萬積分才能購買覺醒劑？這意味著在遊戲前期，百分之九十九的玩家都只能是手無寸鐵的「平民」。真是一場把人性放在顯微鏡下烤的大型社會實驗。在這種資訊極度不對等且無法反抗的環境下，猜忌鏈一旦形成，人類根本不需要怪物動手，自己體內的群體恐慌與獵巫本能就會在最短的時間內把同類票死。</p>
+                    <p>伴隨著一聲沉悶的氣閥洩壓聲，前方那扇厚重的金屬艙門朝著兩側緩緩滑開。門外，是一條深邃、幽暗的哥德式工業風走廊。</p>
+                    <p>走廊寬度足以讓兩輛重型卡車並排通行，兩側高聳的金屬牆面上，每隔十公尺就鑲嵌著一面早已龜裂的厚重防彈玻璃窗，窗外是一片令人窒息的漆黑海面與翻滾的風暴。頂部錯綜複雜的通風管道如同巨獸的腸子般蜿蜒，冷光燈管在積水與機油混雜的地面上，拉出長長的光暈。</p>
+                    <p>凌晏邁出步伐，順手在牆角碎裂的急救箱裡撿起了一卷高效止血繃帶和一支軍用快速凝血劑。就在這時，他的手環突然發出尖銳的蜂鳴。</p>
+
+                    <div class="system-msg">
+                        「叮咚！全球戰報更新：第198號玩家已在溫室區被潛伏者殘忍撕碎～目前剩餘人數：1999人。大家要加快腳步哦！」
+                    </div>
+
+                    <p>空氣中飄散來一絲無法掩蓋的血腥味。<br>凌晏身形迅速貼向金屬牆面的陰影處，探出半個身子觀察。</p>
+                    <p>在第一個巨大的十字交會口中央，躺著一具殘骸。那東西有著巨大的狼首與毛茸茸的身軀，此時牠那顆堅硬的銀色顱骨被某種不講道理的蠻力硬生生砸碎了。這顯然是一隻剛要變身、卻中途被當場物理超渡的狼人。</p>
+                    <p>而在這灘血窪旁邊，站著一個男人。</p>
+                    <p>男人穿著一件黑色作戰服，身材高大挺拔，目測超過一米八五。他手裡正拿著一根從牆上硬生生扯下來的粗壯金屬鋼管，鋼管末端還滴著狼人的血。那寬闊的肩膀和緊繃的肌肉，散發著一股極度危險的野獸氣息。</p>
+                    <p>凌晏大腦飛速運轉。他非常理智地得出了一個結論：自己的格鬥技巧在這傢伙面前，大概跟幼稚園學童的早操沒什麼兩樣。</p>
+                    <p>就在他準備悄無聲息地向後撤退時，那個男人似乎察覺到了什麼，猛地回過頭。</p>
+                    <p>四目相對。<br>凌晏全身的肌肉瞬間緊繃。然而下一秒，他卻愣住了。</p>
+                    <p>男人的五官深邃英挺，極具攻擊性，但此刻那張臉上卻沒有任何殺氣。相反地，那雙漆黑的眼睛在看到凌晏的瞬間，猛地亮了起來。那是一種非常奇特的眼神，就像是一隻剛在外面跟野狼打完架、渾身是血的護衛犬，轉頭卻看見了自己最喜歡的主人，眼神裡盛滿了毫無保留的親暱與興奮。</p>
+                    <p>「哇！活人！好乾淨的活人！」</p>
+                    <p>男人隨手丟下那根金屬管，以一種極其恐怖的爆發力朝凌晏狂奔而來，在距離他半步的地方來了個緊急煞車。</p>
+                    <p>「你好你好！我叫楚戈！」楚戈咧開嘴，指著地上的狼人屍體，彷彿叼著飛盤回來邀功的大狗：「這傢伙剛才說著說著嘴巴突然裂到耳朵根！我一著急，就順手拿管子把牠的腦袋砸扁了！」</p>
+                    <p>凌晏沉默地看著他，隨後看了一眼楚戈手環上的代號。<br><strong>【代號：破軍】</strong></p>
+                    <p>破軍。北斗第七星，主殺伐。確實是個名副其實的暴力代號。<br>凌晏淡淡地報上自己的名字：「凌晏。」</p>
+                    <p>「凌晏？這名字真好聽！」楚戈的眼睛更亮了。他湊近了一點，像隻黏人的大型犬一樣，圍著凌晏轉了半圈。</p>
+                    <p>楚戈盯著他看了一會兒，語氣變得無比認真，甚至透出一絲本能的偏執與強烈的保護欲：「凌晏，你看起來好弱啊。你這樣的，要是碰到剛才那種大狼狗，肯定一口就被吃掉了。不行，你得跟著我。」</p>
+                    <p>凌晏看著眼前這隻武力值封頂、大腦結構卻似乎異常單純的「物理系猛男」，推了推並不存在的眼鏡。</p>
+                    <p>楚戈擁有絕對的武力，卻對自己展現出了一種近乎盲目的護短。這是一把自願把刀柄遞到他手裡的絕世神兵。如果不加以利用，簡直有辱他犯罪心理學教授的頭銜。</p>
+                    <p>「可以組隊。」凌晏嘴角勾起一抹優雅的笑容，「但既然我是你的『大腦』，我的指令，你必須絕對服從。明白嗎？」</p>
+                    <p>「沒問題！老大說什麼就是什麼！」楚戈興奮地答應，背後彷彿有一條無形的尾巴在瘋狂搖擺。</p>
+                    <p>就在這詭異的「主僕契約」剛達成的瞬間，手環再次發出刺耳的警報聲。</p>
+
+                    <div class="system-msg">
+                        「叮咚！全艦進入『黑夜模式』。潛伏者狼人真實型態已解除限制，夜視與狩獵功能全開。祝各位修復者躲貓貓愉快！」
+                    </div>
+
+                    <p>走廊上方的冷光燈發出令人牙酸的電流聲，隨後徹底熄滅。黑暗，毫無預兆地席捲了整個方舟。</p>
+                    <p>黑暗降臨的瞬間，凌晏感覺到一隻乾燥、溫熱的大手，精準地扣住了他的手腕，一把將他拉到了自己的身後。</p>
+                    <p>「凌晏，別怕，我在呢。」楚戈在絕對的黑暗中壓低了聲音，擋在凌晏身前的軀體瞬間繃緊成了一張蓄勢待發的鋼鐵巨弓。</p>
+                    <p>「上面通風管裡，有三隻大狼狗爬過來了。」</p>
+                `
+            },
+            'ch2': {
+                title: '第二章：請不要用體溫挑戰理科生',
+                html: `
+                    <h3>第二章：請不要用體溫挑戰理科生</h3>
+                    <p>極致的黑暗，往往會無限放大人類對未知的恐懼。</p>
+                    <p>但在這伸手不見五指的金屬走廊裡，凌晏的呼吸頻率依然保持在平靜的每分鐘十二次。他背靠著冰冷的牆壁，大腦正飛速讀取著手環剛剛彈出的新提示。</p>
+                    
+                    <div class="system-msg">
+                        「叮咚！檢測到雙方意願，修復者【白夜】與【破軍】已成功建立『戰術小隊』連結。」<br>
+                        「小隊特權啟動：隊內友軍傷害豁免、小隊專屬加密通訊頻道開啟、方舟積分共享權限已解鎖。」
+                    </div>
+
+                    <p>有了系統層面的綁定，這把名為「楚戈」的凶器才算真正握在了他手裡。</p>
+                    <p>「嘎吱——」<br>頭頂的通風管道傳來令人牙酸的金屬形變聲。從震動的頻率來判斷，總共有三隻。</p>
+                    <p>「老大，你靠牆站好，別動。」<br>楚戈的聲音透過小隊通訊頻道傳來。下一秒，凌晏感覺到身前那道高大的熱源瞬間消失了。</p>
+                    <p>沒有任何戰前預警。<br><strong>「轟——！」</strong></p>
+                    <p>一聲震耳欲聾的巨響在凌晏正上方炸開。楚戈憑藉著那非人的直覺與爆發力，直接原地起跳，徒手硬生生扯下了天花板上厚重的鋁合金百葉窗！</p>
+                    <p>一團巨大的黑影帶著腥臭的狂風被粗暴地拽了下來。楚戈沒有使用任何武器，一拳精準地砸穿了第一隻狼人的胸腔。緊接著又是一腳，第二隻從通風管躍下的狼人甚至還沒落地，就被踹斷了脊椎，砸在牆上沒了動靜。</p>
+                    <p>然而，第三隻狼人察覺到了楚戈的不可戰勝。牠悄無聲息地從十米外的另一個排氣孔滑落，直奔角落裡氣息最微弱的凌晏而去！</p>
+                    <p>腥風撲面。楚戈遠在十米開外，根本來不及回防。「凌晏！！」通訊頻道裡傳來楚戈目眥欲裂的狂吼。</p>
+                    <p>但凌晏沒有驚慌。在黑暗降臨前，他的大腦就已經像掃描儀一樣，將這條走廊的每一個細節刻在了記憶裡——包括左後方兩步距離外，那幾根正劈啪作響冒著火花的高壓裸露電線。</p>
+                    <p>在怪物撲過來的那一瞬間，凌晏精準地向右側身滑步。狼人撲了個空，巨大的慣性讓牠重重撞向了高壓電線！</p>
+                    <p>「滋啦——！！」<br>強大的電流直接貫穿了怪物的軀體，藍白色電弧爆發，狼人被電得渾身麻痺，攻勢瞬間停滯。</p>
+                    <p>就在這短短的一秒鐘內，凌晏冷靜地踏前一步，右手猛地向上抬起——將那支【軍用快速凝血劑】，毫不猶豫地扎進了狼人的眼球裡，大拇指用力一按，將整管凝血劑瞬間推入了怪物的眼眶！</p>
+                    <p>劇烈的化學反應讓狼人發出了扭曲的慘叫。</p>
+                    <p>「轟！」<br>狂奔而至的楚戈一腳狠狠踩在狼人的頭顱上，將其徹底物理超渡。</p>
+                    
+                    <div class="system-msg">
+                        「叮咚！恭喜戰術小隊成功擊殺三隻潛伏者（初階狼人型態）！」<br>
+                        「獲得方舟積分：共 300 點（已存入小隊共享帳戶）。」
+                    </div>
+
+                    <p>隨著系統的提示音落下，走廊兩側的應急紅燈再次亮起。</p>
+                    <p>楚戈站在一地殘骸中，胸膛劇烈起伏。但他轉頭看向凌晏時，那股殺氣瞬間消失得無影無蹤，取而代之的是震驚與狂熱：「老大……你算準了牠會撞上電線？你太厲害了！」</p>
+                    <p>「利用野獸的直線撲咬慣性而已。物理學，不是什麼魔法。」凌晏抽出西裝口袋裡的純白手帕，面無表情地遞了過去，「擦臉。去前面找找物資販賣機。」</p>
+                    <p>十五分鐘後。兩人來到了一個較為寬敞的十字路口，找到了系統提到的【物資販賣機】。<br>這是一台充滿賽博龐克風格的黑色金屬機器。螢幕上顯示著：</p>
+                    <ul class="list-disc pl-5 mb-4 text-slate-300">
+                        <li><strong>【初級補給盲盒】</strong> - 售價：100 積分</li>
+                        <li><strong>【指定基因覺醒劑】</strong> - 售價：10,000 積分</li>
+                    </ul>
+                    <p>看著那高達一萬積分的覺醒劑，凌晏微微挑眉。看來在遊戲初期，想要覺醒神職天賦完全是痴人說夢。</p>
+                    <p>「盲盒本質上是利用人類的賭徒心理，但在資訊嚴重匱乏的開局，我們必須購買。」凌晏冷靜地下達指令，「我們有300積分，買兩個初級盲盒，剩下的100積分作為應急備用。」</p>
+                    <p>楚戈立刻按下按鈕，機器的出口處滾出兩個銀色金屬球。<br>楚戈捏碎第一個。白光一閃，手裡多了一包東西。</p>
+                    <p><strong>【獲得物品：極效除菌濕紙巾（100抽）】</strong><br><span class="thought-msg">物品描述：能瞬間擦除任何頑固血漬。請做個愛乾淨的乖孩子。</span></p>
+                    <p>「……」楚戈舉著濕紙巾，委屈地看向凌晏，「老大，這機器是不是在嘲諷我？」<br>「不，它很有戰略眼光。把你身上那些會暴露位置的血腥味擦乾淨。」</p>
+                    <p>凌晏接過第二個金屬球，優雅地打開。</p>
+                    <p><strong>【獲得物品：戰術熱成像單片鏡】</strong><br><span class="thought-msg">物品描述：佩戴後，可穿透一般金屬牆壁探測半徑三十米內的熱源。</span></p>
+                    <p>凌晏看著這個道具，深邃的眼眸微微瞇起。<br>「深淵怪物既然被設定為『潛伏者』，這意味著牠們的生物構造必定與常人不同。冷血動物或深淵生物的基礎體溫，絕對無法完美模擬人類的37度恆溫。這東西在前期，比任何未覺醒的天賦都好用。」</p>
+                    <p>他將單片鏡戴在左眼上，視野中立刻出現了淡綠色的數據網格。他抬頭看向楚戈——在熱成像下，楚戈整個人簡直像是一個熊熊燃燒的火爐，生命體徵旺盛得令人髮指，絕對是個純種人類。</p>
+                    <p>「走吧，我們去人多的地方。」凌晏推了推單片鏡，嘴角勾起一抹冰冷的笑意，「遊戲，才剛開始。」</p>
+
+                    <p class="text-center my-8 text-slate-600">---</p>
+
+                    <p>幾分鐘後，兩人穿過一道沉重的氣壓隔離門，來到了一處類似室內生態園區的巨大中庭。</p>
+                    <p>這裡的空間極其開闊，頭頂是高達數十米的巨大半球形防爆玻璃穹頂。穹頂之外，是翻滾著黑色雷雲的絕海風暴，偶爾閃過的慘白閃電，照亮了這座漂浮在無盡深淵上的鋼鐵巨獸。中庭內部則生長著許多不符合地球常理的變異植物，粗壯的藤蔓如同血管般攀爬在周圍的金屬支柱上，散發著微弱的螢光。</p>
+                    <p>而在這些奇異植被的包圍下，中央有一個散發著微光、由純白大理石砌成的圓形休閒廣場。此時的廣場上，正聚集著大約十幾個男女。他們神情惶恐，有的人身上還帶著傷。</p>
+                    <p>在這些人的中央，牆壁上嵌著一個醒目的紅色按鈕——【警報終端】。</p>
+                    <p>當凌晏和楚戈走出來時，立刻引起了人群的注意。<br>「站住！別過來！」<br>一個穿著西裝、看似某個企業高管的男人緊張地舉起了一把從盲盒裡開出來的左輪手槍，黑洞洞的槍口對準了滿身殺氣的楚戈。</p>
+                    <p>楚戈漆黑的眼睛裡閃過一絲暴戾，剛想動手，肩膀卻被凌晏輕輕按住。<br>「在這種無效射程內，他的手抖得連大象都打不中。別理他。」凌晏透過小隊語音冷靜地下令。楚戈立刻收起殺意，乖順地站在凌晏身後半步的位置。</p>
+                    <p>凌晏的目光掃過這群驚魂未定的玩家。透過熱成像單片鏡，他清晰地看到了每個人的體溫分佈。<br>突然，他的視線鎖定了人群最後方、一個穿著連帽衫、瑟瑟發抖的矮小男人。</p>
+                    <p>那個男人的體溫呈現出詭異的深藍色——他的體溫比周圍的人低了至少五度，而且心跳頻率異常緩慢。</p>
+                    <p>找到了。<br>這就是完美偽裝在人群中的「潛伏者」。</p>
+                    <p>就在這時，那個舉著槍的西裝男似乎由於過度恐懼，神經徹底崩潰了。他看著一言不發的凌晏和楚戈，崩潰地大喊：「不！你們肯定是怪物！我要啟動投票！我要把你們投出去！」</p>
+                    <p>說完，他猛地轉身，狠狠地按下了牆上的【警報終端】！</p>
+                    <p>刺耳的紅色警報燈瞬間閃爍，整座深淵方舟發出了震耳欲聾的嗡鳴。</p>
+
+                    <div class="system-msg">
+                        「叮咚！檢測到【警報終端】被啟動。」<br>
+                        「全艦進入絕對安全停戰模式！第一輪【全體裁決會議】正式開始！」<br>
+                        「請各位在接下來的十分鐘內進行發言與投票。得票最高者，將被執行即時神經毒素抹殺。」
+                    </div>
+
+                    <p>手環的光芒暴漲，公共通訊界面跳出。<br>西裝男立刻在公共頻道裡聲嘶力竭地吼道：<em>「大家投剛才出現在中庭的兩個人！他們滿身是血，絕對是殺了人的怪物！我是上市公司CEO，我的判斷絕對沒錯！」</em></p>
+                    <p>恐慌的情緒是極具傳染性的，無數將信將疑的目光鎖定了凌晏和楚戈，局勢瞬間對他們極度不利。</p>
+                    <p>「老大，我不能揍他嗎？」楚戈在小隊語音裡咬牙切齒。<br>「安全模式下物理攻擊無效。」凌晏冷靜地回答，「而且，對付蠢貨，用不著拳頭。」</p>
+                    <p>凌晏不慌不忙地啟動了手環的公共通訊功能，平穩、且帶著強烈壓迫感的聲音傳遍了全艦：</p>
+                    <p>「上市公司CEO？看來你的危機處理能力跟你的智商一樣，都停留在草履蟲的水平。」</p>
+                    <p>凌晏直視著西裝男，語氣如手術刀般精準剖析：「第一，這是一場死亡遊戲，收起你那套可笑的頭銜。第二，我身邊的同伴滿身是黑色的狼血，稍微有點觀察力的人都看得出來我們剛剛在清剿怪物。」</p>
+                    <p>他稍微停頓了一下，銳利的目光越過人群，精準地砸在那個躲在最後面、體溫異常的連帽衫男人身上。既然現在沒有真正的預言家技能，那就用物理邏輯來編織一場完美的「驗人報告」。</p>
+                    <p>「第三，與其把票浪費在我們這兩個高戰力的『清道夫』身上……不如請那位躲在角落裡、穿著灰色連帽衫的先生解釋一下。」</p>
+                    <p>凌晏的嘴角勾起一抹危險的弧度：「在剛才黑夜模式降臨、暖氣系統停止運作的十五分鐘裡，這裡的氣溫已經降到了攝氏十度以下。所有人都在本能地發抖、呼吸產生白霧。為什麼只有你，既沒有禦寒動作，呼吸也沒有一絲白霧？除非……你體內的恆溫系統根本不是人類，而是一隻不需要靠肺部呼吸凡人空氣的『潛伏者』。」</p>
+                    <p>此言一出，全場死寂。<br>所有人轉頭看向連帽衫男人，這才驚恐地發現，對方的呼吸確實沒有一絲白霧！</p>
+                    <p>而那個男人的臉上，原本偽裝出的怯懦瞬間僵住，嘴角開始不受控制地向耳根裂開……</p>
+                    <p>這就是凌晏。哪怕沒有覺醒任何天賦，他也能用最純粹的智商與觀察力，硬生生打出預言家的壓制力。</p>
+                `
+            },
+            'ch3': {
+                title: '第三章：所謂的絕對多數暴力',
+                html: `
+                    <h3>第三章：所謂的絕對多數暴力</h3>
+                    <p>「喀啦……喀啦……」</p>
+                    <p>令人毛骨悚然的骨骼錯位聲，在死寂的中庭廣場上顯得無比清晰。<br>那個穿著灰色連帽衫的男人，臉部肌肉開始以一種違反人類生理結構的方式瘋狂抽搐。他的嘴角硬生生撕裂到了耳根，露出兩排參差不齊、帶著黏液的鋒利獠牙；原本藏在袖子裡的雙手，也猛地暴長出十幾公分長的黑色利爪，直接刺穿了布料。</p>
+                    <p>他徹底放棄了偽裝。</p>
+                    <p>「吼——！！」<br>半人半狼的怪物發出一聲震耳欲聾的咆哮，雙腿猛地彎曲，巨大的爆發力甚至將腳下的大理石地磚踩出蜘蛛網般的裂痕。牠帶著濃烈的腥風，直撲距離最近的西裝男！</p>
+                    <p>「啊啊啊啊啊！」<br>上一秒還舉著槍耀武揚威的上市公司CEO，此刻嚇得雙腿發軟，手裡的左輪手槍直接掉在地上，連滾帶爬地往後退。</p>
+                    <p>然而，狼人的利爪並沒有撕裂他的喉嚨。<br>就在怪物的爪尖距離西裝男的眼球僅剩不到五公分時，一道淡藍色的半透明六邊形能量護盾憑空出現，硬生生擋下了這致命的一擊。</p>
+                    
+                    <div class="system-msg">
+                        「叮咚！警告！目前處於【全體裁決會議】絕對安全模式，嚴禁任何形式的物理攻擊！」
+                    </div>
+
+                    <p>伴隨著系統冰冷的機械音，狼人彷彿撞上了一堵無法逾越的銅牆鐵壁，巨大的反作用力將牠狠狠彈飛了出去，重重摔在地上。</p>
+                    <p>「楚戈。」凌晏站在人群邊緣的陰影中，雙手插在西裝褲口袋裡，連眼睛都沒眨一下。<br>「在！老大有什麼吩咐？」楚戈興奮地挺直腰桿。<br>「倒數三十秒。盯緊這群蠢貨的投票動作。」</p>
+                    <p>凌晏抬起左腕，指尖在手環的全息螢幕上輕點，隨後透過公共頻道，將冰冷而極具穿透力的聲音砸進每一個陷入恐慌的玩家耳中：</p>
+                    <p>「不想死的話，現在立刻打開你們的手環，把票投給【灰燼】。我只給你們十秒鐘。」</p>
+                    <p>這句話如同深海裡的氧氣瓶，瞬間喚醒了這群大腦宕機的玩家。<br>沒有人再懷疑凌晏的判斷。在絕對的恐懼與鐵證如山的「物理驗人」面前，凌晏展現出的從容與智商，成為了他們此刻唯一能抓住的救命稻草。</p>
+                    <p>「投他！快投那隻怪物！」<br>「我投了！我投了！」</p>
+                    <p>所有人都瘋狂地戳擊著手環上的投票介面。那個被彈飛在地的狼人似乎也意識到了什麼，牠發出絕望而憤怒的嘶吼，拚命抓撓著那層看不見的系統護盾，試圖衝出來把這些投票的人類撕碎，卻無濟於事。</p>
+
+                    <div class="system-msg">
+                        「叮咚！投票時間結束。結果統計中……」<br>
+                        「修復者【灰燼】獲得最高票數：14 票。決議通過。」<br>
+                        「現在執行：即時抹殺。」
+                    </div>
+
+                    <p>話音剛落，狼人左腕上那個原本黑色的金屬手環，突然亮起刺眼的紅光。<br>緊接著，三根細如牛毛的探針從手環內側猛地彈出，精準地刺入怪物的靜脈！</p>
+                    <p>「嗷嗚——！！」<br>高達百倍劑量的神經毒素在零點一秒內變強制注入。這隻體型超過兩米的深淵怪物，甚至連最後的掙扎都做不到，龐大的身軀瞬間僵直。暗黑色的血液從牠的七竅中瘋狂湧出，隨後像一灘爛泥般重重砸在地上，徹底失去了生命跡象。</p>
+
+                    <div class="system-msg">
+                        「叮咚！恭喜各位完成首次放逐。全艦絕對安全模式將在五分鐘後解除。」<br>
+                        「黑夜漫長，請繼續努力存活哦～」
+                    </div>
+
+                    <p>廣場上鴉雀無聲，只有粗重的喘息聲此起不落。<br>西裝男雙手撐在地上，西裝褲襠處已經濕了一大片。他看著怪物的屍體，又轉頭看向凌晏，眼神裡充滿了敬畏與討好。他連忙爬起身，撿起地上的左輪手槍，快步走到凌晏面前。</p>
+                    <p>「這位兄弟……不，這位大佬！」西裝男的語氣發生了一百八十度的大轉彎，諂媚地說道：「剛才是我有眼無珠！您一定是覺醒了【預言家】天賦對不對？您太神了！我叫趙大偉，在現實裡資產過億，只要您願意帶上我，出去後我分您一半家產！」</p>
+                    <p>周圍的其他玩家見狀，也紛紛反應過來，立刻朝著凌晏湧了過來，七嘴八舌地乞求庇護。</p>
+                    <p>面對這群人，凌晏推了推左眼上的熱成像單片鏡，嘴角的弧度降至冰點。</p>
+                    <p>「楚戈。」<br>「收到！」</p>
+                    <p>楚戈早就看這個姓趙的不順眼了。他一步跨出，高大的身軀宛如一尊煞神般擋在凌晏身前。他什麼也沒說，只是單手捏住了趙大偉手裡那把左輪手槍的槍管，隨後肌肉猛地發力——</p>
+                    <p>「嘎吱！」<br>堅硬的精鋼槍管，竟被他硬生生捏扁了！</p>
+                    <p>楚戈居高臨下地俯視著趙大偉，漆黑的眼眸裡透著毫不掩飾的暴戾與野性，語氣森冷：<br>「離我老大遠一點。再敢靠近一步，我就把你的腦袋捏成這把破槍的形狀。」</p>
+                    <p>西裝男嚇得一屁股跌坐在地，連連後退，周圍那些想靠過來的人也瞬間噤若寒蟬，恐懼地退開了三步遠。</p>
+                    <p>「我不需要累贅，也不收垃圾。」凌晏越過楚戈寬闊的肩膀，冷冷地掃視著眾人，「剛才救你們，只是因為我需要足夠的票數來啟動系統的抹殺機制。現在，我的目的達到了。」</p>
+                    <p>他轉過身，連多看這群人一眼的興趣都沒有，徑直朝著中庭廣場另一側的幽暗通道走去。<br>楚戈立刻像隻得勝的猛犬一樣，乖巧地跟在凌晏身後，臨走前還不忘對著那群人呲了呲牙，發出警告的低吼。</p>
+                    <p>兩人重新走入冰冷深邃的金屬走廊。</p>
+                    <p>「老大，我們接下來去哪？」楚戈透過小隊語音問道，語氣裡滿是期待。</p>
+                    <p>凌晏看著單片鏡裡不斷閃爍的區域地圖，眼神深邃。<br>「去『動力室』。」凌晏冷靜地分析，「黑夜模式已經持續了快半個小時，怪物的活動頻率卻沒有減少。這艘方舟的能源供給一定有問題。要想掌控這場遊戲的節奏，我們必須先拿到整艘船的硬體控制權。」</p>
+                    <p>就在這時，凌晏的手環突然震動了一下。<br>一條只有他能看見的血紅色私人訊息，突兀地彈射在半空中：</p>
+                    
+                    <div class="system-msg">
+                        【匿名訊號接入】：「精彩的邏輯推理。不過，親愛的『預言家』先生，你以為剛才那群人裡面，只有一隻狼嗎？」
+                    </div>
+
+                    <p>凌晏的腳步微微一頓。鏡片後的眼神，瞬間變得無比危險。</p>
+
+                    <p class="text-center my-8 text-slate-600">---</p>
+
+                    <p>「老大，怎麼了？」楚戈立刻停下腳步，敏銳地察覺到凌晏周身氣壓的轉變，右手本能地握緊了那根沾血的鐵管。</p>
+                    <p>「沒什麼，一隻自以為躲在暗處的狼，試圖用資訊差來製造猜忌。」凌晏修長的手指在虛空中一劃，冷漠地將這條血紅色的訊息拉入屏蔽名單。他嘴角勾起一抹玩味的弧度，「不過，這條挑釁訊息倒是幫我證實了這場遊戲更底層的『人數機制』。」</p>
+                    <p>「人數機制？」楚戈有些疑惑地歪了歪頭。</p>
+                    <p>凌晏一邊邁開長腿繼續前行，一邊以極其清晰的邏輯向這個「物理系隊友」拆解這場殘酷的生存遊戲：</p>
+                    <p>「系統開局就宣布，這場遊戲總共有 <strong>2000 名人類菁英</strong> 共同登入。楚戈，你想過沒有，如果每次拍響警報，都要這兩千人同時進入同一個公共頻道進行發言和投票，會發生什麼事？」</p>
+                    <p>楚戈認真地想了想，隨後搖搖頭：「那場面肯定比菜市場還亂，兩千人一起吵架，估計十分鐘過去了，連第一個發言的人都還沒講完。」</p>
+                    <p>「沒錯。這就是關鍵。」凌晏推了推左眼上的熱成像單片鏡，鏡片在黑暗中閃爍著幽綠的光芒：<br>「所以，系統絕對採用了<strong>『分區動態計票』</strong>的規則。也就是說，整艘深淵方舟被劃分成了無數個獨立的區域。只有當某個區域的『警報終端』被拍響時，<strong>身處該區域及周邊通道的玩家</strong>，才會被強制拉入那一輪的裁決會議。」</p>
+                    <p>凌晏伸出兩根手指：<br>「剛才在中庭，加上你、我，以及那隻偽裝成連帽衫的狼人，我們那個區域總共聚集了 <strong>15 個人</strong>。」<br>「因為那隻狼人是被指控的目標，失去了投票權，所以最終的有效票數是 <strong>14 票</strong>。我只需要用大白話撕開怪物的偽裝，把這 14 票的絕對多數拿到手，就能利用系統的規則將牠當場抹殺。」</p>
+                    <p>楚戈聽得眼睛發亮，忍不住崇拜地低呼：「也就是說，老大你剛才不是在跟兩千人玩遊戲，你只是把中庭那 14 個人當成了手裡的籌碼？」</p>
+                    <p>「可以這麼理解。」凌晏眼中閃過一抹冷冽的微光，「而發訊息挑釁我的這隻狼，顯然當時也站在中庭的 14 人之中。牠看穿了我沒有真正的『預言家驗人天賦』，而是利用物理規律強行抓出了牠的同伴。牠在試探我的底牌。」</p>
+                    <p>說話間，兩人已經穿過了兩道厚重的氣壓隔離門，周遭的環境變得愈發壓抑。</p>
+                    <p>這裡已經脫離了上層乾淨的甲板，進入了方舟底層的「機艙整備區」。腳下鋪設著帶有防滑紋路的鋼格柵板，透過縫隙可以看見下方幾十米深處、正瘋狂運轉的巨大齒輪與暗沉的機油池。兩側的牆壁上佈滿了如同血管般錯綜複雜的重工業管道，正不斷發出「嘶嘶」的高壓蒸汽洩漏聲。</p>
+                    <p>突然，凌晏停下了腳步。<br>單片鏡的熱成像視野裡，前方一間名為「分控調度室」的艙房內，正散發著大片怪異的暗藍色冷光。</p>
+                    <p>「老大，有血腥味。很新鮮，不是怪物的，是人類的。」楚戈抽了抽鼻子，身體瞬間緊繃成一塊隨時準備彈射的鋼板，橫移半步擋在凌晏身前。</p>
+                    <p>凌晏透過艙門上那面龜裂的厚重防彈玻璃往裡看去。<br>調度室內一片狼藉，三具人類的屍體橫七豎八地倒在血泊中。然而詭異的是，這些屍體上沒有狼人那種粗暴的撕裂傷或爪痕，反而全是被銳利的利器一刀割喉，或是被近距離用鈍器砸碎了頭顱。</p>
+                    <p>這是人類之間的自相殘殺。</p>
+                    <p>「看來，在其他我們看不到的區域，『獵巫恐慌』已經蔓延開了。」凌晏面不改色地推開沉重的舱門，跨過地上的血泊，徑直走到調度室中央那一面巨大的電子監控主機前。</p>
+                    <p>這台主機雖然遭到了部分破壞，但核心的螢幕依然在閃爍著慘白的光芒。<br>螢幕最上方，用血紅色的字體標註著一行不斷跳動的實時數據：</p>
+
+                    <div class="system-msg text-center font-bold">
+                        【當前分區（底層動力段）存活人數：84 / 120】<br>
+                        【深淵方舟全艦總存活人數：1642 / 2000】
+                    </div>
+
+                    <p>看著那正在以每幾分鐘就減少一個的數字，凌晏的眼神愈發深邃。這意味著在短短不到一個小時的時間裡，已經有將近四百名所謂的人類菁英，在各個封閉區域裡被潛伏者獵殺，或是死於同類之間的瘋狂猜忌。</p>
+                    <p>「老大，你看這個！」楚戈指著螢幕下方一個正在閃爍的黃色驚嘆號。</p>
+                    <p>那是一行系統硬體報警提示：</p>
+                    
+                    <div class="system-msg">
+                        「警告：動力室主要冷卻閥門遭到人為破壞，全艦暖氣系統已鎖定關閉。黑夜模式將強制延長，距離下一次全艦核心主線發布剩餘時間：30分鐘。」
+                    </div>
+
+                    <p>「人為破壞……」凌晏修長的手指輕輕敲擊著冰冷的控制台，腦海中的線索在這一刻完美串聯了起來。</p>
+                    <p>「狼人故意破壞了動力室，想利用極寒和永夜來徹底瓦解人類的心理防線，加速這兩千人的死亡速度。而剛才發訊息挑釁我的那隻狼，很可能正在前往主動力室，準備徹底切斷整艘船的能源。」</p>
+                    <p>凌晏轉過頭，看向控制室外那條通往最底層、宛如巨獸食道般幽暗不見底的垂直通道。</p>
+                    <p>「楚戈，拿好你的武器。」凌晏冷笑了一聲，鏡片後的雙眸亮得驚人，「留給我們的時間不多了。既然那些怪物想玩，那我們就去動力室，把牠們的硬體開關……親手砸碎。」</p>
+                `
+            }
+        };
+
+        // 章節順序陣列，用於翻頁邏輯
+        const chapterOrder = ['intro', 'ch1', 'ch2', 'ch3'];
+        let currentChapterIndex = 0;
+
+        const contentContainer = document.getElementById('content-container');
+        const headerTitle = document.getElementById('header-title');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        // 切換章節功能
+        function showChapter(chapterId) {
+            // 更新目前章節索引
+            currentChapterIndex = chapterOrder.indexOf(chapterId);
+
+            // 更新內容
+            contentContainer.innerHTML = novelData[chapterId].html;
+            headerTitle.textContent = novelData[chapterId].title;
+
+            // 更新按鈕樣式
+            document.querySelectorAll('.nav-link').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`btn-${chapterId}`).classList.add('active');
+
+            // 更新翻頁按鈕狀態
+            updatePaginationButtons();
+
+            // 滾動回頂部
+            document.getElementById('read-area').scrollTo(0, 0);
+
+            // 如果在手機版，切換章節後自動收起側邊欄
+            if (window.innerWidth < 768) {
+                toggleSidebar();
+            }
+        }
+
+        // 翻頁邏輯
+        function navigateChapter(direction) {
+            if (direction === 'prev' && currentChapterIndex > 0) {
+                showChapter(chapterOrder[currentChapterIndex - 1]);
+            } else if (direction === 'next' && currentChapterIndex < chapterOrder.length - 1) {
+                showChapter(chapterOrder[currentChapterIndex + 1]);
+            }
+        }
+
+        // 更新翻頁按鈕可用狀態
+        function updatePaginationButtons() {
+            const btnPrev = document.getElementById('btn-prev');
+            const btnNext = document.getElementById('btn-next');
+            
+            btnPrev.disabled = currentChapterIndex === 0;
+            btnNext.disabled = currentChapterIndex === chapterOrder.length - 1;
+        }
+
+        // 手機版側邊欄開關
+        function toggleSidebar() {
+            const isClosed = sidebar.classList.contains('-translate-x-full');
+            if (isClosed) {
+                sidebar.classList.remove('-translate-x-full');
+                sidebarOverlay.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                sidebarOverlay.classList.add('hidden');
+            }
+        }
+
+        // 初始化顯示簡介
+        showChapter('intro');
+    </script>
+</body>
+</html>
