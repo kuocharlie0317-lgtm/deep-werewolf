@@ -88,13 +88,13 @@
         .theme-light .thought-msg { color: #64748b; }
     </style>
 </head>
-<body class="flex h-screen overflow-hidden antialiased text-base font-sans" id="body-container">
+<body class="flex h-[100dvh] w-full overflow-hidden antialiased text-base font-sans" id="body-container">
 
     <!-- 遮罩背景：點擊關閉手機側邊欄 -->
     <div id="sidebarOverlay" class="fixed inset-0 bg-black/60 z-40 hidden md:hidden backdrop-blur-sm" onclick="toggleSidebar()"></div>
 
-    <!-- 側邊欄（目錄）：修正為明確的 absolute top-0 left-0 避免在行動端沉底 -->
-    <aside id="sidebar" class="w-64 bg-slate-900 border-r border-slate-800 flex flex-col h-full absolute top-0 left-0 md:relative z-50 transform -translate-x-full md:translate-x-0 shadow-2xl md:shadow-none">
+    <!-- 側邊欄（目錄）：強制使用 fixed inset-y-0 left-0 確保在任何設備上都不會被擠到下面 -->
+    <aside id="sidebar" class="w-64 bg-slate-900 border-r border-slate-800 flex flex-col fixed inset-y-0 left-0 md:relative z-50 transform -translate-x-full md:translate-x-0 shadow-2xl md:shadow-none">
         <div class="p-6 border-b border-slate-800 flex justify-between items-center">
             <div>
                 <h1 class="text-xl font-bold text-white tracking-wider">深淵狼人殺</h1>
