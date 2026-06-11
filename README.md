@@ -88,52 +88,171 @@
         .theme-light .thought-msg { color: #64748b; }
     </style>
 </head>
-<body class="flex h-[100dvh] w-full overflow-hidden antialiased text-base font-sans" id="body-container">
+<body class="antialiased text-base font-sans bg-slate-950" id="body-container">
 
-    <!-- 遮罩背景：點擊關閉手機側邊欄 -->
-    <div id="sidebarOverlay" class="fixed inset-0 bg-black/60 z-40 hidden md:hidden backdrop-blur-sm" onclick="toggleSidebar()"></div>
-
-    <!-- 側邊欄（目錄）：強制使用 fixed inset-y-0 left-0 確保在任何設備上都不會被擠到下面 -->
-    <aside id="sidebar" class="w-64 bg-slate-900 border-r border-slate-800 flex flex-col fixed inset-y-0 left-0 md:relative z-50 transform -translate-x-full md:translate-x-0 shadow-2xl md:shadow-none">
-        <div class="p-6 border-b border-slate-800 flex justify-between items-center">
-            <div>
-                <h1 class="text-xl font-bold text-white tracking-wider">深淵狼人殺</h1>
-                <p class="text-xs text-slate-500 mt-1">Abyss Werewolf</p>
-            </div>
-            <!-- 手機版目錄關閉按鈕 -->
-            <button onclick="toggleSidebar()" class="md:hidden text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-        </div>
+    <!-- 強制滿版防護罩，阻絕 GitHub Pages 預設主題的版面干擾 -->
+    <div class="fixed inset-0 w-full h-full flex flex-row overflow-hidden bg-slate-950">
         
-        <div class="p-4 flex-1 overflow-y-auto">
-            <h2 class="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-4 px-3">目錄</h2>
-            <nav class="space-y-1">
-                <button onclick="showChapter('intro')" id="btn-intro" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-150 active">
-                    作品簡介
-                </button>
-                <button onclick="showChapter('ch1')" id="btn-ch1" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-150">
-                    第一章：請勿在狼人殺裡飼養大型犬
-                </button>
-                <button onclick="showChapter('ch2')" id="btn-ch2" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-150">
-                    第二章：請不要用體溫挑戰理科生
-                </button>
-                <button onclick="showChapter('ch3')" id="btn-ch3" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-150">
-                    第三章：所謂的絕對多數暴力
-                </button>
-                <button onclick="showChapter('ch4')" id="btn-ch4" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-150">
-                    第四章：抓到你了，躲在暗處的小狼崽
-                </button>
-            </nav>
-        </div>
-        <div class="p-4 border-t border-slate-800 text-xs text-slate-500 text-center">
-            &copy; 2026 深淵方舟記錄檔
-        </div>
-    </aside>
+        <!-- 遮罩背景：點擊關閉手機側邊欄 -->
+        <div id="sidebarOverlay" class="fixed inset-0 bg-black/60 z-40 hidden md:hidden backdrop-blur-sm" onclick="toggleSidebar()"></div>
 
-    <!-- 個人資料設定彈窗 -->
+        <!-- 側邊欄（目錄） -->
+        <aside id="sidebar" class="w-64 flex-shrink-0 bg-slate-900 border-r border-slate-800 flex flex-col fixed inset-y-0 left-0 md:relative z-50 transform -translate-x-full md:translate-x-0 shadow-2xl md:shadow-none">
+            <div class="p-6 border-b border-slate-800 flex justify-between items-center">
+                <div>
+                    <h1 class="text-xl font-bold text-white tracking-wider">深淵狼人殺</h1>
+                    <p class="text-xs text-slate-500 mt-1">Abyss Werewolf</p>
+                </div>
+                <!-- 手機版目錄關閉按鈕 -->
+                <button onclick="toggleSidebar()" class="md:hidden text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="p-4 flex-1 overflow-y-auto">
+                <h2 class="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-4 px-3">目錄</h2>
+                <nav class="space-y-1">
+                    <button onclick="showChapter('intro')" id="btn-intro" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-150 active">
+                        作品簡介
+                    </button>
+                    <button onclick="showChapter('ch1')" id="btn-ch1" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-150">
+                        第一章：請勿在狼人殺裡飼養大型犬
+                    </button>
+                    <button onclick="showChapter('ch2')" id="btn-ch2" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-150">
+                        第二章：請不要用體溫挑戰理科生
+                    </button>
+                    <button onclick="showChapter('ch3')" id="btn-ch3" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-150">
+                        第三章：所謂的絕對多數暴力
+                    </button>
+                    <button onclick="showChapter('ch4')" id="btn-ch4" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-150">
+                        第四章：抓到你了，躲在暗處的小狼崽
+                    </button>
+                </nav>
+            </div>
+            <div class="p-4 border-t border-slate-800 text-xs text-slate-500 text-center">
+                &copy; 2026 深淵方舟記錄檔
+            </div>
+        </aside>
+
+        <!-- 主閱讀視窗 -->
+        <main class="flex-1 flex flex-col h-full relative overflow-hidden">
+            <header class="h-16 border-b border-slate-800 bg-slate-900/80 backdrop-blur-sm flex items-center justify-between px-4 sticky top-0 z-20 shadow-sm flex-shrink-0">
+                <div class="flex items-center overflow-hidden flex-1 mr-2">
+                    <!-- 目錄抽屜觸發器 -->
+                    <button onclick="toggleSidebar()" class="p-2 mr-3 text-slate-400 hover:text-white rounded focus:outline-none hover:bg-slate-800 flex-shrink-0" title="開啟目錄">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    
+                    <!-- 頂部快速切換章節下拉選單 -->
+                    <div class="relative flex-1 max-w-[200px] md:max-w-[260px]">
+                        <select id="chapter-quick-select" onchange="showChapter(this.value)" class="w-full bg-slate-800/90 text-slate-200 border border-slate-700 rounded-lg py-1.5 px-3 pr-8 text-sm focus:outline-none focus:border-sky-500 cursor-pointer appearance-none truncate">
+                            <option value="intro">作品簡介</option>
+                            <option value="ch1">第一章：請勿在狼人殺裡飼養大型犬</option>
+                            <option value="ch2">第二章：請不要用體溫挑戰理科生</option>
+                            <option value="ch3">第三章：所謂的絕對多數暴力</option>
+                            <option value="ch4">第四章：抓到你了，躲在暗處的小狼崽</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-400">
+                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-2 flex-shrink-0">
+                    <!-- 個人資料按鈕 -->
+                    <button onclick="openProfile()" class="p-2 text-slate-400 hover:text-white rounded focus:outline-none hover:bg-slate-800 transition-colors" title="個人檔案設定">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                    </button>
+                    
+                    <!-- 閱讀設定按鈕 -->
+                    <button onclick="toggleSettings()" class="p-2 text-slate-400 hover:text-white rounded focus:outline-none hover:bg-slate-800 transition-colors" title="閱讀設定">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+            </header>
+
+            <!-- 閱讀進度條 -->
+            <div class="h-1 bg-slate-800 w-full z-10 flex-shrink-0">
+                <div id="reading-progress" class="h-full bg-sky-500 w-0 transition-all duration-150 ease-out"></div>
+            </div>
+
+            <div id="read-area" class="flex-1 overflow-y-auto p-4 sm:p-8 md:p-12 scroll-smooth theme-dark transition-colors duration-300">
+                <div class="max-w-3xl mx-auto chapter-content" id="content-container">
+                </div>
+                
+                <div class="max-w-3xl mx-auto mt-8 pt-6 border-t divider-line flex justify-between items-center" id="pagination-container">
+                    <button id="btn-prev" onclick="navigateChapter('prev')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded hover:bg-slate-700 hover:text-white transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed border border-slate-700 shadow-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                        上一章
+                    </button>
+                    <button id="btn-next" onclick="navigateChapter('next')" class="px-4 py-2 bg-sky-600 text-white rounded hover:bg-sky-500 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-md">
+                        下一章
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
+                    </button>
+                </div>
+
+                <!-- 互動區域 (按讚與留言) -->
+                <div class="max-w-3xl mx-auto mt-8 pt-8 border-t divider-line" id="interaction-container">
+                    <!-- 按讚區 -->
+                    <div class="flex justify-center mb-8">
+                        <button id="btn-like" onclick="toggleLike()" class="flex items-center gap-2 px-8 py-3 bg-slate-800/50 rounded-full hover:bg-slate-700 transition-all text-slate-400 border border-slate-700 shadow-sm">
+                            <svg id="like-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                            </svg>
+                            <span class="font-medium">喜歡 <span id="like-count" class="ml-1 font-bold">0</span></span>
+                        </button>
+                    </div>
+
+                    <!-- 留言區 -->
+                    <div class="bg-black/10 p-6 rounded-xl border divider-line">
+                        <div class="flex justify-between items-center mb-6">
+                            <h4 class="text-lg font-bold flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                </svg>
+                                讀者留言
+                            </h4>
+                            <!-- 分享按鈕 -->
+                            <button onclick="shareChapter()" class="flex items-center gap-1 text-sm bg-slate-800 text-slate-300 hover:text-white px-3 py-1.5 rounded-md transition-colors border border-slate-700">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
+                                分享章節
+                            </button>
+                        </div>
+                        
+                        <!-- 留言輸入框 -->
+                        <div class="mb-8 flex gap-3">
+                            <div id="comment-user-avatar-container" class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center flex-shrink-0 text-slate-300 font-bold shadow-inner overflow-hidden border border-slate-600">
+                                <img id="comment-user-avatar" src="" alt="Avatar" class="w-full h-full object-cover hidden">
+                                <span id="comment-user-fallback" class="text-sm">匿</span>
+                            </div>
+                            <div class="flex-1 flex flex-col gap-3">
+                                <textarea id="comment-input" rows="2" class="w-full bg-black/20 border border-slate-700/50 rounded-lg p-3 text-sm focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 resize-none transition-colors shadow-inner placeholder-slate-500" placeholder="留下你的想法..."></textarea>
+                                <div class="flex justify-between items-center">
+                                    <span id="comment-user-name" class="text-xs opacity-70">以 匿名讀者 身分留言</span>
+                                    <button onclick="submitComment()" class="px-5 py-2 bg-sky-600 text-white font-medium text-sm rounded-md hover:bg-sky-500 transition-colors shadow-md">發佈留言</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 留言列表 -->
+                        <div id="comment-list" class="space-y-4">
+                            <!-- 留言會由 JS 動態載入 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 個人資料設定彈窗 (移至絕對上層確保不會被蓋住) -->
     <div id="profile-modal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center backdrop-blur-sm transition-opacity">
         <div class="bg-slate-900 border border-slate-700 rounded-xl shadow-2xl w-11/12 max-w-md p-6">
             <div class="flex justify-between items-center mb-6 border-b border-slate-800 pb-3">
@@ -185,162 +304,47 @@
         </button>
     </div>
 
-    <!-- 主閱讀視窗 -->
-    <main class="flex-1 flex flex-col h-full bg-slate-950 relative overflow-hidden">
-        <header class="h-16 border-b border-slate-800 bg-slate-900/80 backdrop-blur-sm flex items-center justify-between px-4 sticky top-0 z-20 shadow-sm flex-shrink-0">
-            <div class="flex items-center overflow-hidden flex-1 mr-2">
-                <!-- 目錄抽屜觸發器 -->
-                <button onclick="toggleSidebar()" class="p-2 mr-3 text-slate-400 hover:text-white rounded focus:outline-none hover:bg-slate-800 flex-shrink-0" title="開啟目錄">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                </button>
-                
-                <!-- 頂部快速切換章節下拉選單：讓章節再也不會迷失在底部 -->
-                <div class="relative flex-1 max-w-[200px] md:max-w-[260px]">
-                    <select id="chapter-quick-select" onchange="showChapter(this.value)" class="w-full bg-slate-800/90 text-slate-200 border border-slate-700 rounded-lg py-1.5 px-3 pr-8 text-sm focus:outline-none focus:border-sky-500 cursor-pointer appearance-none truncate">
-                        <option value="intro">作品簡介</option>
-                        <option value="ch1">第一章：請勿在狼人殺裡飼養大型犬</option>
-                        <option value="ch2">第二章：請不要用體溫挑戰理科生</option>
-                        <option value="ch3">第三章：所謂的絕對多數暴力</option>
-                        <option value="ch4">第四章：抓到你了，躲在暗處的小狼崽</option>
-                    </select>
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-400">
-                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="flex items-center gap-2 flex-shrink-0">
-                <!-- 個人資料按鈕 -->
-                <button onclick="openProfile()" class="p-2 text-slate-400 hover:text-white rounded focus:outline-none hover:bg-slate-800 transition-colors" title="個人檔案設定">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                </button>
-                
-                <!-- 閱讀設定按鈕 -->
-                <button onclick="toggleSettings()" class="p-2 text-slate-400 hover:text-white rounded focus:outline-none hover:bg-slate-800 transition-colors" title="閱讀設定">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
-                    </svg>
-                </button>
-            </div>
-        </header>
-
-        <!-- 閱讀進度條 -->
-        <div class="h-1 bg-slate-800 w-full z-10 flex-shrink-0">
-            <div id="reading-progress" class="h-full bg-sky-500 w-0 transition-all duration-150 ease-out"></div>
-        </div>
-
-        <!-- 閱讀設定面板 -->
-        <div id="settings-panel" class="hidden absolute top-16 right-4 w-72 bg-slate-800 border border-slate-700 rounded-lg shadow-2xl z-50 p-5 transform transition-all">
-            <h3 class="text-white font-bold mb-4 border-b border-slate-700 pb-2">閱讀設定</h3>
-            
-            <!-- 背景主題 -->
-            <div class="mb-5">
-                <p class="text-slate-400 text-xs mb-2 tracking-wider">背景主題</p>
-                <div class="flex gap-2">
-                    <button onclick="changeTheme('theme-dark')" class="flex-1 py-1.5 bg-[#020617] hover:ring-2 hover:ring-sky-500 rounded text-sm text-slate-300 border border-slate-600 transition-all">深色</button>
-                    <button onclick="changeTheme('theme-sepia')" class="flex-1 py-1.5 bg-[#f4ecd8] hover:ring-2 hover:ring-sky-500 rounded text-sm text-[#5c4b37] border border-slate-400 transition-all">護眼</button>
-                    <button onclick="changeTheme('theme-light')" class="flex-1 py-1.5 bg-white hover:ring-2 hover:ring-sky-500 rounded text-sm text-slate-800 border border-slate-300 transition-all">明亮</button>
-                </div>
-            </div>
-
-            <!-- 字體大小 -->
-            <div class="mb-5">
-                <p class="text-slate-400 text-xs mb-2 tracking-wider">字體大小</p>
-                <div class="flex gap-2">
-                    <button onclick="changeFontSize('text-sm')" class="flex-1 py-1.5 bg-slate-900 hover:bg-slate-700 rounded text-sm text-slate-300 border border-slate-700 transition-colors">小</button>
-                    <button onclick="changeFontSize('text-base')" class="flex-1 py-1.5 bg-slate-900 hover:bg-slate-700 rounded text-base text-slate-300 border border-slate-700 transition-colors">中</button>
-                    <button onclick="changeFontSize('text-lg')" class="flex-1 py-1.5 bg-slate-900 hover:bg-slate-700 rounded text-lg text-slate-300 border border-slate-700 transition-colors">大</button>
-                </div>
-            </div>
-            
-            <!-- 字體樣式 -->
-            <div class="mb-5">
-                <p class="text-slate-400 text-xs mb-2 tracking-wider">字體樣式</p>
-                <div class="flex gap-2">
-                    <button onclick="changeFontFamily('font-sans')" class="flex-1 py-1.5 bg-slate-900 hover:bg-slate-700 rounded text-sm text-slate-300 border border-slate-700 transition-colors font-sans">黑體</button>
-                    <button onclick="changeFontFamily('font-serif')" class="flex-1 py-1.5 bg-slate-900 hover:bg-slate-700 rounded text-sm text-slate-300 border border-slate-700 transition-colors font-serif">明體</button>
-                </div>
-            </div>
-
-            <!-- 自動閱讀 -->
-            <div class="border-t border-slate-700 pt-4 mt-2">
-                <button onclick="startAutoScroll()" class="w-full flex items-center justify-center gap-2 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-colors font-bold shadow-md">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
-                    開始自動閱讀
-                </button>
+    <!-- 閱讀設定面板 -->
+    <div id="settings-panel" class="hidden fixed top-16 right-4 w-72 bg-slate-800 border border-slate-700 rounded-lg shadow-2xl z-50 p-5 transform transition-all">
+        <h3 class="text-white font-bold mb-4 border-b border-slate-700 pb-2">閱讀設定</h3>
+        
+        <!-- 背景主題 -->
+        <div class="mb-5">
+            <p class="text-slate-400 text-xs mb-2 tracking-wider">背景主題</p>
+            <div class="flex gap-2">
+                <button onclick="changeTheme('theme-dark')" class="flex-1 py-1.5 bg-[#020617] hover:ring-2 hover:ring-sky-500 rounded text-sm text-slate-300 border border-slate-600 transition-all">深色</button>
+                <button onclick="changeTheme('theme-sepia')" class="flex-1 py-1.5 bg-[#f4ecd8] hover:ring-2 hover:ring-sky-500 rounded text-sm text-[#5c4b37] border border-slate-400 transition-all">護眼</button>
+                <button onclick="changeTheme('theme-light')" class="flex-1 py-1.5 bg-white hover:ring-2 hover:ring-sky-500 rounded text-sm text-slate-800 border border-slate-300 transition-all">明亮</button>
             </div>
         </div>
 
-        <div id="read-area" class="flex-1 overflow-y-auto p-4 sm:p-8 md:p-12 scroll-smooth theme-dark transition-colors duration-300">
-            <div class="max-w-3xl mx-auto chapter-content" id="content-container">
-            </div>
-            
-            <div class="max-w-3xl mx-auto mt-8 pt-6 border-t divider-line flex justify-between items-center" id="pagination-container">
-                <button id="btn-prev" onclick="navigateChapter('prev')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded hover:bg-slate-700 hover:text-white transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed border border-slate-700 shadow-sm">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
-                    上一章
-                </button>
-                <button id="btn-next" onclick="navigateChapter('next')" class="px-4 py-2 bg-sky-600 text-white rounded hover:bg-sky-500 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-md">
-                    下一章
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
-                </button>
-            </div>
-
-            <!-- 互動區域 (按讚與留言) -->
-            <div class="max-w-3xl mx-auto mt-8 pt-8 border-t divider-line" id="interaction-container">
-                <!-- 按讚區 -->
-                <div class="flex justify-center mb-8">
-                    <button id="btn-like" onclick="toggleLike()" class="flex items-center gap-2 px-8 py-3 bg-slate-800/50 rounded-full hover:bg-slate-700 transition-all text-slate-400 border border-slate-700 shadow-sm">
-                        <svg id="like-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                        </svg>
-                        <span class="font-medium">喜歡 <span id="like-count" class="ml-1 font-bold">0</span></span>
-                    </button>
-                </div>
-
-                <!-- 留言區 -->
-                <div class="bg-black/10 p-6 rounded-xl border divider-line">
-                    <div class="flex justify-between items-center mb-6">
-                        <h4 class="text-lg font-bold flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                            </svg>
-                            讀者留言
-                        </h4>
-                        <!-- 分享按鈕 -->
-                        <button onclick="shareChapter()" class="flex items-center gap-1 text-sm bg-slate-800 text-slate-300 hover:text-white px-3 py-1.5 rounded-md transition-colors border border-slate-700">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
-                            分享章節
-                        </button>
-                    </div>
-                    
-                    <!-- 留言輸入框 -->
-                    <div class="mb-8 flex gap-3">
-                        <div id="comment-user-avatar-container" class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center flex-shrink-0 text-slate-300 font-bold shadow-inner overflow-hidden border border-slate-600">
-                            <img id="comment-user-avatar" src="" alt="Avatar" class="w-full h-full object-cover hidden">
-                            <span id="comment-user-fallback" class="text-sm">匿</span>
-                        </div>
-                        <div class="flex-1 flex flex-col gap-3">
-                            <textarea id="comment-input" rows="2" class="w-full bg-black/20 border border-slate-700/50 rounded-lg p-3 text-sm focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 resize-none transition-colors shadow-inner placeholder-slate-500" placeholder="留下你的想法..."></textarea>
-                            <div class="flex justify-between items-center">
-                                <span id="comment-user-name" class="text-xs opacity-70">以 匿名讀者 身分留言</span>
-                                <button onclick="submitComment()" class="px-5 py-2 bg-sky-600 text-white font-medium text-sm rounded-md hover:bg-sky-500 transition-colors shadow-md">發佈留言</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 留言列表 -->
-                    <div id="comment-list" class="space-y-4">
-                        <!-- 留言會由 JS 動態載入 -->
-                    </div>
-                </div>
+        <!-- 字體大小 -->
+        <div class="mb-5">
+            <p class="text-slate-400 text-xs mb-2 tracking-wider">字體大小</p>
+            <div class="flex gap-2">
+                <button onclick="changeFontSize('text-sm')" class="flex-1 py-1.5 bg-slate-900 hover:bg-slate-700 rounded text-sm text-slate-300 border border-slate-700 transition-colors">小</button>
+                <button onclick="changeFontSize('text-base')" class="flex-1 py-1.5 bg-slate-900 hover:bg-slate-700 rounded text-base text-slate-300 border border-slate-700 transition-colors">中</button>
+                <button onclick="changeFontSize('text-lg')" class="flex-1 py-1.5 bg-slate-900 hover:bg-slate-700 rounded text-lg text-slate-300 border border-slate-700 transition-colors">大</button>
             </div>
         </div>
-    </main>
+        
+        <!-- 字體樣式 -->
+        <div class="mb-5">
+            <p class="text-slate-400 text-xs mb-2 tracking-wider">字體樣式</p>
+            <div class="flex gap-2">
+                <button onclick="changeFontFamily('font-sans')" class="flex-1 py-1.5 bg-slate-900 hover:bg-slate-700 rounded text-sm text-slate-300 border border-slate-700 transition-colors font-sans">黑體</button>
+                <button onclick="changeFontFamily('font-serif')" class="flex-1 py-1.5 bg-slate-900 hover:bg-slate-700 rounded text-sm text-slate-300 border border-slate-700 transition-colors font-serif">明體</button>
+            </div>
+        </div>
+
+        <!-- 自動閱讀 -->
+        <div class="border-t border-slate-700 pt-4 mt-2">
+            <button onclick="startAutoScroll()" class="w-full flex items-center justify-center gap-2 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-colors font-bold shadow-md">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                開始自動閱讀
+            </button>
+        </div>
+    </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -896,9 +900,6 @@
 
             if (contentContainer) contentContainer.innerHTML = contentHtml;
             
-            // 安全防護：如果 headerTitle 存在（在未來若新增了標題 DOM）才進行設定，防止 JavaScript 拋出 Unhandled Rejection 崩潰。
-            if (headerTitle) headerTitle.textContent = novelData[chapterId].title;
-
             document.querySelectorAll('.nav-link').forEach(btn => {
                 btn.classList.remove('active');
             });
