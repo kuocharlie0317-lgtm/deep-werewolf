@@ -60,9 +60,9 @@
             border-left: 3px solid #38bdf8;
         }
         
-        /* 側邊欄過渡動畫 */
+        /* 側邊欄過渡與陰影動畫 */
         #sidebar {
-            transition: transform 0.3s ease-in-out;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* 明體字型選項 */
@@ -88,49 +88,171 @@
         .theme-light .thought-msg { color: #64748b; }
     </style>
 </head>
-<body class="flex h-screen overflow-hidden antialiased text-base font-sans" id="body-container">
+<body class="antialiased text-base font-sans bg-slate-950" id="body-container">
 
-    <div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden md:hidden" onclick="toggleSidebar()"></div>
-
-    <aside id="sidebar" class="w-64 bg-slate-900 border-r border-slate-800 flex flex-col h-full absolute md:relative z-30 transform -translate-x-full md:translate-x-0">
-        <div class="p-6 border-b border-slate-800 flex justify-between items-center">
-            <div>
-                <h1 class="text-xl font-bold text-white tracking-wider">深淵狼人殺</h1>
-                <p class="text-xs text-slate-500 mt-1">Abyss Werewolf</p>
-            </div>
-            <button onclick="toggleSidebar()" class="md:hidden text-slate-400 hover:text-white">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-        </div>
+    <!-- 強制滿版防護罩，阻絕 GitHub Pages 預設主題的版面干擾 -->
+    <div class="fixed inset-0 w-full h-full flex flex-row overflow-hidden bg-slate-950">
         
-        <div class="p-4 flex-1 overflow-y-auto">
-            <h2 class="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-4 px-3">目錄</h2>
-            <nav class="space-y-1">
-                <button onclick="showChapter('intro')" id="btn-intro" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-colors duration-150 active">
-                    作品簡介
-                </button>
-                <button onclick="showChapter('ch1')" id="btn-ch1" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-colors duration-150">
-                    第一章：請勿在狼人殺裡飼養大型犬
-                </button>
-                <button onclick="showChapter('ch2')" id="btn-ch2" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-colors duration-150">
-                    第二章：請不要用體溫挑戰理科生
-                </button>
-                <button onclick="showChapter('ch3')" id="btn-ch3" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-colors duration-150">
-                    第三章：所謂的絕對多數暴力
-                </button>
-                <button onclick="showChapter('ch4')" id="btn-ch4" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-colors duration-150">
-                    第四章：抓到你了，躲在暗處的小狼崽
-                </button>
-            </nav>
-        </div>
-        <div class="p-4 border-t border-slate-800 text-xs text-slate-500 text-center">
-            &copy; 2026 深淵方舟記錄檔
-        </div>
-    </aside>
+        <!-- 遮罩背景：點擊關閉手機側邊欄 -->
+        <div id="sidebarOverlay" class="fixed inset-0 bg-black/60 z-40 hidden md:hidden backdrop-blur-sm" onclick="toggleSidebar()"></div>
 
-    <!-- 個人資料設定彈窗 -->
+        <!-- 側邊欄（目錄） -->
+        <aside id="sidebar" class="w-64 flex-shrink-0 bg-slate-900 border-r border-slate-800 flex flex-col fixed inset-y-0 left-0 md:relative z-50 transform -translate-x-full md:translate-x-0 shadow-2xl md:shadow-none">
+            <div class="p-6 border-b border-slate-800 flex justify-between items-center">
+                <div>
+                    <h1 class="text-xl font-bold text-white tracking-wider">深淵狼人殺</h1>
+                    <p class="text-xs text-slate-500 mt-1">Abyss Werewolf</p>
+                </div>
+                <!-- 手機版目錄關閉按鈕 -->
+                <button onclick="toggleSidebar()" class="md:hidden text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="p-4 flex-1 overflow-y-auto">
+                <h2 class="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-4 px-3">目錄</h2>
+                <nav class="space-y-1">
+                    <button onclick="showChapter('intro')" id="btn-intro" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-150 active">
+                        作品簡介
+                    </button>
+                    <button onclick="showChapter('ch1')" id="btn-ch1" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-150">
+                        第一章：請勿在狼人殺裡飼養大型犬
+                    </button>
+                    <button onclick="showChapter('ch2')" id="btn-ch2" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-150">
+                        第二章：請不要用體溫挑戰理科生
+                    </button>
+                    <button onclick="showChapter('ch3')" id="btn-ch3" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-150">
+                        第三章：所謂的絕對多數暴力
+                    </button>
+                    <button onclick="showChapter('ch4')" id="btn-ch4" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-150">
+                        第四章：抓到你了，躲在暗處的小狼崽
+                    </button>
+                </nav>
+            </div>
+            <div class="p-4 border-t border-slate-800 text-xs text-slate-500 text-center">
+                &copy; 2026 深淵方舟記錄檔
+            </div>
+        </aside>
+
+        <!-- 主閱讀視窗 -->
+        <main class="flex-1 flex flex-col h-full relative overflow-hidden">
+            <header class="h-16 border-b border-slate-800 bg-slate-900/80 backdrop-blur-sm flex items-center justify-between px-4 sticky top-0 z-20 shadow-sm flex-shrink-0">
+                <div class="flex items-center overflow-hidden flex-1 mr-2">
+                    <!-- 目錄抽屜觸發器 -->
+                    <button onclick="toggleSidebar()" class="p-2 mr-3 text-slate-400 hover:text-white rounded focus:outline-none hover:bg-slate-800 flex-shrink-0" title="開啟目錄">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    
+                    <!-- 頂部快速切換章節下拉選單 -->
+                    <div class="relative flex-1 max-w-[200px] md:max-w-[260px]">
+                        <select id="chapter-quick-select" onchange="showChapter(this.value)" class="w-full bg-slate-800/90 text-slate-200 border border-slate-700 rounded-lg py-1.5 px-3 pr-8 text-sm focus:outline-none focus:border-sky-500 cursor-pointer appearance-none truncate">
+                            <option value="intro">作品簡介</option>
+                            <option value="ch1">第一章：請勿在狼人殺裡飼養大型犬</option>
+                            <option value="ch2">第二章：請不要用體溫挑戰理科生</option>
+                            <option value="ch3">第三章：所謂的絕對多數暴力</option>
+                            <option value="ch4">第四章：抓到你了，躲在暗處的小狼崽</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-400">
+                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-2 flex-shrink-0">
+                    <!-- 個人資料按鈕 -->
+                    <button onclick="openProfile()" class="p-2 text-slate-400 hover:text-white rounded focus:outline-none hover:bg-slate-800 transition-colors" title="個人檔案設定">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                    </button>
+                    
+                    <!-- 閱讀設定按鈕 -->
+                    <button onclick="toggleSettings()" class="p-2 text-slate-400 hover:text-white rounded focus:outline-none hover:bg-slate-800 transition-colors" title="閱讀設定">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+            </header>
+
+            <!-- 閱讀進度條 -->
+            <div class="h-1 bg-slate-800 w-full z-10 flex-shrink-0">
+                <div id="reading-progress" class="h-full bg-sky-500 w-0 transition-all duration-150 ease-out"></div>
+            </div>
+
+            <div id="read-area" class="flex-1 overflow-y-auto p-4 sm:p-8 md:p-12 scroll-smooth theme-dark transition-colors duration-300">
+                <div class="max-w-3xl mx-auto chapter-content" id="content-container">
+                </div>
+                
+                <div class="max-w-3xl mx-auto mt-8 pt-6 border-t divider-line flex justify-between items-center" id="pagination-container">
+                    <button id="btn-prev" onclick="navigateChapter('prev')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded hover:bg-slate-700 hover:text-white transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed border border-slate-700 shadow-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                        上一章
+                    </button>
+                    <button id="btn-next" onclick="navigateChapter('next')" class="px-4 py-2 bg-sky-600 text-white rounded hover:bg-sky-500 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-md">
+                        下一章
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
+                    </button>
+                </div>
+
+                <!-- 互動區域 (按讚與留言) -->
+                <div class="max-w-3xl mx-auto mt-8 pt-8 border-t divider-line" id="interaction-container">
+                    <!-- 按讚區 -->
+                    <div class="flex justify-center mb-8">
+                        <button id="btn-like" onclick="toggleLike()" class="flex items-center gap-2 px-8 py-3 bg-slate-800/50 rounded-full hover:bg-slate-700 transition-all text-slate-400 border border-slate-700 shadow-sm">
+                            <svg id="like-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                            </svg>
+                            <span class="font-medium">喜歡 <span id="like-count" class="ml-1 font-bold">0</span></span>
+                        </button>
+                    </div>
+
+                    <!-- 留言區 -->
+                    <div class="bg-black/10 p-6 rounded-xl border divider-line">
+                        <div class="flex justify-between items-center mb-6">
+                            <h4 class="text-lg font-bold flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                </svg>
+                                讀者留言
+                            </h4>
+                            <!-- 分享按鈕 -->
+                            <button onclick="shareChapter()" class="flex items-center gap-1 text-sm bg-slate-800 text-slate-300 hover:text-white px-3 py-1.5 rounded-md transition-colors border border-slate-700">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
+                                分享章節
+                            </button>
+                        </div>
+                        
+                        <!-- 留言輸入框 -->
+                        <div class="mb-8 flex gap-3">
+                            <div id="comment-user-avatar-container" class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center flex-shrink-0 text-slate-300 font-bold shadow-inner overflow-hidden border border-slate-600">
+                                <img id="comment-user-avatar" src="" alt="Avatar" class="w-full h-full object-cover hidden">
+                                <span id="comment-user-fallback" class="text-sm">匿</span>
+                            </div>
+                            <div class="flex-1 flex flex-col gap-3">
+                                <textarea id="comment-input" rows="2" class="w-full bg-black/20 border border-slate-700/50 rounded-lg p-3 text-sm focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 resize-none transition-colors shadow-inner placeholder-slate-500" placeholder="留下你的想法..."></textarea>
+                                <div class="flex justify-between items-center">
+                                    <span id="comment-user-name" class="text-xs opacity-70">以 匿名讀者 身分留言</span>
+                                    <button onclick="submitComment()" class="px-5 py-2 bg-sky-600 text-white font-medium text-sm rounded-md hover:bg-sky-500 transition-colors shadow-md">發佈留言</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 留言列表 -->
+                        <div id="comment-list" class="space-y-4">
+                            <!-- 留言會由 JS 動態載入 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 個人資料設定彈窗 (移至絕對上層確保不會被蓋住) -->
     <div id="profile-modal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center backdrop-blur-sm transition-opacity">
         <div class="bg-slate-900 border border-slate-700 rounded-xl shadow-2xl w-11/12 max-w-md p-6">
             <div class="flex justify-between items-center mb-6 border-b border-slate-800 pb-3">
@@ -182,147 +304,47 @@
         </button>
     </div>
 
-    <main class="flex-1 flex flex-col h-full bg-slate-950 relative overflow-hidden">
-        <header class="h-16 border-b border-slate-800 bg-slate-900/80 backdrop-blur-sm flex items-center justify-between px-4 sticky top-0 z-20 shadow-sm flex-shrink-0">
-            <div class="flex items-center overflow-hidden">
-                <button onclick="toggleSidebar()" class="md:hidden p-2 mr-3 text-slate-400 hover:text-white rounded focus:outline-none focus:bg-slate-800 flex-shrink-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                </button>
-                <h2 id="header-title" class="text-lg font-medium text-slate-200 truncate">作品簡介</h2>
-            </div>
-            
-            <div class="flex items-center gap-2">
-                <!-- 個人資料按鈕 -->
-                <button onclick="openProfile()" class="p-2 text-slate-400 hover:text-white rounded focus:outline-none hover:bg-slate-800 transition-colors flex-shrink-0" title="個人檔案設定">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                </button>
-                
-                <!-- 閱讀設定按鈕 -->
-                <button onclick="toggleSettings()" class="p-2 text-slate-400 hover:text-white rounded focus:outline-none hover:bg-slate-800 transition-colors flex-shrink-0" title="閱讀設定">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
-                    </svg>
-                </button>
-            </div>
-        </header>
-
-        <!-- 閱讀進度條 -->
-        <div class="h-1 bg-slate-800 w-full z-10 flex-shrink-0">
-            <div id="reading-progress" class="h-full bg-sky-500 w-0 transition-all duration-150 ease-out"></div>
-        </div>
-
-        <!-- 閱讀設定面板 -->
-        <div id="settings-panel" class="hidden absolute top-16 right-4 w-72 bg-slate-800 border border-slate-700 rounded-lg shadow-2xl z-50 p-5 transform transition-all">
-            <h3 class="text-white font-bold mb-4 border-b border-slate-700 pb-2">閱讀設定</h3>
-            
-            <!-- 背景主題 -->
-            <div class="mb-5">
-                <p class="text-slate-400 text-xs mb-2 tracking-wider">背景主題</p>
-                <div class="flex gap-2">
-                    <button onclick="changeTheme('theme-dark')" class="flex-1 py-1.5 bg-[#020617] hover:ring-2 hover:ring-sky-500 rounded text-sm text-slate-300 border border-slate-600 transition-all">深色</button>
-                    <button onclick="changeTheme('theme-sepia')" class="flex-1 py-1.5 bg-[#f4ecd8] hover:ring-2 hover:ring-sky-500 rounded text-sm text-[#5c4b37] border border-slate-400 transition-all">護眼</button>
-                    <button onclick="changeTheme('theme-light')" class="flex-1 py-1.5 bg-white hover:ring-2 hover:ring-sky-500 rounded text-sm text-slate-800 border border-slate-300 transition-all">明亮</button>
-                </div>
-            </div>
-
-            <!-- 字體大小 -->
-            <div class="mb-5">
-                <p class="text-slate-400 text-xs mb-2 tracking-wider">字體大小</p>
-                <div class="flex gap-2">
-                    <button onclick="changeFontSize('text-sm')" class="flex-1 py-1.5 bg-slate-900 hover:bg-slate-700 rounded text-sm text-slate-300 border border-slate-700 transition-colors">小</button>
-                    <button onclick="changeFontSize('text-base')" class="flex-1 py-1.5 bg-slate-900 hover:bg-slate-700 rounded text-base text-slate-300 border border-slate-700 transition-colors">中</button>
-                    <button onclick="changeFontSize('text-lg')" class="flex-1 py-1.5 bg-slate-900 hover:bg-slate-700 rounded text-lg text-slate-300 border border-slate-700 transition-colors">大</button>
-                </div>
-            </div>
-            
-            <!-- 字體樣式 -->
-            <div class="mb-5">
-                <p class="text-slate-400 text-xs mb-2 tracking-wider">字體樣式</p>
-                <div class="flex gap-2">
-                    <button onclick="changeFontFamily('font-sans')" class="flex-1 py-1.5 bg-slate-900 hover:bg-slate-700 rounded text-sm text-slate-300 border border-slate-700 transition-colors font-sans">黑體</button>
-                    <button onclick="changeFontFamily('font-serif')" class="flex-1 py-1.5 bg-slate-900 hover:bg-slate-700 rounded text-sm text-slate-300 border border-slate-700 transition-colors font-serif">明體</button>
-                </div>
-            </div>
-
-            <!-- 自動閱讀 -->
-            <div class="border-t border-slate-700 pt-4 mt-2">
-                <button onclick="startAutoScroll()" class="w-full flex items-center justify-center gap-2 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-colors font-bold shadow-md">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
-                    開始自動閱讀
-                </button>
+    <!-- 閱讀設定面板 -->
+    <div id="settings-panel" class="hidden fixed top-16 right-4 w-72 bg-slate-800 border border-slate-700 rounded-lg shadow-2xl z-50 p-5 transform transition-all">
+        <h3 class="text-white font-bold mb-4 border-b border-slate-700 pb-2">閱讀設定</h3>
+        
+        <!-- 背景主題 -->
+        <div class="mb-5">
+            <p class="text-slate-400 text-xs mb-2 tracking-wider">背景主題</p>
+            <div class="flex gap-2">
+                <button onclick="changeTheme('theme-dark')" class="flex-1 py-1.5 bg-[#020617] hover:ring-2 hover:ring-sky-500 rounded text-sm text-slate-300 border border-slate-600 transition-all">深色</button>
+                <button onclick="changeTheme('theme-sepia')" class="flex-1 py-1.5 bg-[#f4ecd8] hover:ring-2 hover:ring-sky-500 rounded text-sm text-[#5c4b37] border border-slate-400 transition-all">護眼</button>
+                <button onclick="changeTheme('theme-light')" class="flex-1 py-1.5 bg-white hover:ring-2 hover:ring-sky-500 rounded text-sm text-slate-800 border border-slate-300 transition-all">明亮</button>
             </div>
         </div>
 
-        <div id="read-area" class="flex-1 overflow-y-auto p-4 sm:p-8 md:p-12 scroll-smooth theme-dark transition-colors duration-300">
-            <div class="max-w-3xl mx-auto chapter-content" id="content-container">
-            </div>
-            
-            <div class="max-w-3xl mx-auto mt-8 pt-6 border-t divider-line flex justify-between items-center" id="pagination-container">
-                <button id="btn-prev" onclick="navigateChapter('prev')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded hover:bg-slate-700 hover:text-white transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed border border-slate-700 shadow-sm">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
-                    上一章
-                </button>
-                <button id="btn-next" onclick="navigateChapter('next')" class="px-4 py-2 bg-sky-600 text-white rounded hover:bg-sky-500 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-md">
-                    下一章
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
-                </button>
-            </div>
-
-            <!-- 互動區域 (按讚與留言) -->
-            <div class="max-w-3xl mx-auto mt-8 pt-8 border-t divider-line" id="interaction-container">
-                <!-- 按讚區 -->
-                <div class="flex justify-center mb-8">
-                    <button id="btn-like" onclick="toggleLike()" class="flex items-center gap-2 px-8 py-3 bg-slate-800/50 rounded-full hover:bg-slate-700 transition-all text-slate-400 border border-slate-700 shadow-sm">
-                        <svg id="like-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                        </svg>
-                        <span class="font-medium">喜歡 <span id="like-count" class="ml-1 font-bold">0</span></span>
-                    </button>
-                </div>
-
-                <!-- 留言區 -->
-                <div class="bg-black/10 p-6 rounded-xl border divider-line">
-                    <div class="flex justify-between items-center mb-6">
-                        <h4 class="text-lg font-bold flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                            </svg>
-                            讀者留言
-                        </h4>
-                        <!-- 分享按鈕 -->
-                        <button onclick="shareChapter()" class="flex items-center gap-1 text-sm bg-slate-800 text-slate-300 hover:text-white px-3 py-1.5 rounded-md transition-colors border border-slate-700">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
-                            分享章節
-                        </button>
-                    </div>
-                    
-                    <!-- 留言輸入框 -->
-                    <div class="mb-8 flex gap-3">
-                        <div id="comment-user-avatar-container" class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center flex-shrink-0 text-slate-300 font-bold shadow-inner overflow-hidden border border-slate-600">
-                            <img id="comment-user-avatar" src="" alt="Avatar" class="w-full h-full object-cover hidden">
-                            <span id="comment-user-fallback" class="text-sm">匿</span>
-                        </div>
-                        <div class="flex-1 flex flex-col gap-3">
-                            <textarea id="comment-input" rows="2" class="w-full bg-black/20 border border-slate-700/50 rounded-lg p-3 text-sm focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 resize-none transition-colors shadow-inner placeholder-slate-500" placeholder="留下你的想法..."></textarea>
-                            <div class="flex justify-between items-center">
-                                <span id="comment-user-name" class="text-xs opacity-70">以 匿名讀者 身分留言</span>
-                                <button onclick="submitComment()" class="px-5 py-2 bg-sky-600 text-white font-medium text-sm rounded-md hover:bg-sky-500 transition-colors shadow-md">發佈留言</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 留言列表 -->
-                    <div id="comment-list" class="space-y-4">
-                        <!-- 留言會由 JS 動態載入 -->
-                    </div>
-                </div>
+        <!-- 字體大小 -->
+        <div class="mb-5">
+            <p class="text-slate-400 text-xs mb-2 tracking-wider">字體大小</p>
+            <div class="flex gap-2">
+                <button onclick="changeFontSize('text-sm')" class="flex-1 py-1.5 bg-slate-900 hover:bg-slate-700 rounded text-sm text-slate-300 border border-slate-700 transition-colors">小</button>
+                <button onclick="changeFontSize('text-base')" class="flex-1 py-1.5 bg-slate-900 hover:bg-slate-700 rounded text-base text-slate-300 border border-slate-700 transition-colors">中</button>
+                <button onclick="changeFontSize('text-lg')" class="flex-1 py-1.5 bg-slate-900 hover:bg-slate-700 rounded text-lg text-slate-300 border border-slate-700 transition-colors">大</button>
             </div>
         </div>
-    </main>
+        
+        <!-- 字體樣式 -->
+        <div class="mb-5">
+            <p class="text-slate-400 text-xs mb-2 tracking-wider">字體樣式</p>
+            <div class="flex gap-2">
+                <button onclick="changeFontFamily('font-sans')" class="flex-1 py-1.5 bg-slate-900 hover:bg-slate-700 rounded text-sm text-slate-300 border border-slate-700 transition-colors font-sans">黑體</button>
+                <button onclick="changeFontFamily('font-serif')" class="flex-1 py-1.5 bg-slate-900 hover:bg-slate-700 rounded text-sm text-slate-300 border border-slate-700 transition-colors font-serif">明體</button>
+            </div>
+        </div>
+
+        <!-- 自動閱讀 -->
+        <div class="border-t border-slate-700 pt-4 mt-2">
+            <button onclick="startAutoScroll()" class="w-full flex items-center justify-center gap-2 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-colors font-bold shadow-md">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                開始自動閱讀
+            </button>
+        </div>
+    </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -366,7 +388,7 @@
 
                         <p class="mb-2"><strong>故事背景與方舟地形：</strong></p>
                         <p>2000名在各領域達到極限值的人類菁英，被神秘力量綁架到一個名為「深淵方舟」的巨大封閉設施中，被迫參與一場真實的死亡狼人殺遊戲。</p>
-                        <p>這艘方舟並非單純的金屬船艦，其內部透過超高科技劃分為多個廣袤的<strong>「生態模擬地形」</strong>（如：迷霧森林、赤紅惡地、極寒冰原、廢土都市等）。玩家不僅要對抗潛伏在人群中的怪物，還要適應各種極端地形的生存挑戰與環境災害。</p>
+                        <p>這艘方舟並非單純的金屬船艦，其內部透過超高科技劃分為多個廣袤的<strong>「生態模擬地形」</strong>（如：迷霧森林、赤紅惡地、極寒冰原、廢土都市等）。玩家不僅要對抗潛伏者人群中的怪物，還要適應各種極端地形的生存挑戰與環境災害。</p>
                         <p class="mt-6 text-center opacity-70 italic">「在資訊極度不對等且無法反抗的環境下，猜忌鏈一旦形成，人類根本不需要怪物動手，自己體內的群體恐慌與獵巫本能就會在最短的時間內把同類票死。」</p>
                     </div>
                 `
@@ -430,7 +452,7 @@
                     <p>凌晏沉默地看著他，隨後看了一眼楚戈手環上的代號。<br><strong>【代號：破軍】</strong></p>
                     <p>破軍。北斗第七星，主殺伐。確實是個名副其實的暴力代號。<br>凌晏淡淡地報上自己的名字：「凌晏。」</p>
                     <p>「凌晏？這名字真好聽！」楚戈的眼睛更亮了。他湊近了一點，像隻黏人的大型犬一樣，圍著凌晏轉了半圈。</p>
-                    <p>楚戈盯著他看了一會兒，語氣變得無比認真，甚至透出一絲本能的偏執與強烈的保護欲：「凌晏，你看起來好弱啊。你這樣的，要是碰到剛才那種大狼狗，肯定一口就被吃掉了。不行，你得跟著我。」</p>
+                    <p>楚戈盯著他看會兒，語氣變得無比認真，甚至透出一絲本能的偏執與強烈的保護欲：「凌晏，你看起來好弱啊。你這樣的，要是碰到剛才那種大狼狗，肯定一口就被吃掉了。不行，你得跟著我。」</p>
                     <p>凌晏看著眼前這隻武力值封頂、大腦結構卻似乎異常單純的「物理系猛男」，推了推並不存在的眼鏡。</p>
                     <p>楚戈擁有絕對的武力，卻對自己展現出了一種近乎盲目的護短。這是一把自願把刀柄遞到他手裡的絕世神兵。如果不加以利用，簡直有辱他犯罪心理學教授的頭銜。</p>
                     <p>「可以組隊。」凌晏嘴角勾起一抹優雅的笑容，「但既然我是你的『大腦』，我的指令，你必須絕對服從。明白嗎？」</p>
@@ -456,14 +478,14 @@
                     
                     <div class="system-msg">
                         「叮咚！檢測到雙方意願，修復者【白夜】與【破軍】已成功建立『戰術小隊』連結。」<br>
-                        「小隊特權啟動：隊內友軍傷害豁免、小隊專屬加密通訊頻道開啟、方舟積分共享權限已解鎖。」
+                        "小隊特權啟動：隊內友軍傷害豁免、小隊專屬加密通訊頻道開啟、方舟積分共享權限已解鎖。"
                     </div>
 
                     <p>有了系統層面的綁定，這把名為「楚戈」的凶器才算真正握在了他手裡。</p>
                     <p>「嘎吱——」<br>頭頂的通風管道傳來令人牙酸的金屬形變聲。從震動的頻率來判斷，總共有三隻。</p>
                     <p>「老大，你靠牆站好，別動。」<br>楚戈的聲音透過小隊通訊頻道傳來。下一秒，凌晏感覺到身前那道高大的熱源瞬間消失了。</p>
                     <p>沒有任何戰前預警。<br><strong>「轟——！」</strong></p>
-                    <p>一聲震耳欲聾的巨響在凌晏正上方炸開。楚戈憑藉著那非人的直覺與爆發力，直接原地起跳，徒手硬生生扯下了天花板上厚重的鋁合金百葉窗！</p>
+                    <p>一聲震耳之聾的巨響在凌晏正上方炸開。楚戈憑藉著那非人的直覺與爆發力，直接原地起跳，徒手硬生生扯下了天花板上厚重的鋁合金百葉窗！</p>
                     <p>一團巨大的黑影帶著腥臭的狂風被粗暴地拽了下來。楚戈沒有使用任何武器，一拳精準地砸穿了第一隻狼人的胸腔。緊接著又是一腳，第二隻從通風管躍下的狼人甚至還沒落地，就被踹斷了脊椎，砸在牆上沒了動靜。</p>
                     <p>然而，第三隻狼人察覺到了楚戈的不可戰勝。牠悄無聲息地從十米外的另一個排氣孔滑落，直奔角落裡氣息最微弱的凌晏而去！</p>
                     <p>腥風撲面。楚戈遠在十米開外，根本來不及回防。「凌晏！！」通訊頻道裡傳來楚戈目眥欲裂的狂吼。</p>
@@ -487,7 +509,7 @@
                         <li><strong>【初級補給盲盒】</strong> - 售價：100 積分</li>
                         <li><strong>【指定基因覺醒劑】</strong> - 售價：10,000 積分</li>
                     </ul>
-                    <p>看著那高達一萬積分的覺醒劑，凌晏微微挑眉。看來在遊戲初期，想要覺醒神職天賦完全是痴人說夢。</p>
+                    <p>看著那高達一萬積分的覺醒劑，凌晏微微挑眉。看來在遊戲初期，想要覺醒神職天賦完全是紙人說夢。</p>
                     <p>「盲盒本質上是利用人類的賭徒心理，但在資訊嚴重匱乏的開局，我們必須購買。」凌晏冷靜下達指令，「我們有300積分，買兩個初級盲盒，剩下的100積分作為應急備用。」</p>
                     <p>楚戈立刻按下按鈕，機器的出口處滾出兩個銀色金屬球。<br>楚戈捏碎第一個。白光一閃，手裡多了一包東西。</p>
                     <p><strong>【獲得物品：極效除菌濕紙巾（100抽）】</strong><br><span class="thought-msg">物品描述：能瞬間擦除任何頑固血漬。請做個愛乾淨的乖孩子。</span></p>
@@ -515,7 +537,7 @@
 
                     <div class="system-msg">
                         「叮咚！檢測到【警報終端】被啟動。」<br>
-                        「全艦進入絕對安全停戰模式！第一輪【全體裁決會議】正式開始！」<br>
+                        "全艦進入絕對安全停戰模式！第一輪【全體裁決會議】正式開始！"<br>
                         「請各位在接下來的十分鐘內進行發言與投票。得票最高者，將被執行即時神經毒素抹殺。」
                     </div>
 
@@ -538,7 +560,7 @@
                 html: `
                     <h3>第三章：所謂的絕對多數暴力</h3>
                     <p>「喀啦……喀啦……」</p>
-                    <p>令人毛骨悚然的骨骼錯位聲，在死寂的中庭廣場上顯得無比清晰。<br>那個穿著灰色連帽衫的男人，臉部肌肉開始以一種違反人類生理結構的方式瘋狂抽搐。他的嘴角硬生生撕裂到了耳根，露出兩排參差不齊、帶著黏液的鋒利獠牙；原本藏在袖子裡的雙手，也猛地暴長出十幾公分長的黑色利爪，直接刺穿了布料。</p>
+                    <p>令人毛骨悚然的骨骼錯位聲，在死寂裝庭廣場上顯得無比清晰。<br>那個穿著灰色連帽衫的男人，臉部肌肉開始以一種違反人類生理結構的方式瘋狂抽搐。他的嘴角硬生生撕裂到了耳根，露出兩排參差不齊、帶著黏液的鋒利獠牙；原本藏在袖子裡的雙手，也猛地暴長出十幾公分長的黑色利爪，直接刺穿了布料。</p>
                     <p>他徹底放棄了偽裝。</p>
                     <p>「吼——！！」<br>半人半狼的怪物發出一聲震耳欲聾的咆哮，雙腿猛地彎曲，巨大的爆發力甚至將腳下的大理石地磚踩出蜘蛛網般的裂痕。牠帶著濃烈的腥風，直撲距離最近的西裝男！</p>
                     <p>「啊啊啊啊啊！」<br>上一秒還舉著槍耀武揚威的上市公司CEO，此刻嚇得雙腿發軟，手裡的左輪手槍直接掉在地上，連滾帶爬地往後退。</p>
@@ -579,8 +601,8 @@
                     <p>「嘎吱！」<br>堅硬的精鋼槍管，竟被他硬生生捏扁了！</p>
                     <p>楚戈居高臨下地俯視著趙大偉，漆黑的眼眸裡透著毫不掩飾的暴戾與野性，語氣森冷：<br>「離我老大遠一點。再敢靠近一步，我就把你的腦袋捏成這把破槍的形狀。」</p>
                     <p>西裝男嚇得一屁股跌坐在地，連連後退，周圍那些想靠過來的人也瞬間噤若寒蟬，恐懼地退開了三步遠。</p>
-                    <p>「我不需要累贅，也不收垃圾。」凌晏越過楚戈寬闊的肩膀，冷冷地掃視著眾人，「剛才救你們，只是因為我需要足夠的票數來啟動系統的抹殺機制。現在，我的目的達到了。」</p>
-                    <p>他轉過身，連多看這群人一眼的興趣都沒有，徑直朝著中庭廣場另一側的幽暗通道走去。<br>楚戈立刻像隻得勝的猛犬一樣，乖巧地跟在凌晏身後，臨走前還不忘對著那群人呲了呲牙，發出警告的低吼。</p>
+                    <p>「我不需要累贅，也不收垃圾。」凌晏越過楚戈寬闊的肩膀，冷冷地掃視著眾人，「剛才救你們，職是因為我需要足夠的票數來啟動系統的抹殺機制。現在，我的目的達到了。」</p>
+                    <p>他轉過線，連多看這群人一眼的興趣都沒有，徑直朝著中庭廣場另一側的幽暗通道走去。<br>楚戈立刻像隻得勝的猛犬一樣，乖巧地跟在凌晏身後，臨走前還不忘對著那群人呲了呲牙，發出警告的低吼。</p>
                     <p>兩人重新走入冰冷深邃的金屬走廊。</p>
                     <p>「老大，我們接下來去哪？」楚戈透過小隊語音問道，語氣裡滿是期待。</p>
                     <p>凌晏看著單片鏡裡不斷閃爍的區域地圖。這艘「深淵方舟」的廣闊程度遠超常理，全息地圖上不僅標示著他們目前所在的『金屬工業板塊』，周圍更拼接著大片標記為『迷霧森林』、『赤紅惡地』、『極寒冰原』等廣袤的生態模擬地形。</p>
@@ -601,7 +623,7 @@
                     <p>凌晏一邊邁開長腿繼續前行，一邊以極其清晰的邏輯向這個「物理系隊友」拆解這場殘酷的生存遊戲：</p>
                     <p>「系統開局就宣布，這場遊戲總共有 <strong>2000 名人類菁英</strong> 共同登入。楚戈，你想過沒有，如果每次拍響警報，都要這兩千人同時進入同一個公共頻道進行發言和投票，會發生什麼事？」</p>
                     <p>楚戈認真地想了想，隨後搖搖頭：「那場面肯定比菜市場還亂，兩千人一起吵架，估計十分鐘過去了，連第一個發言的人都還沒講完。」</p>
-                    <p>「沒錯。這就是關鍵。」凌晏推了推左眼上的熱成像單片鏡，鏡片在黑暗中閃爍著幽綠的光芒：<br>「所以，系統絕對採用了<strong>『分區動態計票』</strong>的規則。也就是說，整艘深淵方舟被劃分成了無數個獨立的區域。只有當某個區域的『警報終端』被拍響時，<strong>身處該區域及周邊通道的玩家</strong>，才會被強制拉入那一輪的裁決會議。」</p>
+                    <p>「沒錯。這就是關鍵。」凌晏推了推左眼上的熱成像單片鏡，鏡片在黑暗中閃爍著幽綠的光芒：<br>「所以，系統絕對採用了<strong>『分區動態計票』</strong>的規則。整艘深淵方舟被劃分成了無數個獨立的區域。只有當某個區域的『警報終端』被拍響時，<strong>身處該區域及周邊通道的玩家</strong>，才會被強制拉入那一輪的裁決會議。」</p>
                     <p>凌晏伸出兩根手指：<br>「剛才在中庭，加上你、我，以及那隻偽裝成連帽衫的狼人，我們那個區域總共聚集了 <strong>15 個人</strong>。」<br>「因為那隻狼人是被指控的目標，失去了投票權，所以最終的有效票數是 <strong>14 票</strong>。我只需要用大白話撕開怪物的偽裝，把這 14 票的絕對多數拿到手，就能利用系統的規則將牠當場抹殺。」</p>
                     <p>楚戈聽得眼睛發亮，忍不住崇拜地低呼：「也就是說，老大你剛才不是在跟兩千人玩遊戲，你只是把中庭那 14 個人當成了手裡的籌碼？」</p>
                     <p>「可以這麼理解。」凌晏眼中閃過一抹冷冽的微光，「而發訊息挑釁我的這隻狼，顯然當時也站在中庭的 14 人之中。牠看穿了我沒有真正的『預言家驗人天賦』，而是利用物理規律強行抓出了牠的同伴。牠在試探我的底牌。」</p>
@@ -609,7 +631,7 @@
                     <p>這裡已經脫離了上層乾淨的甲板，進入了方舟底層的「機艙整備區」。腳下鋪設著帶有防滑紋路的鋼格柵板，透過縫隙可以看見下方幾十米深處、正瘋狂運轉的巨大齒輪與暗沉的機油池。兩側的牆壁上佈滿了如同血管般錯綜複雜的重工業管道，正不斷發出「嘶嘶」的高壓蒸汽洩漏聲。</p>
                     <p>突然，凌晏停下了腳步。<br>單片鏡的熱成像視野裡，前方一間名為「分控調度室」的艙房內，正散發著大片怪異的暗藍色冷光。</p>
                     <p>「老大，有血腥味。很新鮮，不是怪物的，是人類的。」楚戈抽了吹鼻子，身體瞬間緊繃成一塊隨時準備彈射的鋼板，橫移半步擋在凌晏身前。</p>
-                    <p>凌晏透過艙門上那面龜裂的厚重防彈玻璃往裡看去。<br>調度室內一片狼藉，三具人類的屍體橫七豎八地倒在血泊中。然而詭異的是，這些屍體上沒有狼人那種粗暴的撕裂傷或爪痕，反而全是被銳利的利器一刀割喉，或是被近距離用鈍器砸碎了頭顱。</p>
+                    <p>凌晏透過艙門上那面龜裂的厚重防彈玻璃往裡看去。<br>調度室內一片狼藉，三具人類的屍體橫七豎八地倒在血泊中。然而詭異的是，這些屍體上沒有狼人種粗暴的撕裂傷或爪痕，反而全是被銳利的利器一刀割喉，或是被近距離用鈍器砸碎了頭顱。</p>
                     <p>這是人類之間的自相殘殺。</p>
                     <p>「看來，在其他我們看不到的區域，『獵巫恐慌』已經蔓延開了。」凌晏面不改色地推開沉重的舱門，跨過地上的血泊，徑直走到調度室中央那一面巨大的電子監控主機前。</p>
                     <p>這台主機雖然遭到了部分破壞，但核心的螢幕依然在閃爍著慘白的光芒。<br>螢幕最上方，用血紅色的字體標註著一行不斷跳動的實時數據：</p>
@@ -660,7 +682,7 @@
                         然而，眼前這個女學生，即使此時身體骨骼正發出異變的脆響，額頭隱現血色殘月，卻依然能口齒清晰地用人類的語言冷嘲熱諷。
                     </p>
                     <p class="thought-msg font-medium">
-                        這其中的差異，本質上是演化階級與智商的斷層。
+                        防中的差異，本質上是演化階級與智商的斷層。
                     </p>
                     <p>
                         「答案很簡單。」凌晏在心中冷靜地推導出結論：普通的潛伏者在變身後大腦會被殺戮本能吞噬；而眼前這隻，能夠在變身狀態下保持人類智慧與語言能力的，只有一種可能——她是高人一等的<strong>「高階突變種狼人」</strong>。
@@ -670,7 +692,7 @@
 
                     <p>「在犯罪心理學中，一個人越是缺乏底氣，就越喜歡在言語和姿態上過度強調自己的主導權。」凌晏語速平緩，字字如刀：<br>「你故意熔毀閥門、發訊息引我過來，甚至在這裡等著我，不就證明了你在恐懼嗎？你恐懼下一次裁決會議召開時，我會再度用你無法預防的邏輯，把你也送上斷頭台。所以你急著在黑夜模式結束前，親手抹殺我這個最大的威脅。」</p>
                     <p>平台上的女學生笑容瞬間僵硬在臉上，眼中閃過一抹被看穿的惱羞成怒。</p>
-                    <p>「而且，誰告訴你我是來修閥門的？」凌晏嘴角勾起一抹極度冰冷的譏諷弧度，「我只是來……物理超渡你的。」</p>
+                    <p>「而且，誰告訴你我是來修閥門的？」凌晏嘴角勾起一抹極度冰冷的譏諷弧度，「我職是來……物理超渡你的。」</p>
                     <p>「找死！！」<br>女學生嘴裡發出一聲尖銳的唳嘯，她的身體突然以一種恐怖的幅度膨脹、扭曲！鋼針一般的銀灰色毛髮瞬間刺穿了她的皮膚，雙手暴長出將近半公尺長的倒鉤利爪，額頭中央，更隱隱浮現出一道散發著血光的殘月印記！</p>
 
                     <div class="system-msg">
@@ -703,7 +725,7 @@
                     </p>
                     <p>
                         「挑！」<br>
-                        楚戈雙手握緊鐵管，由下至上瘋狂掀起。白狼王快到拉出殘影的身軀，竟然精準無誤地在空中被這一記鐵管重重撩中了腹部，發出一聲沉悶的重擊聲！
+                        楚戈雙手握緊鐵管，由下至上瘋狂掀起。白狼王快到殘影的身軀，竟然精準無誤地在空中被這一記鐵管重重撩中了腹部，發出一聲沉悶的重擊聲！
                     </p>
                     <p>
                         然而怪物在空中強行扭轉關節，長爪以不可思議的角度反向抓向楚戈的喉嚨。
@@ -758,7 +780,7 @@
                         「轟隆——！！！」
                     </p>
                     <p>
-                        震耳欲聾的爆炸聲響徹整個動力室，狂暴的衝擊波夾雜著高溫火焰席捲而來。楚戈一個飛撲將凌晏死死護在身下，背後的作戰服被飛濺的金屬碎片劃出數道焦痕。
+                        震耳猶聾的爆炸聲響徹整個動力室，狂暴的衝擊波夾雜著高溫火焰席捲而來。楚戈一個飛撲將凌晏死死護在身下，背後的作戰服被飛濺的金屬碎片劃出數道焦痕。
                     </p>
                     <p>
                         當一切歸於平靜，白狼王自爆的中心已經被炸出了一個直徑數公尺的焦黑大坑，連帶周圍的金屬牆壁都被高溫熔化變形。若不是躲避及時，那威力足以讓兩人在瞬間汽化。
@@ -853,6 +875,10 @@
             saveUserSettings();
             currentChapterIndex = chapterOrder.indexOf(chapterId);
 
+            // 更新頂部章節快速切換下拉選單的選中狀態
+            const quickSelect = document.getElementById('chapter-quick-select');
+            if(quickSelect) quickSelect.value = chapterId;
+
             let contentHtml = novelData[chapterId].html;
             const pureText = contentHtml.replace(/<[^>]*>?/gm, '').replace(/\s+/g, ''); 
             const wordCount = pureText.length;
@@ -872,13 +898,13 @@
             
             contentHtml = contentHtml.replace(/(<\/h3>)/i, `$1${statsHtml}`);
 
-            contentContainer.innerHTML = contentHtml;
-            headerTitle.textContent = novelData[chapterId].title;
-
+            if (contentContainer) contentContainer.innerHTML = contentHtml;
+            
             document.querySelectorAll('.nav-link').forEach(btn => {
                 btn.classList.remove('active');
             });
-            document.getElementById(`btn-${chapterId}`).classList.add('active');
+            const activeBtn = document.getElementById(`btn-${chapterId}`);
+            if (activeBtn) activeBtn.classList.add('active');
 
             updatePaginationButtons();
             setupChapterListener(chapterId);
@@ -890,7 +916,9 @@
             // 換章節時停止自動閱讀
             stopAutoScroll();
 
-            if (window.innerWidth < 768) {
+            // 在手機版中，切換章節後自動收起側邊欄
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar && !sidebar.classList.contains('-translate-x-full') && window.innerWidth < 768) {
                 toggleSidebar();
             }
         }
@@ -932,7 +960,7 @@
         document.addEventListener('click', (e) => {
             const panel = document.getElementById('settings-panel');
             const header = document.querySelector('header');
-            if (!panel.classList.contains('hidden') && !panel.contains(e.target) && !header.contains(e.target)) {
+            if (panel && !panel.classList.contains('hidden') && !panel.contains(e.target) && !header.contains(e.target)) {
                 panel.classList.add('hidden');
             }
         });
@@ -988,8 +1016,10 @@
             readArea.classList.add('scroll-smooth');
 
             const panel = document.getElementById('autoscroll-panel');
-            panel.classList.add('translate-y-20');
-            setTimeout(() => panel.classList.add('hidden'), 300);
+            if(panel) {
+                panel.classList.add('translate-y-20');
+                setTimeout(() => panel.classList.add('hidden'), 300);
+            }
         }
 
         function togglePauseScroll() {
@@ -998,13 +1028,14 @@
         }
 
         function changeScrollSpeed(delta) {
-            // 將速度範圍擴大到 0.2x ~ 5.0x，並保留小數點第一位
             scrollSpeed = Math.max(0.2, Math.min(5.0, Number((scrollSpeed + delta).toFixed(1))));
             
-            // 給予速度反饋的 Toast (簡易版)
             document.getElementById('scroll-status-text').textContent = `速度 ${scrollSpeed.toFixed(1)}x`;
             if(!isPaused) {
-                setTimeout(() => { if(!isPaused) document.getElementById('scroll-status-text').textContent = '閱讀中'; }, 1000);
+                setTimeout(() => { if(!isPaused) {
+                    const statusText = document.getElementById('scroll-status-text');
+                    if (statusText) statusText.textContent = '閱讀中';
+                } }, 1000);
             }
         }
 
@@ -1012,7 +1043,6 @@
         function shareChapter() {
             const url = window.location.href.split('#')[0] + '#' + chapterOrder[currentChapterIndex];
             
-            // 由於沙盒環境限制，使用備用輸入框方式複製
             const tempInput = document.createElement("input");
             tempInput.value = `我正在看《深淵狼人殺》的 ${novelData[chapterOrder[currentChapterIndex]].title}，超好看！推薦給你：${url}`;
             document.body.appendChild(tempInput);
@@ -1020,7 +1050,6 @@
             document.execCommand("copy");
             document.body.removeChild(tempInput);
             
-            // 彈出提示
             const toast = document.createElement('div');
             toast.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 bg-sky-500 text-white px-4 py-2 rounded shadow-lg z-50 transition-opacity';
             toast.textContent = '✅ 已複製分享連結！快去貼給朋友吧！';
@@ -1102,18 +1131,21 @@
             const likeCount = document.getElementById('like-count');
             const likeIcon = document.getElementById('like-icon');
 
-            likeCount.textContent = data.likes;
-            if (isLiked) {
-                likeBtn.classList.add('text-rose-500');
-                likeIcon.setAttribute('fill', 'currentColor');
-                likeIcon.classList.add('text-rose-500');
-            } else {
-                likeBtn.classList.remove('text-rose-500');
-                likeIcon.setAttribute('fill', 'none');
-                likeIcon.classList.remove('text-rose-500');
+            if (likeCount) likeCount.textContent = data.likes;
+            if (likeBtn && likeIcon) {
+                if (isLiked) {
+                    likeBtn.classList.add('text-rose-500');
+                    likeIcon.setAttribute('fill', 'currentColor');
+                    likeIcon.classList.add('text-rose-500');
+                } else {
+                    likeBtn.classList.remove('text-rose-500');
+                    likeIcon.setAttribute('fill', 'none');
+                    likeIcon.classList.remove('text-rose-500');
+                }
             }
 
             const commentList = document.getElementById('comment-list');
+            if (!commentList) return;
             commentList.innerHTML = '';
             const comments = data.comments || [];
             if (comments.length > 0) {
@@ -1158,13 +1190,15 @@
             renderInteractions(chapterId);
             
             const icon = document.getElementById('like-icon');
-            icon.classList.add('scale-125', '-translate-y-1');
-            setTimeout(() => icon.classList.remove('scale-125', '-translate-y-1'), 200);
+            if (icon) {
+                icon.classList.add('scale-125', '-translate-y-1');
+                setTimeout(() => icon.classList.remove('scale-125', '-translate-y-1'), 200);
+            }
         }
 
         function submitComment() {
             const input = document.getElementById('comment-input');
-            const text = input.value.trim();
+            const text = input ? input.value.trim() : '';
             if (!text) return;
 
             const chapterId = chapterOrder[currentChapterIndex];
@@ -1180,23 +1214,27 @@
             interactionsData[chapterId].comments.push({ user: userName, avatar: avatar, text: text, time: timeString });
 
             saveInteractions(chapterId);
-            input.value = '';
+            if (input) input.value = '';
             renderInteractions(chapterId);
         }
 
         // --- 個人資料邏輯 ---
         function openProfile() {
-            document.getElementById('profile-modal').classList.remove('hidden');
-            document.getElementById('profile-name-input').value = userSettings.userName || '';
+            const modal = document.getElementById('profile-modal');
+            const input = document.getElementById('profile-name-input');
+            if (modal) modal.classList.remove('hidden');
+            if (input) input.value = userSettings.userName || '';
             updateProfileAvatarUI(userSettings.avatar);
         }
         
         function closeProfile() {
-            document.getElementById('profile-modal').classList.add('hidden');
+            const modal = document.getElementById('profile-modal');
+            if (modal) modal.classList.add('hidden');
         }
 
         function saveProfile() {
-            userSettings.userName = document.getElementById('profile-name-input').value.trim();
+            const input = document.getElementById('profile-name-input');
+            userSettings.userName = input ? input.value.trim() : '';
             saveUserSettings();
             updateCurrentUserUI();
             closeProfile();
@@ -1234,13 +1272,15 @@
         function updateProfileAvatarUI(avatarBase64) {
             const img = document.getElementById('profile-avatar-preview');
             const fallback = document.getElementById('profile-avatar-fallback');
-            if(avatarBase64) {
-                img.src = avatarBase64;
-                img.classList.remove('hidden');
-                fallback.classList.add('hidden');
-            } else {
-                img.classList.add('hidden');
-                fallback.classList.remove('hidden');
+            if (img && fallback) {
+                if(avatarBase64) {
+                    img.src = avatarBase64;
+                    img.classList.remove('hidden');
+                    fallback.classList.add('hidden');
+                } else {
+                    img.classList.add('hidden');
+                    fallback.classList.remove('hidden');
+                }
             }
         }
 
@@ -1248,19 +1288,22 @@
             const defaultName = currentUser ? `修復者 ${currentUser.uid.substring(0,4).toUpperCase()}` : '匿名讀者';
             const displayName = userSettings.userName || defaultName;
             
-            document.getElementById('comment-user-name').textContent = `以 ${displayName} 身分留言`;
+            const commentUser = document.getElementById('comment-user-name');
+            if (commentUser) commentUser.textContent = `以 ${displayName} 身分留言`;
             
             const avatarImg = document.getElementById('comment-user-avatar');
             const avatarFallback = document.getElementById('comment-user-fallback');
             
-            if (userSettings.avatar) {
-                avatarImg.src = userSettings.avatar;
-                avatarImg.classList.remove('hidden');
-                avatarFallback.classList.add('hidden');
-            } else {
-                avatarImg.classList.add('hidden');
-                avatarFallback.classList.remove('hidden');
-                avatarFallback.textContent = displayName.substring(0,1);
+            if (avatarImg && avatarFallback) {
+                if (userSettings.avatar) {
+                    avatarImg.src = userSettings.avatar;
+                    avatarImg.classList.remove('hidden');
+                    avatarFallback.classList.add('hidden');
+                } else {
+                    avatarImg.classList.add('hidden');
+                    avatarFallback.classList.remove('hidden');
+                    avatarFallback.textContent = displayName.substring(0,1);
+                }
             }
         }
 
@@ -1275,19 +1318,24 @@
         function updatePaginationButtons() {
             const btnPrev = document.getElementById('btn-prev');
             const btnNext = document.getElementById('btn-next');
-            
-            btnPrev.disabled = currentChapterIndex === 0;
-            btnNext.disabled = currentChapterIndex === chapterOrder.length - 1;
+            if (btnPrev && btnNext) {
+                btnPrev.disabled = currentChapterIndex === 0;
+                btnNext.disabled = currentChapterIndex === chapterOrder.length - 1;
+            }
         }
 
         function toggleSidebar() {
-            const isClosed = sidebar.classList.contains('-translate-x-full');
-            if (isClosed) {
-                sidebar.classList.remove('-translate-x-full');
-                sidebarOverlay.classList.remove('hidden');
-            } else {
-                sidebar.classList.add('-translate-x-full');
-                sidebarOverlay.classList.add('hidden');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            if (sidebar && overlay) {
+                const isClosed = sidebar.classList.contains('-translate-x-full');
+                if (isClosed) {
+                    sidebar.classList.remove('-translate-x-full');
+                    overlay.classList.remove('hidden');
+                } else {
+                    sidebar.classList.add('-translate-x-full');
+                    overlay.classList.add('hidden');
+                }
             }
         }
 
