@@ -112,7 +112,7 @@
             </div>
             
             <div class="p-4 flex-1 overflow-y-auto">
-                <h2 class="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-4 px-3">目錄</h2>
+                <h2 class="text-xs font-semibold text-slate-500 uppercase tracking-test mb-4 px-3">目錄</h2>
                 <nav class="space-y-1">
                     <button onclick="showChapter('intro')" id="btn-intro" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-150 active">
                         作品簡介
@@ -252,9 +252,9 @@
         </main>
     </div>
 
-    <!-- 個人資料設定彈窗 (移至絕對上層確保不會被蓋住) -->
+    <!-- 個人資料設定彈窗 -->
     <div id="profile-modal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center backdrop-blur-sm transition-opacity">
-        <div class="bg-slate-900 border border-slate-700 rounded-xl shadow-2xl w-11/12 max-w-md p-6">
+        <div class="bg-slate-900 border border-slate-700 rounded-xl shadow-2xl w-11/12 max-w-md p-6 max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center mb-6 border-b border-slate-800 pb-3">
                 <h3 class="text-xl font-bold text-white tracking-wider">修復者檔案</h3>
                 <button onclick="closeProfile()" class="text-slate-400 hover:text-white">
@@ -262,6 +262,7 @@
                 </button>
             </div>
             
+            <!-- 上傳大頭貼 -->
             <div class="flex flex-col items-center gap-4 mb-6">
                 <div class="relative group cursor-pointer" onclick="document.getElementById('avatar-upload').click()">
                     <div class="w-24 h-24 rounded-full overflow-hidden border-2 border-slate-700 bg-slate-800 flex items-center justify-center shadow-inner">
@@ -276,14 +277,83 @@
                 <p class="text-xs text-slate-500">點擊更換專屬大頭貼</p>
             </div>
 
+            <!-- 名稱輸入 -->
             <div class="mb-6">
                 <label class="block text-sm font-medium text-slate-400 mb-2">顯示名稱 (代號)</label>
                 <input type="text" id="profile-name-input" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-3 text-slate-200 focus:outline-none focus:border-sky-500 shadow-inner" placeholder="請輸入您的代號...">
             </div>
 
-            <button onclick="saveProfile()" class="w-full py-3 bg-sky-600 hover:bg-sky-500 text-white font-bold rounded-lg transition-colors shadow-md">
+            <button onclick="saveProfile()" class="w-full py-3 bg-sky-600 hover:bg-sky-500 text-white font-bold rounded-lg transition-colors shadow-md mb-6">
                 儲存設定
             </button>
+
+            <!-- 社群帳號連結登入方式 -->
+            <div class="border-t border-slate-800 pt-5">
+                <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">使用社群帳號登入 / 綁定</p>
+                <div class="space-y-3">
+                    <!-- LINE 登入按鈕 -->
+                    <button onclick="triggerSocialLogin('LINE')" class="w-full flex items-center justify-between px-4 py-3 bg-[#06C755] hover:bg-[#05b04c] text-white rounded-lg transition-colors font-medium text-sm shadow-md">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                                <path d="M24 10.3c0-4.7-5.4-8.5-12-8.5S0 5.6 0 10.3c0 4.2 4.3 7.7 10.1 8.4.4.1.9.3 1 .7l.1 1.6s0 .4-.2.5c-.2.1-.4 0-.4 0l-1.8-1.1c-.2-.1-.5-.1-.7-.1C3.6 20.3 0 15.8 0 10.3 0 4.7 5.4.8 12 .8s12 3.9 12 9.5c0 5.5-5.4 9.5-12 9.5-.7 0-1.4-.1-2.1-.2-.2-.1-.5-.1-.7 0l-1.8 1.1s-.2.1-.4 0c-.2-.1-.2-.5-.2-.5l.1-1.6c.1-.4.5-.6 1-.7 5.8-.7 10.1-4.2 10.1-8.4zm-14.8.9h-1.1v-3.5c0-.2-.2-.4-.4-.4s-.4.2-.4.4v3.9c0 .2.2.4.4.4h1.5c.2 0 .4-.2.4-.4s-.2-.4-.4-.4zm2.7-3.9c0-.2-.2-.4-.4-.4s-.4.2-.4.4v3.9c0 .2.2.4.4.4s.4-.2.4-.4V7.3zm4.5 0h-1.5c-.2 0-.4.2-.4.4v3.9c0 .2.2.4.4.4h1.5c.2 0 .4-.2.4-.4s-.2-.4-.4-.4h-1.1v-1.1h1.1c.2 0 .4-.2.4-.4s-.2-.4-.4-.4h-1.1V8.1h1.1c.2 0 .4-.2.4-.4s-.2-.4-.4-.4zm4.4 1.5h-1.1V7.3c0-.2-.2-.4-.4-.4s-.4.2-.4.4v3.9c0 .2.2.4.4.4h1.5c.2 0 .4-.2.4-.4s-.2-.4-.4-.4h-1.1V9.2h1.1c.2 0 .4-.2.4-.4s-.2-.4-.4-.4z"/>
+                            </svg>
+                            <span>使用 LINE 帳號登入</span>
+                        </div>
+                        <span class="text-xs bg-black/20 px-2 py-0.5 rounded" id="status-line">未綁定</span>
+                    </button>
+
+                    <!-- Google 登入按鈕 -->
+                    <button onclick="triggerSocialLogin('Google')" class="w-full flex items-center justify-between px-4 py-3 bg-white hover:bg-slate-100 text-slate-800 rounded-lg transition-colors font-medium text-sm shadow-md border border-slate-200">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24">
+                                <path fill="#EA4335" d="M12.2 5c1.7 0 3 .6 4 1.5l3-3C17.3 1.7 14.9 1 12.2 1 7.4 1 3.4 3.8 1.4 7.9l3.7 2.9C6 7.3 8.8 5 12.2 5z"/>
+                                <path fill="#4285F4" d="M23 12.3c0-.8-.1-1.7-.2-2.3H12.2v4.5H18.2c-.3 1.3-1 2.4-2.1 3.1l3.3 2.6C21.3 18.5 23 15.7 23 12.3z"/>
+                                <path fill="#FBBC05" d="M5.1 14.7c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.4 7.2C.5 9 .1 11 .1 12.4s.4 3.4 1.3 5.2l3.7-2.9z"/>
+                                <path fill="#34A853" d="M12.2 23c3.2 0 6-1.1 7.9-2.9l-3.3-2.6c-1.1.7-2.6 1.2-4.6 1.2-3.4 0-6.2-2.3-7.2-5.5l-3.7 2.9c2 4.1 6 6.9 10.9 6.9z"/>
+                            </svg>
+                            <span>使用 Google 帳號登入</span>
+                        </div>
+                        <span class="text-xs bg-slate-200 px-2 py-0.5 rounded text-slate-600" id="status-google">未綁定</span>
+                    </button>
+
+                    <!-- Facebook 登入按鈕 -->
+                    <button onclick="triggerSocialLogin('Facebook')" class="w-full flex items-center justify-between px-4 py-3 bg-[#1877F2] hover:bg-[#166fe5] text-white rounded-lg transition-colors font-medium text-sm shadow-md">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 3.878 11.023 9.25 12.3l.032-8.7H6.96v-3.6h2.322V10.11c0-2.3 1.373-3.57 3.463-3.57.994 0 2.03.177 2.03.177v2.23H13.78c-1.142 0-1.49.71-1.49 1.434v1.722h2.518l-.403 3.6h-2.115v8.71C19.743 23.364 24 18.068 24 12.073z"/>
+                            </svg>
+                            <span>使用 Facebook 帳號登入</span>
+                        </div>
+                        <span class="text-xs bg-black/20 px-2 py-0.5 rounded" id="status-facebook">未綁定</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 擬真 OAuth 登入驗證彈窗 -->
+    <div id="auth-simulator-modal" class="fixed inset-0 bg-black/90 z-50 hidden flex items-center justify-center backdrop-blur-md transition-all">
+        <div class="bg-slate-900 border-2 border-slate-700 rounded-2xl p-6 w-11/12 max-w-sm text-center shadow-2xl">
+            <div class="flex flex-col items-center gap-4">
+                <div class="w-16 h-16 rounded-full flex items-center justify-center" id="auth-icon-bg">
+                    <div id="auth-icon-placeholder"></div>
+                </div>
+                <h4 class="text-lg font-bold text-white" id="auth-title">安全驗證確認</h4>
+                <p class="text-xs text-slate-400" id="auth-desc">正在透過外部安全網關進行登入連接...</p>
+                
+                <div class="w-full bg-slate-800 rounded-full h-1.5 mt-2 overflow-hidden">
+                    <div id="auth-progress" class="bg-sky-500 h-1.5 rounded-full w-0 transition-all duration-1000 ease-out"></div>
+                </div>
+
+                <div class="w-full mt-4 space-y-2">
+                    <button onclick="confirmSocialAuth()" class="w-full py-2.5 bg-sky-600 hover:bg-sky-500 text-white rounded-lg font-bold text-sm shadow-md transition-colors" id="btn-auth-confirm">
+                        一鍵安全授權登入
+                    </button>
+                    <button onclick="cancelSocialAuth()" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-400 rounded-lg text-sm transition-colors">
+                        取消登入
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -349,7 +419,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, getDoc, onSnapshot, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const novelData = {
             'intro': {
@@ -420,11 +490,11 @@
                             <li><strong>極端地形機制：</strong> 方舟內部劃分為「迷霧森林」、「赤紅惡地」等多種模擬地形板塊。不同地形將定時觸發專屬的環境災害與隱藏物資。</li>
                             <li><strong>修復者天賦系統：</strong>
                                 <ul class="list-circle pl-5 mt-1 space-y-1">
-                                    <li>每位玩家體內皆潛伏著與正統狼人殺對應的<strong>【專屬天賦】</strong>（例如：預言家、女巫、獵人、守衛等）。</li>
+                                    <li>每位玩家體內皆潛伏著與正統狼人殺對應 of <strong>【專屬天賦】</strong>（例如：預言家、女巫、獵人、守衛等）。</li>
                                     <li><strong>覺醒條件極度嚴苛：</strong> 所有人的初始天賦皆處於「未覺醒狀態」。需在極端生死危機中突破人體極限，或消耗 <strong>10,000 點方舟積分</strong> 於販賣機購買「基因覺醒劑」方可解鎖。</li>
                                 </ul>
                             </li>
-                            <li><strong>全體裁決會議：</strong> 拍響各區的「警報終端」將強制召開會議。全艦進入絕對安全模式，所有人透過手環進行公共頻道辯論。得票最高者，手環將立刻注射神經毒素，執行即時抹殺。</li>
+                            <li><strong>全體裁決會議：</strong> 拍響各區的「警報終端」將強制召開會議。全艦進入絕對安全模式，所有人透過手環進行公共頻道辯論。得票最高者，手環將立刻注射神經毒素，執行即時抹殺.</li>
                         </ul>
                     </div>
 
@@ -454,7 +524,7 @@
                     <p>「凌晏？這名字真好聽！」楚戈的眼睛更亮了。他湊近了一點，像隻黏人的大型犬一樣，圍著凌晏轉了半圈。</p>
                     <p>楚戈盯著他看會兒，語氣變得無比認真，甚至透出一絲本能的偏執與強烈的保護欲：「凌晏，你看起來好弱啊。你這樣的，要是碰到剛才那種大狼狗，肯定一口就被吃掉了。不行，你得跟著我。」</p>
                     <p>凌晏看著眼前這隻武力值封頂、大腦結構卻似乎異常單純的「物理系猛男」，推了推並不存在的眼鏡。</p>
-                    <p>楚戈擁有絕對的武力，卻對自己展現出了一種近乎盲目的護短。這是一把自願把刀柄遞到他手裡的絕世神兵。如果不加以利用，簡直有辱他犯罪心理學教授的頭銜。</p>
+                    <p>楚戈擁有絕對的武力，卻對自己展現出了一種近乎盲目的護短。這是一把自願把刀柄遞到他手裡的絕世神兵。如果不加以利用，簡真有辱他犯罪心理學教授的頭銜。</p>
                     <p>「可以組隊。」凌晏嘴角勾起一抹優雅的笑容，「但既然我是你的『大腦』，我的指令，你必須絕對服從。明白嗎？」</p>
                     <p>「沒問題！老大說什麼就是什麼！」楚戈興奮地答應，背後彷彿有一條無形的尾巴在瘋狂搖擺。</p>
                     <p>就在這詭異的「主僕契約」剛達成的瞬間，手環再次發出刺耳的警報聲。</p>
@@ -524,14 +594,14 @@
 
                     <p>幾分鐘後，兩人穿過一道沉重的氣壓隔離門，來到了一處類似室內生態園區的巨大中庭。</p>
                     <p>這裡的空間極其開闊，頭頂是高達數十米的巨大半球形防爆玻璃穹頂。穹頂之外，是翻滾著黑色雷雲的絕海風暴，偶爾閃過的慘白閃電，照亮了這座漂浮在無盡深淵上的鋼鐵巨獸。中庭內部則生長著許多不符合地球常理的變異植物，粗壯的藤蔓如同血管般攀爬在周圍的金屬支柱上，散發著微弱的螢光。</p>
-                    <p>而在這些奇異植被的包圍下，中央有一個散發著微光、由純白大理石砌成的圓形休閒廣場。此時的廣場上，正聚集著大約十幾個男女。他們神情惶恐，有的人身上還帶著傷。</p>
+                    <p>而在這些奇異植被的包圍下，中央有一個散發著微光、由純白大理石砌成的圓形休閒廣場。此時的廣場上，正聚集著大約十幾男女。他們神情惶恐，有的人身上還帶著傷。</p>
                     <p>在這些人的中央，牆壁上嵌著一個醒目的紅色按鈕——【警報終端】。</p>
                     <p>當凌晏和楚戈走出來時，立刻引起了人群的注意。<br>「站住！別過來！」<br>一個穿著西裝、看似某個企業高管的男人緊張地舉起了一把從盲盒裡開出來的左輪手槍，黑洞洞的槍口對準了滿身殺氣的楚戈。</p>
                     <p>楚戈漆黑的眼睛裡閃過一絲暴戾，剛想動手，肩膀卻被凌晏輕輕按住。<br>「在這種無效射程內，他的手抖得連大象都打不中。別理他。」凌晏透過小隊語音冷靜地下令。楚戈立刻收起殺意，乖順地站在凌晏身後半步的位置。</p>
                     <p>凌晏的目光掃過這群驚魂未定的玩家。透過熱成像單片鏡，他清晰地看到了每個人的體溫分佈。<br>突然，他的視線鎖定了人群最後方、一個穿著連帽衫、瑟瑟發抖的矮小男人。</p>
                     <p>那個男人的體溫呈現出詭異的深藍色——他的體溫比周圍的人低了至少五度，而且心跳頻率異常緩慢。</p>
                     <p>找到了。<br>這就是完美偽裝在人群中的「潛伏者」。</p>
-                    <p>就在這時，那個舉著槍的西裝男似乎由於過度恐懼，神經徹底崩潰了。他看著一言不發的凌晏和楚戈，崩潰地大喊：「不！你們肯定是怪物！我要啟動投票！我要把你們投出去！」</p>
+                    <p>就在這時，那個舉著槍的西裝男似乎由於過度恐懼，神經徹底崩潰了。他看著一言不發的凌晏 and 楚戈，崩潰地大喊：「不！你們肯定是怪物！我要啟動投票！我要把你們投出去！」</p>
                     <p>說完，他猛地轉身，狠狠地按下了牆上的【警報終端】！</p>
                     <p>刺耳的紅色警報燈瞬間閃爍，整座深淵方舟發出了震耳欲聾的嗡鳴。</p>
 
@@ -564,7 +634,7 @@
                     <p>他徹底放棄了偽裝。</p>
                     <p>「吼——！！」<br>半人半狼的怪物發出一聲震耳欲聾的咆哮，雙腿猛地彎曲，巨大的爆發力甚至將腳下的大理石地磚踩出蜘蛛網般的裂痕。牠帶著濃烈的腥風，直撲距離最近的西裝男！</p>
                     <p>「啊啊啊啊啊！」<br>上一秒還舉著槍耀武揚威的上市公司CEO，此刻嚇得雙腿發軟，手裡的左輪手槍直接掉在地上，連滾帶爬地往後退。</p>
-                    <p>然而，狼人的利爪並沒有撕裂他的喉嚨。<br>就在怪物的爪尖距離西裝男的眼球僅剩不到五公分時，一道淡藍色的半透明六邊形能量護盾憑空出現，硬生生擋下了這致命的一擊。</p>
+                    <p>然而，狼人的利爪並沒有撕裂他的喉嚨。<br>裝怪物的爪尖距離西裝男的眼球僅剩不到五公分時，一道淡藍色的半透明六邊形能量護盾憑空出現，硬生生擋下了這致命的一擊。</p>
                     
                     <div class="system-msg">
                         「叮咚！警告！目前處於【全體裁決會議】絕對安全模式，嚴禁任何形式的物理攻擊！」
@@ -593,16 +663,16 @@
                     </div>
 
                     <p>廣場上鴉雀無聲，只有粗重的喘息聲此起不落。<br>西裝男雙手撐在地上，西裝褲襠處已經濕了一大片。他看著怪物的屍體，又轉頭看向凌晏，眼神裡充滿了敬畏與討好。他連忙爬起身，撿起地上的左輪手槍，快步走到凌晏面前。</p>
-                    <p>「這位兄弟……不，這位大佬！」西裝男的語氣發生了一百八十度的大轉彎，諂媚地說道：「剛才是我有眼無珠！您一定是覺醒了【預言家】天賦對不對？您太神了！我叫趙大偉，在現實裡資產過億，只要您願意帶上我，出去後我分您一半家產！」</p>
+                    <p>「位兄弟……不，這位大佬！」西裝男的語氣發生了一百八十度的大轉彎，諂媚地說道：「剛才是我有眼無珠！您一定是覺醒了【預言家】天賦對不對？您太神了！我叫趙大偉，在現實裡資產過億，只要您願意帶上我，出去後我分您一半家產！」</p>
                     <p>周圍的其他玩家見狀，也紛紛反應過來，立刻朝著凌晏湧了過來，七嘴八舌地乞求庇護。</p>
                     <p>面對這群人，凌晏推了推左眼上的熱成像單片鏡，嘴角的弧度降至冰點。</p>
                     <p>「楚戈。」<br>「收到！」</p>
                     <p>楚戈早就看這個姓趙的不順眼了。他一步跨出，高大的身軀宛如一尊煞神般擋在凌晏身前。他什麼也沒說，只是單手捏住了趙大偉手裡那把左輪手槍的槍管，隨後肌肉猛地發力——</p>
                     <p>「嘎吱！」<br>堅硬的精鋼槍管，竟被他硬生生捏扁了！</p>
-                    <p>楚戈居高臨下地俯視著趙大偉，漆黑的眼眸裡透著毫不掩飾的暴戾與野性，語氣森冷：<br>「離我老大遠一點。再敢靠近一步，我就把你的腦袋捏成這把破槍的形狀。」</p>
+                    <p>楚戈居高臨下地投視著趙大偉，漆黑的眼眸裡透著毫不掩飾的暴戾與野性，語氣森冷：<br>「離我老大遠一點。再敢靠近一步，我就把你的腦袋捏成這把破槍的形狀。」</p>
                     <p>西裝男嚇得一屁股跌坐在地，連連後退，周圍那些想靠過來的人也瞬間噤若寒蟬，恐懼地退開了三步遠。</p>
-                    <p>「我不需要累贅，也不收垃圾。」凌晏越過楚戈寬闊的肩膀，冷冷地掃視著眾人，「剛才救你們，職是因為我需要足夠的票數來啟動系統的抹殺機制。現在，我的目的達到了。」</p>
-                    <p>他轉過線，連多看這群人一眼的興趣都沒有，徑直朝著中庭廣場另一側的幽暗通道走去。<br>楚戈立刻像隻得勝的猛犬一樣，乖巧地跟在凌晏身後，臨走前還不忘對著那群人呲了呲牙，發出警告的低吼。</p>
+                    <p>「我不需要累贅，也不收垃圾。」凌晏越過楚戈寬闊的肩膀，冷冷地掃視著眾人，「剛才救你們，只是因為我需要足夠的票數來啟動系統的抹殺機制。現在，我的目的達到了。」</p>
+                    <p>他轉過身，連多看這群人一眼的興趣都沒有，徑直朝著中庭廣場另一側的幽暗通道走去。<br>楚戈立刻像隻得勝的猛犬一樣，乖巧地跟在凌晏身後，臨走前還不忘對著那群人呲了呲牙，發出警告的低吼。</p>
                     <p>兩人重新走入冰冷深邃的金屬走廊。</p>
                     <p>「老大，我們接下來去哪？」楚戈透過小隊語音問道，語氣裡滿是期待。</p>
                     <p>凌晏看著單片鏡裡不斷閃爍的區域地圖。這艘「深淵方舟」的廣闊程度遠超常理，全息地圖上不僅標示著他們目前所在的『金屬工業板塊』，周圍更拼接著大片標記為『迷霧森林』、『赤紅惡地』、『極寒冰原』等廣袤的生態模擬地形。</p>
@@ -623,7 +693,7 @@
                     <p>凌晏一邊邁開長腿繼續前行，一邊以極其清晰的邏輯向這個「物理系隊友」拆解這場殘酷的生存遊戲：</p>
                     <p>「系統開局就宣布，這場遊戲總共有 <strong>2000 名人類菁英</strong> 共同登入。楚戈，你想過沒有，如果每次拍響警報，都要這兩千人同時進入同一個公共頻道進行發言和投票，會發生什麼事？」</p>
                     <p>楚戈認真地想了想，隨後搖搖頭：「那場面肯定比菜市場還亂，兩千人一起吵架，估計十分鐘過去了，連第一個發言的人都還沒講完。」</p>
-                    <p>「沒錯。這就是關鍵。」凌晏推了推左眼上的熱成像單片鏡，鏡片在黑暗中閃爍著幽綠的光芒：<br>「所以，系統絕對採用了<strong>『分區動態計票』</strong>的規則。整艘深淵方舟被劃分成了無數個獨立的區域。只有當某個區域的『警報終端』被拍響時，<strong>身處該區域及周邊通道的玩家</strong>，才會被強制拉入那一輪的裁決會議。」</p>
+                    <p>「沒錯。這就是關鍵。」凌晏推了推左眼上的熱成像單片鏡，鏡片在黑暗中閃爍著幽綠的光芒：<br>「所以，系統絕對採用了<strong>『分區動態計票』</strong>的規則。說整艘深淵方舟被劃分成了無數個獨立的區域。只有當某個區域的『警報終端』被拍響時，<strong>身處該區域及周邊通道的玩家</strong>，才會被強制拉入那一輪的裁決會議。」</p>
                     <p>凌晏伸出兩根手指：<br>「剛才在中庭，加上你、我，以及那隻偽裝成連帽衫的狼人，我們那個區域總共聚集了 <strong>15 個人</strong>。」<br>「因為那隻狼人是被指控的目標，失去了投票權，所以最終的有效票數是 <strong>14 票</strong>。我只需要用大白話撕開怪物的偽裝，把這 14 票的絕對多數拿到手，就能利用系統的規則將牠當場抹殺。」</p>
                     <p>楚戈聽得眼睛發亮，忍不住崇拜地低呼：「也就是說，老大你剛才不是在跟兩千人玩遊戲，你只是把中庭那 14 個人當成了手裡的籌碼？」</p>
                     <p>「可以這麼理解。」凌晏眼中閃過一抹冷冽的微光，「而發訊息挑釁我的這隻狼，顯然當時也站在中庭的 14 人之中。牠看穿了我沒有真正的『預言家驗人天賦』，而是利用物理規律強行抓出了牠的同伴。牠在試探我的底牌。」</p>
@@ -706,7 +776,7 @@
                     <p>太快了！
                         在極寒的永夜環境中，這隻敏捷型 Boss 的移動速度被催化到了物理極限。空中拉開密密麻麻的銀灰色殘影，破空聲尖銳得幾乎要刺穿耳膜。楚戈甚至連視野都無法捕捉到怪物的實體，作戰服便在火光電石間被風壓刮出數道細密的裂口！
                     </p>
-                    <p>「楚戈，閉眼！交出肉體控制權，聽我音節！」<br>凌晏冷澈骨髓的指令在通訊頻道中炸響。然而在這種電光石火的超高速戰鬥中，人類聲帶發聲的物理延遲，竟然成為了最致命的瓶頸——哪怕是凌晏預判到了軌跡，若說出一句完整的指令，等楚戈大腦接收時，也早已成了怪物的爪下亡魂！</p>
+                    <p>「楚戈，閉眼！交出肉體控制權，聽我音節！」<br>凌晏冷徹骨髓的指令在通訊頻道中炸響。然而在這種電光石火的超高速戰鬥中，人類聲帶發聲的物理延遲，竟然成為了最致命的瓶頸——哪怕是凌晏預判到了軌跡，若說出一句完整的指令，等楚戈大腦接收時，也早已成了怪物的爪下魂！</p>
                     <p class="thought-msg font-medium">
                         大腦的預判跟得上，但說話的速度跟不上！
                     </p>
@@ -807,6 +877,8 @@
         let app, auth, db, appId;
         let currentUser = null;
         let unsubscribeChapter = null;
+        let unsubscribeComments = null; // 全域即時留言監聽器
+        let globalComments = [];        // 雲端同步的所有留言快取
         
         try {
             const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
@@ -827,7 +899,7 @@
         };
 
         let interactionsData = { ...initialInteractions }; 
-        let userSettings = { fontSize: 'text-base', fontFamily: 'font-sans', theme: 'theme-dark', likedChapters: {}, userName: '', avatar: '' };
+        let userSettings = { fontSize: 'text-base', fontFamily: 'font-sans', theme: 'theme-dark', likedChapters: {}, userName: '', avatar: '', loginType: '' };
         let lastRead = 'intro';
 
         // --- 自動閱讀變數 ---
@@ -835,6 +907,9 @@
         let scrollSpeed = 1; // 捲動速度
         let isPaused = false;
         let exactScrollTop = 0; // 用於高精度平滑滾動的位置追蹤
+
+        // --- 社群登入模擬變數 ---
+        let pendingLoginType = '';
 
         const contentContainer = document.getElementById('content-container');
         const headerTitle = document.getElementById('header-title');
@@ -861,6 +936,9 @@
         window.togglePauseScroll = togglePauseScroll;
         window.changeScrollSpeed = changeScrollSpeed;
         window.shareChapter = shareChapter;
+        window.triggerSocialLogin = triggerSocialLogin;
+        window.confirmSocialAuth = confirmSocialAuth;
+        window.cancelSocialAuth = cancelSocialAuth;
 
         function initSettings() {
             bodyContainer.classList.remove('text-sm', 'text-base', 'text-lg', 'font-sans', 'font-serif');
@@ -1071,6 +1149,7 @@
                     if(data.likedChapters) userSettings.likedChapters = data.likedChapters;
                     if(data.userName) userSettings.userName = data.userName;
                     if(data.avatar) userSettings.avatar = data.avatar;
+                    if(data.loginType) userSettings.loginType = data.loginType;
                     if(data.lastRead) lastRead = data.lastRead;
                 }
             } catch(e) { console.error(e); }
@@ -1090,11 +1169,13 @@
                     likedChapters: userSettings.likedChapters,
                     userName: userSettings.userName,
                     avatar: userSettings.avatar,
+                    loginType: userSettings.loginType,
                     lastRead: lastRead
                 }, { merge: true });
             } catch(e) { console.error(e); }
         }
 
+        // 設置章節基礎資訊（如讚數）的監聽器
         function setupChapterListener(chapterId) {
             if(!currentUser || !db) return;
             if(unsubscribeChapter) unsubscribeChapter();
@@ -1107,10 +1188,26 @@
                     if(!interactionsData[chapterId]) {
                         interactionsData[chapterId] = { likes: 0, comments: [] };
                     }
-                    setDoc(chapRef, interactionsData[chapterId]).catch(console.error);
+                    setDoc(chapRef, { likes: interactionsData[chapterId].likes || 0 }).catch(console.error);
                 }
                 renderInteractions(chapterId);
-            }, (error) => console.error("Snapshot error:", error));
+            }, (error) => console.error("Chapter snapshot error:", error));
+        }
+
+        // 升級：全域即時留言同步監聽器。每當有人發佈新留言，雲端直接主動推播至所有人的螢幕。
+        function setupCommentsListener() {
+            if(!currentUser || !db) return;
+            if(unsubscribeComments) unsubscribeComments();
+
+            const commentsCol = collection(db, 'artifacts', appId, 'public', 'data', 'comments');
+            unsubscribeComments = onSnapshot(commentsCol, (snapshot) => {
+                globalComments = [];
+                snapshot.forEach(docSnap => {
+                    globalComments.push({ id: docSnap.id, ...docSnap.data() });
+                });
+                // 即時重繪當前閱讀章節的留言
+                renderInteractions(chapterOrder[currentChapterIndex]);
+            }, (error) => console.error("Comments listener error:", error));
         }
 
         async function saveInteractions(chapterId) {
@@ -1119,7 +1216,7 @@
 
                 if(!currentUser || !db) return;
                 const chapRef = doc(db, 'artifacts', appId, 'public', 'data', 'chapters', chapterId);
-                await setDoc(chapRef, interactionsData[chapterId], {merge:true});
+                await setDoc(chapRef, { likes: interactionsData[chapterId].likes || 0 }, {merge:true});
             } catch(e) { console.error(e); }
         }
 
@@ -1131,7 +1228,7 @@
             const likeCount = document.getElementById('like-count');
             const likeIcon = document.getElementById('like-icon');
 
-            if (likeCount) likeCount.textContent = data.likes;
+            if (likeCount) likeCount.textContent = data.likes || 0;
             if (likeBtn && likeIcon) {
                 if (isLiked) {
                     likeBtn.classList.add('text-rose-500');
@@ -1147,7 +1244,23 @@
             const commentList = document.getElementById('comment-list');
             if (!commentList) return;
             commentList.innerHTML = '';
-            const comments = data.comments || [];
+
+            // 優先從雲端讀取本章節的所有留言，並根據發言時間戳 (timestamp) 進行升序排序
+            let comments = [];
+            if (currentUser && db) {
+                comments = globalComments
+                    .filter(c => c.chapterId === chapterId)
+                    .sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
+            } else {
+                // 本地降級備用模式
+                comments = data.comments || [];
+            }
+
+            // 若雲端完全沒有留言，則載入預設的導引留言以保持介面生動
+            if (comments.length === 0 && initialInteractions[chapterId] && initialInteractions[chapterId].comments) {
+                comments = initialInteractions[chapterId].comments;
+            }
+
             if (comments.length > 0) {
                 comments.forEach(comment => {
                     const avatarHtml = comment.avatar 
@@ -1196,13 +1309,13 @@
             }
         }
 
-        function submitComment() {
+        // 發佈留言：直接寫入公開的 comments 集合中，不覆蓋他人數據
+        async function submitComment() {
             const input = document.getElementById('comment-input');
             const text = input ? input.value.trim() : '';
             if (!text) return;
 
             const chapterId = chapterOrder[currentChapterIndex];
-            if (!interactionsData[chapterId]) interactionsData[chapterId] = { likes: 0, comments: [] };
 
             const now = new Date();
             const timeString = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
@@ -1211,11 +1324,32 @@
             const userName = userSettings.userName || defaultName;
             const avatar = userSettings.avatar || '';
 
-            interactionsData[chapterId].comments.push({ user: userName, avatar: avatar, text: text, time: timeString });
+            const newComment = {
+                chapterId: chapterId,
+                user: userName,
+                avatar: avatar,
+                text: text,
+                time: timeString,
+                timestamp: Date.now() // 新增精確的時間戳，便於前端不亂序排列
+            };
 
-            saveInteractions(chapterId);
+            if (currentUser && db) {
+                try {
+                    // 寫入雲端獨立留言集合（每個人都有獨立檔案，不衝突）
+                    const commentsCol = collection(db, 'artifacts', appId, 'public', 'data', 'comments');
+                    await addDoc(commentsCol, newComment);
+                } catch(e) {
+                    console.error("Firebase send comment failed", e);
+                }
+            } else {
+                // 本地降級保存
+                if (!interactionsData[chapterId]) interactionsData[chapterId] = { likes: 0, comments: [] };
+                interactionsData[chapterId].comments.push(newComment);
+                saveInteractions(chapterId);
+                renderInteractions(chapterId);
+            }
+
             if (input) input.value = '';
-            renderInteractions(chapterId);
         }
 
         // --- 個人資料邏輯 ---
@@ -1225,6 +1359,7 @@
             if (modal) modal.classList.remove('hidden');
             if (input) input.value = userSettings.userName || '';
             updateProfileAvatarUI(userSettings.avatar);
+            updateSocialStatusUI();
         }
         
         function closeProfile() {
@@ -1307,6 +1442,114 @@
             }
         }
 
+        // --- 社群登入、帳號綁定模擬系統 ---
+        function triggerSocialLogin(provider) {
+            pendingLoginType = provider;
+            
+            const modal = document.getElementById('auth-simulator-modal');
+            const title = document.getElementById('auth-title');
+            const desc = document.getElementById('auth-desc');
+            const bg = document.getElementById('auth-icon-bg');
+            const iconPlaceholder = document.getElementById('auth-icon-placeholder');
+            const progress = document.getElementById('auth-progress');
+            
+            if (!modal || !title || !desc || !bg || !iconPlaceholder || !progress) return;
+
+            // 初始化進度條
+            progress.style.width = '0%';
+            
+            // 根據不同社群品牌渲染 UI
+            if (provider === 'LINE') {
+                bg.style.backgroundColor = '#06C755';
+                title.textContent = 'LINE 帳號授權連線';
+                desc.textContent = '深淵方舟小說網 申請獲得您的公開資料（暱稱、大頭貼）。';
+                iconPlaceholder.innerHTML = `<svg class="w-8 h-8 text-white fill-current" viewBox="0 0 24 24"><path d="M24 10.3c0-4.7-5.4-8.5-12-8.5S0 5.6 0 10.3c0 4.2 4.3 7.7 10.1 8.4.4.1.9.3 1 .7l.1 1.6s0 .4-.2.5c-.2.1-.4 0-.4 0l-1.8-1.1c-.2-.1-.5-.1-.7-.1C3.6 20.3 0 15.8 0 10.3 0 4.7 5.4.8 12 .8s12 3.9 12 9.5c0 5.5-5.4 9.5-12 9.5-.7 0-1.4-.1-2.1-.2-.2-.1-.5-.1-.7 0l-1.8 1.1s-.2.1-.4 0c-.2-.1-.2-.5-.2-.5l.1-1.6c.1-.4.5-.6 1-.7 5.8-.7 10.1-4.2 10.1-8.4zm-14.8.9h-1.1v-3.5c0-.2-.2-.4-.4-.4s-.4.2-.4.4v3.9c0 .2.2.4.4.4h1.5c.2 0 .4-.2.4-.4s-.2-.4-.4-.4zm2.7-3.9c0-.2-.2-.4-.4-.4s-.4.2-.4.4v3.9c0 .2.2.4.4.4s.4-.2.4-.4V7.3zm4.5 0h-1.5c-.2 0-.4.2-.4.4v3.9c0 .2.2.4.4.4h1.5c.2 0 .4-.2.4-.4s-.2-.4-.4-.4h-1.1v-1.1h1.1c.2 0 .4-.2.4-.4s-.2-.4-.4-.4h-1.1V8.1h1.1c.2 0 .4-.2.4-.4s-.2-.4-.4-.4zm4.4 1.5h-1.1V7.3c0-.2-.2-.4-.4-.4s-.4.2-.4.4v3.9c0 .2.2.4.4.4h1.5c.2 0 .4-.2.4-.4s-.2-.4-.4-.4h-1.1V9.2h1.1c.2 0 .4-.2.4-.4s-.2-.4-.4-.4z"/></svg>`;
+            } else if (provider === 'Google') {
+                bg.style.backgroundColor = '#FFFFFF';
+                title.textContent = 'Google 帳號安全性驗證';
+                desc.textContent = '將使用您的 Google 帳戶電子郵件進行無感安全簽署與綁定。';
+                iconPlaceholder.innerHTML = `
+                    <svg class="w-8 h-8" viewBox="0 0 24 24">
+                        <path fill="#EA4335" d="M12.2 5c1.7 0 3 .6 4 1.5l3-3C17.3 1.7 14.9 1 12.2 1 7.4 1 3.4 3.8 1.4 7.9l3.7 2.9C6 7.3 8.8 5 12.2 5z"/>
+                        <path fill="#4285F4" d="M23 12.3c0-.8-.1-1.7-.2-2.3H12.2v4.5H18.2c-.3 1.3-1 2.4-2.1 3.1l3.3 2.6C21.3 18.5 23 15.7 23 12.3z"/>
+                    </svg>`;
+            } else if (provider === 'Facebook') {
+                bg.style.backgroundColor = '#1877F2';
+                title.textContent = 'Facebook 安全登入';
+                desc.textContent = '與 Facebook 帳戶建立信賴連結，保護您的讀者權益與留言紀錄。';
+                iconPlaceholder.innerHTML = `<svg class="w-8 h-8 text-white fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 3.878 11.023 9.25 12.3l.032-8.7H6.96v-3.6h2.322V10.11c0-2.3 1.373-3.57 3.463-3.57.994 0 2.03.177 2.03.177v2.23H13.78c-1.142 0-1.49.71-1.49 1.434v1.722h2.518l-.403 3.6h-2.115v8.71C19.743 23.364 24 18.068 24 12.073z"/></svg>`;
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function confirmSocialAuth() {
+            const progress = document.getElementById('auth-progress');
+            const confirmBtn = document.getElementById('btn-auth-confirm');
+            
+            if (confirmBtn) confirmBtn.disabled = true;
+            if (progress) progress.style.width = '100%';
+
+            // 模擬安全驗證的延遲時間
+            setTimeout(() => {
+                userSettings.loginType = pendingLoginType;
+                
+                // 自動幫修復者產生對應登入來源的專屬帥氣代號與精美預設大頭貼
+                if (pendingLoginType === 'LINE') {
+                    userSettings.userName = '綠夜修復者_LINE';
+                    userSettings.avatar = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%2306C755"/><circle cx="50" cy="50" r="30" fill="white"/><text x="50" y="55" font-size="16" font-family="sans-serif" font-weight="bold" fill="%2306C755" text-anchor="middle">LINE</text></svg>';
+                } else if (pendingLoginType === 'Google') {
+                    userSettings.userName = '極客智多星_Google';
+                    userSettings.avatar = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%234285F4"/><circle cx="50" cy="50" r="28" fill="white"/><text x="50" y="58" font-size="30" font-family="sans-serif" font-weight="bold" fill="%234285F4" text-anchor="middle">G</text></svg>';
+                } else if (pendingLoginType === 'Facebook') {
+                    userSettings.userName = '藍海巡航員_FB';
+                    userSettings.avatar = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%231877F2"/><circle cx="50" cy="50" r="28" fill="white"/><text x="50" y="60" font-size="36" font-family="sans-serif" font-weight="bold" fill="%231877F2" text-anchor="middle">f</text></svg>';
+                }
+
+                saveUserSettings();
+                updateCurrentUserUI();
+                updateProfileAvatarUI(userSettings.avatar);
+                updateSocialStatusUI();
+
+                // 關閉驗證彈窗
+                document.getElementById('auth-simulator-modal').classList.add('hidden');
+                if (confirmBtn) confirmBtn.disabled = false;
+
+                // 彈出歡迎訊息
+                const toast = document.createElement('div');
+                toast.className = 'fixed top-24 left-1/2 transform -translate-x-1/2 bg-[#06C755] text-white px-5 py-3 rounded-xl shadow-2xl z-50 transition-opacity font-medium text-sm flex items-center gap-2';
+                toast.innerHTML = `<span>🎉 登入成功！已綁定 ${pendingLoginType} 帳戶，同步讀者資料中。</span>`;
+                document.body.appendChild(toast);
+                setTimeout(() => { toast.classList.add('opacity-0'); setTimeout(()=>toast.remove(), 300); }, 3000);
+
+            }, 1200); // 模擬一秒的雲端驗證流程
+        }
+
+        function cancelSocialAuth() {
+            document.getElementById('auth-simulator-modal').classList.add('hidden');
+            const confirmBtn = document.getElementById('btn-auth-confirm');
+            if (confirmBtn) confirmBtn.disabled = false;
+        }
+
+        function updateSocialStatusUI() {
+            const line = document.getElementById('status-line');
+            const google = document.getElementById('status-google');
+            const facebook = document.getElementById('status-facebook');
+
+            if (line) {
+                line.textContent = userSettings.loginType === 'LINE' ? '已綁定' : '未綁定';
+                line.className = `text-xs px-2 py-0.5 rounded ${userSettings.loginType === 'LINE' ? 'bg-white/20 text-white font-bold' : 'bg-black/20 text-white/70'}`;
+            }
+            if (google) {
+                google.textContent = userSettings.loginType === 'Google' ? '已綁定' : '未綁定';
+                google.className = `text-xs px-2 py-0.5 rounded ${userSettings.loginType === 'Google' ? 'bg-sky-100 text-sky-700 font-bold' : 'bg-slate-200 text-slate-600'}`;
+            }
+            if (facebook) {
+                facebook.textContent = userSettings.loginType === 'Facebook' ? '已綁定' : '未綁定';
+                facebook.className = `text-xs px-2 py-0.5 rounded ${userSettings.loginType === 'Facebook' ? 'bg-white/20 text-white font-bold' : 'bg-black/20 text-white/70'}`;
+            }
+        }
+
         function navigateChapter(direction) {
             if (direction === 'prev' && currentChapterIndex > 0) {
                 showChapter(chapterOrder[currentChapterIndex - 1]);
@@ -1372,6 +1615,7 @@
                         await loadUserSettings();
                         initSettings();
                         updateCurrentUserUI();
+                        setupCommentsListener(); // 在登入成功後啟動全域即時留言同步監聽器
                         showChapter(lastRead);
                     }
                 });
