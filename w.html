@@ -112,7 +112,7 @@
             </div>
             
             <div class="p-4 flex-1 overflow-y-auto">
-                <h2 class="text-xs font-semibold text-slate-500 uppercase tracking-test mb-4 px-3">目錄</h2>
+                <h2 class="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-4 px-3">目錄</h2>
                 <nav class="space-y-1">
                     <button onclick="showChapter('intro')" id="btn-intro" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-150 active">
                         作品簡介
@@ -214,16 +214,22 @@
                     <!-- 留言區 -->
                     <div class="bg-black/10 p-6 rounded-xl border divider-line">
                         <div class="flex justify-between items-center mb-6">
-                            <h4 class="text-lg font-bold flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                                </svg>
-                                讀者留言
-                            </h4>
+                            <div class="flex items-center gap-3">
+                                <h4 class="text-lg font-bold flex items-center gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                    </svg>
+                                    讀者留言
+                                </h4>
+                                <!-- 連線狀態燈號 -->
+                                <span id="connection-status" class="text-[10px] px-2 py-0.5 rounded border border-amber-500/50 bg-amber-500/10 text-amber-500 flex items-center gap-1 font-medium">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span> 單機模式
+                                </span>
+                            </div>
                             <!-- 分享按鈕 -->
-                            <button onclick="shareChapter()" class="flex items-center gap-1 text-sm bg-slate-800 text-slate-300 hover:text-white px-3 py-1.5 rounded-md transition-colors border border-slate-700">
+                            <button onclick="shareChapter()" class="flex items-center gap-1 text-sm bg-slate-800 text-slate-300 hover:text-white px-3 py-1.5 rounded-md transition-colors border border-slate-700 shadow-sm">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
-                                分享章節
+                                邀請朋友
                             </button>
                         </div>
                         
@@ -490,7 +496,7 @@
                             <li><strong>極端地形機制：</strong> 方舟內部劃分為「迷霧森林」、「赤紅惡地」等多種模擬地形板塊。不同地形將定時觸發專屬的環境災害與隱藏物資。</li>
                             <li><strong>修復者天賦系統：</strong>
                                 <ul class="list-circle pl-5 mt-1 space-y-1">
-                                    <li>每位玩家體內皆潛伏著與正統狼人殺對應 of <strong>【專屬天賦】</strong>（例如：預言家、女巫、獵人、守衛等）。</li>
+                                    <li>每位玩家體內皆潛伏著與正統狼人殺對應的<strong>【專屬天賦】</strong>（例如：預言家、女巫、獵人、守衛等）。</li>
                                     <li><strong>覺醒條件極度嚴苛：</strong> 所有人的初始天賦皆處於「未覺醒狀態」。需在極端生死危機中突破人體極限，或消耗 <strong>10,000 點方舟積分</strong> 於販賣機購買「基因覺醒劑」方可解鎖。</li>
                                 </ul>
                             </li>
@@ -587,7 +593,7 @@
                     <p>凌晏接過第二個金屬球，優雅地打開。</p>
                     <p><strong>【獲得物品：戰術熱成像單片鏡】</strong><br><span class="thought-msg">物品描述：佩戴後，可穿透一般金屬牆壁探測半徑三十米內的熱源。</span></p>
                     <p>凌晏看著這個道具，深邃的眼眸微微瞇起。<br>「深淵怪物既然被設定為『潛伏者』，這意味著牠們的生物構造必定與常人不同。冷血動物或深淵生物的基礎體溫，絕對無法完美模擬人類的37度恆溫。這東西在前期，比任何未覺醒的天賦都好用。」</p>
-                    <p>他將單片鏡戴在左眼上，視野中立刻出現了淡綠色的數據網格。他抬頭看向楚戈——在熱成像下，楚戈整個人簡直像是一個熊熊燃燒的火爐，生命體徵旺盛得令人髮指，絕對是個純種人類。</p>
+                    <p>他將單片鏡戴在左眼上，視野中立刻出現了淡色的數據網格。他抬頭看向楚戈——在熱成像下，楚戈整個人簡直像是一個熊熊燃燒的火爐，生命體徵旺盛得令人髮指，絕對是個純種人類。</p>
                     <p>「走吧，我們去人多的地方。」凌晏推了推單片鏡，嘴角勾起一抹冰冷的笑意，「遊戲，才剛開始。」</p>
 
                     <div class="text-center my-8 opacity-40">❖ ❖ ❖</div>
@@ -719,7 +725,7 @@
                         「警告：動力室主要冷卻閥門遭到人為破壞，全艦暖氣系統已鎖定關閉。黑夜模式將強制延長，距離下一次全艦核心主線發布剩餘時間：30分鐘。」
                     </div>
 
-                    <p>「人為破壞……」凌晏修長的手指輕輕敲擊著冰冷的控制台，腦海中的線索在這一刻完美串聯了起來。</p>
+                    <p>「人為破壞……」凌晏修長手指輕輕敲擊著冰冷的控制台，腦海中的線索在這一刻完美串聯了起來。</p>
                     <p>「狼人故意破壞了動力室，想利用極寒和永夜來徹底瓦解人類的心理防線，加速這兩千人的死亡速度。而剛才發訊息挑釁我的那隻狼，很可能正在前往主動力室，準備徹底切斷整艘船的能源。」</p>
                     <p>凌晏轉過頭，看向控制室外那條通往最底層、宛如巨獸食道般幽暗不見底的垂直通道。</p>
                     <p>「楚戈，拿好你的武器。」凌晏冷笑了一聲，鏡片後的雙眸亮得驚人，「留給我們的時間不多了。既然那些怪物想玩，那我們就去動力室，把牠們的硬體開關……親手砸碎。」</p>
@@ -776,7 +782,7 @@
                     <p>太快了！
                         在極寒的永夜環境中，這隻敏捷型 Boss 的移動速度被催化到了物理極限。空中拉開密密麻麻的銀灰色殘影，破空聲尖銳得幾乎要刺穿耳膜。楚戈甚至連視野都無法捕捉到怪物的實體，作戰服便在火光電石間被風壓刮出數道細密的裂口！
                     </p>
-                    <p>「楚戈，閉眼！交出肉體控制權，聽我音節！」<br>凌晏冷徹骨髓的指令在通訊頻道中炸響。然而在這種電光石火的超高速戰鬥中，人類聲帶發聲的物理延遲，竟然成為了最致命的瓶頸——哪怕是凌晏預判到了軌跡，若說出一句完整的指令，等楚戈大腦接收時，也早已成了怪物的爪下魂！</p>
+                    <p>「楚戈，閉眼！交出肉體控制權，聽我音節！」<br>凌晏冷澈骨髓的指令在通訊頻道中炸響。然而在這種電光石火的超高速戰鬥中，人類聲帶發聲的物理延遲，竟然成為了最致命的瓶頸——哪怕是凌晏預判到了軌跡，若說出一句完整的指令，等楚戈大腦接收時，也早已成了怪物的爪下魂！</p>
                     <p class="thought-msg font-medium">
                         大腦的預判跟得上，但說話的速度跟不上！
                     </p>
@@ -881,12 +887,32 @@
         let globalComments = [];        // 雲端同步的所有留言快取
         
         try {
-            const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+            // 嘗試連線至 Firebase 雲端伺服器 (若是在 GitHub Pages 上，這會 fallback 到自訂設定)
+            let firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+            
+            // -------------------------------------------------------------
+            // 👉【GitHub Pages 專用】請在這裡貼上你的 Firebase Config👈
+            // 如果你想在 GitHub Pages 上也能用留言板，請把下面的 /* 和 */ 刪掉，
+            // 並且填入你免費申請到的 Firebase 鑰匙！
+            // -------------------------------------------------------------
+            /*
+            if (!firebaseConfig) {
+                firebaseConfig = {
+                    apiKey: "你的-API-KEY",
+                    authDomain: "你的-專案ID.firebaseapp.com",
+                    projectId: "你的-專案ID",
+                    storageBucket: "你的-專案ID.appspot.com",
+                    messagingSenderId: "你的-SENDER-ID",
+                    appId: "你的-APP-ID"
+                };
+            }
+            */
+
             if(firebaseConfig) {
                 app = initializeApp(firebaseConfig);
                 auth = getAuth(app);
                 db = getFirestore(app);
-                appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+                appId = typeof __app_id !== 'undefined' ? __app_id : 'my-github-novel-app';
             }
         } catch(e) { console.error("Firebase init failed", e); }
 
@@ -978,6 +1004,9 @@
 
             if (contentContainer) contentContainer.innerHTML = contentHtml;
             
+            // 安全防護：如果 headerTitle 存在才進行設定
+            if (headerTitle) headerTitle.textContent = novelData[chapterId].title;
+
             document.querySelectorAll('.nav-link').forEach(btn => {
                 btn.classList.remove('active');
             });
@@ -1045,7 +1074,7 @@
 
         // --- 自動閱讀功能 ---
         function startAutoScroll() {
-            toggleSettings(); // 關閉設定面板
+            toggleSettings(); 
             if (autoScrollInterval) return;
             
             const panel = document.getElementById('autoscroll-panel');
@@ -1055,25 +1084,19 @@
             isPaused = false;
             document.getElementById('scroll-status-text').textContent = '閱讀中';
 
-            // 關鍵修正：關閉 CSS 的 scroll-smooth，避免與 JS 動畫衝突導致抖動
             readArea.classList.remove('scroll-smooth');
-            
-            // 關鍵修正：記錄精確的初始小數點位置
             exactScrollTop = readArea.scrollTop;
 
             const step = () => {
                 if (!isPaused) {
                     exactScrollTop += scrollSpeed;
                     
-                    // 若使用者手動大幅度滾動，重新同步追蹤位置避免拉扯
                     if (Math.abs(readArea.scrollTop - exactScrollTop) > Math.max(scrollSpeed * 5, 5)) {
                         exactScrollTop = readArea.scrollTop;
                     }
 
-                    // 強制賦予精確數值
                     readArea.scrollTop = exactScrollTop;
                     
-                    // 偵測是否到底部
                     if (readArea.scrollTop + readArea.clientHeight >= readArea.scrollHeight - 2) {
                         stopAutoScroll();
                         return;
@@ -1090,7 +1113,6 @@
                 autoScrollInterval = null;
             }
             
-            // 恢復 CSS 的平滑滾動特性 (用於翻頁時的滑順感)
             readArea.classList.add('scroll-smooth');
 
             const panel = document.getElementById('autoscroll-panel');
@@ -1175,7 +1197,6 @@
             } catch(e) { console.error(e); }
         }
 
-        // 設置章節基礎資訊（如讚數）的監聽器
         function setupChapterListener(chapterId) {
             if(!currentUser || !db) return;
             if(unsubscribeChapter) unsubscribeChapter();
@@ -1194,7 +1215,6 @@
             }, (error) => console.error("Chapter snapshot error:", error));
         }
 
-        // 升級：全域即時留言同步監聽器。每當有人發佈新留言，雲端直接主動推播至所有人的螢幕。
         function setupCommentsListener() {
             if(!currentUser || !db) return;
             if(unsubscribeComments) unsubscribeComments();
@@ -1205,7 +1225,6 @@
                 snapshot.forEach(docSnap => {
                     globalComments.push({ id: docSnap.id, ...docSnap.data() });
                 });
-                // 即時重繪當前閱讀章節的留言
                 renderInteractions(chapterOrder[currentChapterIndex]);
             }, (error) => console.error("Comments listener error:", error));
         }
@@ -1245,18 +1264,15 @@
             if (!commentList) return;
             commentList.innerHTML = '';
 
-            // 優先從雲端讀取本章節的所有留言，並根據發言時間戳 (timestamp) 進行升序排序
             let comments = [];
             if (currentUser && db) {
                 comments = globalComments
                     .filter(c => c.chapterId === chapterId)
                     .sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
             } else {
-                // 本地降級備用模式
                 comments = data.comments || [];
             }
 
-            // 若雲端完全沒有留言，則載入預設的導引留言以保持介面生動
             if (comments.length === 0 && initialInteractions[chapterId] && initialInteractions[chapterId].comments) {
                 comments = initialInteractions[chapterId].comments;
             }
@@ -1268,7 +1284,7 @@
                         : `<div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-slate-400 text-xs font-bold border border-slate-600">${comment.user.substring(0,1)}</div>`;
 
                     commentList.innerHTML += `
-                        <div class="bg-black/10 p-4 rounded-lg border border-slate-700/30 shadow-sm flex gap-3">
+                        <div class="bg-black/10 p-4 rounded-lg border border-slate-700/30 shadow-sm flex gap-3 animate-fade-in">
                             <div class="flex-shrink-0 mt-1">${avatarHtml}</div>
                             <div class="flex-1">
                                 <div class="flex justify-between items-center mb-1">
@@ -1309,7 +1325,6 @@
             }
         }
 
-        // 發佈留言：直接寫入公開的 comments 集合中，不覆蓋他人數據
         async function submitComment() {
             const input = document.getElementById('comment-input');
             const text = input ? input.value.trim() : '';
@@ -1330,19 +1345,17 @@
                 avatar: avatar,
                 text: text,
                 time: timeString,
-                timestamp: Date.now() // 新增精確的時間戳，便於前端不亂序排列
+                timestamp: Date.now() 
             };
 
             if (currentUser && db) {
                 try {
-                    // 寫入雲端獨立留言集合（每個人都有獨立檔案，不衝突）
                     const commentsCol = collection(db, 'artifacts', appId, 'public', 'data', 'comments');
                     await addDoc(commentsCol, newComment);
                 } catch(e) {
                     console.error("Firebase send comment failed", e);
                 }
             } else {
-                // 本地降級保存
                 if (!interactionsData[chapterId]) interactionsData[chapterId] = { likes: 0, comments: [] };
                 interactionsData[chapterId].comments.push(newComment);
                 saveInteractions(chapterId);
@@ -1442,6 +1455,23 @@
             }
         }
 
+        function navigateChapter(direction) {
+            if (direction === 'prev' && currentChapterIndex > 0) {
+                showChapter(chapterOrder[currentChapterIndex - 1]);
+            } else if (direction === 'next' && currentChapterIndex < chapterOrder.length - 1) {
+                showChapter(chapterOrder[currentChapterIndex + 1]);
+            }
+        }
+
+        function updatePaginationButtons() {
+            const btnPrev = document.getElementById('btn-prev');
+            const btnNext = document.getElementById('btn-next');
+            if (btnPrev && btnNext) {
+                btnPrev.disabled = currentChapterIndex === 0;
+                btnNext.disabled = currentChapterIndex === chapterOrder.length - 1;
+            }
+        }
+
         // --- 社群登入、帳號綁定模擬系統 ---
         function triggerSocialLogin(provider) {
             pendingLoginType = provider;
@@ -1468,11 +1498,7 @@
                 bg.style.backgroundColor = '#FFFFFF';
                 title.textContent = 'Google 帳號安全性驗證';
                 desc.textContent = '將使用您的 Google 帳戶電子郵件進行無感安全簽署與綁定。';
-                iconPlaceholder.innerHTML = `
-                    <svg class="w-8 h-8" viewBox="0 0 24 24">
-                        <path fill="#EA4335" d="M12.2 5c1.7 0 3 .6 4 1.5l3-3C17.3 1.7 14.9 1 12.2 1 7.4 1 3.4 3.8 1.4 7.9l3.7 2.9C6 7.3 8.8 5 12.2 5z"/>
-                        <path fill="#4285F4" d="M23 12.3c0-.8-.1-1.7-.2-2.3H12.2v4.5H18.2c-.3 1.3-1 2.4-2.1 3.1l3.3 2.6C21.3 18.5 23 15.7 23 12.3z"/>
-                    </svg>`;
+                iconPlaceholder.innerHTML = `<svg class="w-8 h-8" viewBox="0 0 24 24"><path fill="#EA4335" d="M12.2 5c1.7 0 3 .6 4 1.5l3-3C17.3 1.7 14.9 1 12.2 1 7.4 1 3.4 3.8 1.4 7.9l3.7 2.9C6 7.3 8.8 5 12.2 5z"/><path fill="#4285F4" d="M23 12.3c0-.8-.1-1.7-.2-2.3H12.2v4.5H18.2c-.3 1.3-1 2.4-2.1 3.1l3.3 2.6C21.3 18.5 23 15.7 23 12.3z"/><path fill="#FBBC05" d="M5.1 14.7c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.4 7.2C.5 9 .1 11 .1 12.4s.4 3.4 1.3 5.2l3.7-2.9z"/><path fill="#34A853" d="M12.2 23c3.2 0 6-1.1 7.9-2.9l-3.3-2.6c-1.1.7-2.6 1.2-4.6 1.2-3.4 0-6.2-2.3-7.2-5.5l-3.7 2.9c2 4.1 6 6.9 10.9 6.9z"/></svg>`;
             } else if (provider === 'Facebook') {
                 bg.style.backgroundColor = '#1877F2';
                 title.textContent = 'Facebook 安全登入';
@@ -1512,7 +1538,8 @@
                 updateSocialStatusUI();
 
                 // 關閉驗證彈窗
-                document.getElementById('auth-simulator-modal').classList.add('hidden');
+                const modal = document.getElementById('auth-simulator-modal');
+                if (modal) modal.classList.add('hidden');
                 if (confirmBtn) confirmBtn.disabled = false;
 
                 // 彈出歡迎訊息
@@ -1526,7 +1553,8 @@
         }
 
         function cancelSocialAuth() {
-            document.getElementById('auth-simulator-modal').classList.add('hidden');
+            const modal = document.getElementById('auth-simulator-modal');
+            if (modal) modal.classList.add('hidden');
             const confirmBtn = document.getElementById('btn-auth-confirm');
             if (confirmBtn) confirmBtn.disabled = false;
         }
@@ -1547,23 +1575,6 @@
             if (facebook) {
                 facebook.textContent = userSettings.loginType === 'Facebook' ? '已綁定' : '未綁定';
                 facebook.className = `text-xs px-2 py-0.5 rounded ${userSettings.loginType === 'Facebook' ? 'bg-white/20 text-white font-bold' : 'bg-black/20 text-white/70'}`;
-            }
-        }
-
-        function navigateChapter(direction) {
-            if (direction === 'prev' && currentChapterIndex > 0) {
-                showChapter(chapterOrder[currentChapterIndex - 1]);
-            } else if (direction === 'next' && currentChapterIndex < chapterOrder.length - 1) {
-                showChapter(chapterOrder[currentChapterIndex + 1]);
-            }
-        }
-
-        function updatePaginationButtons() {
-            const btnPrev = document.getElementById('btn-prev');
-            const btnNext = document.getElementById('btn-next');
-            if (btnPrev && btnNext) {
-                btnPrev.disabled = currentChapterIndex === 0;
-                btnNext.disabled = currentChapterIndex === chapterOrder.length - 1;
             }
         }
 
@@ -1589,7 +1600,6 @@
             const localSettings = localStorage.getItem('novelSettings');
             if(localSettings) userSettings = JSON.parse(localSettings);
             
-            // 讀取 URL Hash 來決定要跳轉到哪一章 (用於分享連結)
             const hashChapter = window.location.hash.replace('#', '');
             if (chapterOrder.includes(hashChapter)) {
                 lastRead = hashChapter;
@@ -1612,10 +1622,18 @@
                 onAuthStateChanged(auth, async (user) => {
                     if(user) {
                         currentUser = user;
+                        
+                        // 成功登入雲端後，更新右上角燈號狀態為綠色
+                        const statusBadge = document.getElementById('connection-status');
+                        if (statusBadge) {
+                            statusBadge.className = 'text-[10px] px-2 py-0.5 rounded border border-emerald-500/50 bg-emerald-500/10 text-emerald-500 flex items-center gap-1 font-medium';
+                            statusBadge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 已連線 (多人同步中)';
+                        }
+
                         await loadUserSettings();
                         initSettings();
                         updateCurrentUserUI();
-                        setupCommentsListener(); // 在登入成功後啟動全域即時留言同步監聽器
+                        setupCommentsListener(); 
                         showChapter(lastRead);
                     }
                 });
