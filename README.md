@@ -129,6 +129,9 @@
                     <button onclick="showChapter('ch4')" id="btn-ch4" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-150">
                         第四章：抓到你了，躲在暗處的小狼崽
                     </button>
+                    <button onclick="showChapter('ch5')" id="btn-ch5" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-150">
+                        第五章：所謂的暴君，不過是懦夫的遮羞布
+                    </button>
                 </nav>
             </div>
             <div class="p-4 border-t border-slate-800 text-xs text-slate-500 text-center">
@@ -155,6 +158,7 @@
                             <option value="ch2">第二章：請不要用體溫挑戰理科生</option>
                             <option value="ch3">第三章：所謂的絕對多數暴力</option>
                             <option value="ch4">第四章：抓到你了，躲在暗處的小狼崽</option>
+                            <option value="ch5">第五章：所謂的暴君，不過是懦夫的遮羞布</option>
                         </select>
                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-400">
                             <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -464,7 +468,9 @@
 
                         <p class="mb-2"><strong>故事背景與方舟地形：</strong></p>
                         <p>2000名在各領域達到極限值的人類菁英，被神秘力量綁架到一個名為「深淵方舟」的巨大封閉設施中，被迫參與一場真實的死亡狼人殺遊戲。</p>
-                        <p>這艘方舟並非單純的金屬船艦，其內部透過超高科技劃分為多個廣袤的<strong>「生態模擬地形」</strong>（如：迷霧森林、赤紅惡地、極寒冰原、廢土都市等）。玩家不僅要對抗潛伏者人群中的怪物，還要適應各種極端地形的生存挑戰與環境災害。</p>
+                        <p>這艘方舟並非單純的金屬船艦，其內部透過超高科技劃分為多個廣袤的<strong>「生態模擬地形」</strong>（如：迷霧森林、赤紅惡地、極寒冰原、廢土都市等）。玩家不僅要對抗潛伏在人群中的怪物，還要適應各種極端地形的生存挑戰與環境災害。</p>
+                        <p class="mb-2"><strong>官方交易體系「深淵交易所」：</strong></p>
+                        <p>方舟內各區皆設有官方的自動化交易終端，玩家可在交易所中以方舟積分買賣材料、道具與珍貴的「天賦製作配方」。</p>
                         <p class="mt-6 text-center opacity-70 italic">「在資訊極度不對等且無法反抗的環境下，猜忌鏈一旦形成，人類根本不需要怪物動手，自己體內的群體恐慌與獵巫本能就會在最短的時間內把同類票死。」</p>
                     </div>
                 `
@@ -476,7 +482,7 @@
                     <p>冰冷。<br>這是一種毫無人情味、彷彿連靈魂都能凍結的機體冷覺，正順著脊椎一路往大腦皮層竄。</p>
                     <p>當凌晏恢復意識時，視網膜首先捕捉到的是一片黏稠的、宛如凝固血液般的暗紅色應急燈光。他沒有立刻坐起身，甚至連呼吸的頻率都沒有發生任何改變。在完全陌生的環境中，暴露出自己已經清醒，是只有低等獵物才會犯的愚蠢錯誤。</p>
                     <p>他躺在帶有細微磨砂感的銀灰色金屬地板上，閉上眼睛，冷靜地記下周圍風扇運轉的低頻共振聲，同時在大腦中高速回溯自己失去意識前的最後畫面。</p>
-                    <p>今年二十四歲的凌晏，是國內最年輕的犯罪心理學副教授，同時也是特聘的重案組戰略顧問。失去意識前，他正坐在自己那間堆滿卷宗的辦公室裡，研究著近期在全球範圍內引發恐慌的「黑盒子事件」。</p>
+                    <p>今年二十四歲的逆晏，是國內最年輕的犯罪心理學副教授，同時也是特聘的重案組戰略顧問。失去意識前，他正坐在自己那間堆滿卷宗的辦公室裡，研究著近期在全球範圍內引發恐慌的「黑盒子事件」。</p>
                     <p>過去三個月裡，世界各地陸續發生了離奇的失蹤案。失蹤者都是在某個領域達到了人類極限值的菁英。而就在午夜十一點四十五分，一個憑空出現的完美黑色幾何立方體吞噬了凌晏。沒有失重感，也沒有痛覺，只是一瞬間的絕對黑暗，他便來到了這裡。</p>
                     <p>凌晏睜開眼坐起身。這是一個大約三坪大的封閉金屬艙室，四周的牆壁呈現出冷硬的鐵灰色，表面佈滿了猶如鱗片般的銲接痕跡與斑駁的暗紅色鐵鏽。天花板極低，給人一種強烈的幽閉恐懼感，角落裡甚至還有幾根裸露的粗大管線，正往外滲著黏稠的防鏽油。他拍了拍白襯衫上沾染的微塵，低頭看向自己的左手腕。那裡被扣上了一個黑色金屬手環。</p>
                     <p>突然，手環螢幕亮起，投射出一道淡藍色的全息光幕。與此同時，整個艙室內響起了一道經過多重電子合成、分不出性別的歡快聲音。</p>
@@ -494,18 +500,18 @@
                             <li><strong>陣營配置：</strong> 分為【好人陣營】（神職與平民）與【狼人陣營】（潛伏者）。</li>
                             <li><strong>狼人特性：</strong> 潛伏者常態下可完美複製人類的外貌與記憶。進入「黑夜模式」後可化身為<strong>深淵狼人</strong>進行肉體獵殺。部分高階怪物擁有特殊的<strong>突變種類</strong>（例如：死亡時可引爆周圍引發範圍傷害的【白狼王】、能散發神經毒素魅惑玩家的【狼美人】等）。</li>
                             <li><strong>極端地形機制：</strong> 方舟內部劃分為「迷霧森林」、「赤紅惡地」等多種模擬地形板塊。不同地形將定時觸發專屬的環境災害與隱藏物資。</li>
-                            <li><strong>修復者天賦系統：</strong>
+                            <li><strong>修復者天賦系統（配方解鎖）：</strong>
                                 <ul class="list-circle pl-5 mt-1 space-y-1">
                                     <li>每位玩家體內皆潛伏著與正統狼人殺對應的<strong>【專屬天賦】</strong>（例如：預言家、女巫、獵人、守衛等）。</li>
-                                    <li><strong>覺醒條件極度嚴苛：</strong> 所有人的初始天賦皆處於「未覺醒狀態」。需在極端生死危機中突破人體極限，或消耗 <strong>10,000 點方舟積分</strong> 於販賣機購買「基因覺醒劑」方可解鎖。</li>
+                                    <li><strong>覺醒條件極度嚴苛：</strong> 所有人的初始天賦皆處於「未覺醒狀態」。玩家需要透過搜集或向系統購買<strong>『專屬天賦製作配方』</strong>，並籌齊指定材料進行合成解鎖。配方可於販賣機或官方「深淵交易所」中以 <strong>10,000 點方舟積分</strong> 購買。</li>
                                 </ul>
                             </li>
-                            <li><strong>全體裁決會議：</strong> 拍響各區的「警報終端」將強制召開會議。全艦進入絕對安全模式，所有人透過手環進行公共頻道辯論。得票最高者，手環將立刻注射神經毒素，執行即時抹殺.</li>
+                            <li><strong>全體裁決會議：</strong> 拍響各區的「警報終端」將強制召開會議。全艦進入絕對安全模式，所有人透過手環進行公共頻道辯論。得票最高者，手環將立刻注射神經毒素，執行即時抹殺。</li>
                         </ul>
                     </div>
 
                     <p>凌晏看著眼前的規則，嘴角勾起一抹極度冰冷的嘲諷弧度。</p>
-                    <p>高達一萬積分才能購買覺醒劑？這意味著在遊戲前期，百分之九十九的玩家都只能是手無寸鐵的「平民」。真是一場把人性放在顯微鏡下烤的大型社會實驗。在這種資訊極度不對等且無法反抗的環境下，猜忌鏈一旦形成，人類根本不需要怪物動手，自己體內的群體恐慌與獵巫本能就會在最短的時間內把同類票死。</p>
+                    <p>高達一萬積分才能購買覺醒配方？這意味著在遊戲前期，百分之九十九的玩家都只能是手無寸鐵的「平民」。真是一場把人性放在顯微鏡下烤的大型社會實驗。在這種資訊極度不對等且無法反抗的環境下，猜忌鏈一旦形成，人類根本不需要怪物動手，自己體內的群體恐慌與獵巫本能就會在最短的時間內把同類票死。</p>
                     <p>伴隨著一聲沉悶的氣閥洩壓聲，前方那扇厚重的金屬艙門朝著兩側緩緩滑開。門外，是一條深邃、幽暗的哥德式工業風走廊。</p>
                     <p>走廊寬度足以讓兩輛重型卡車並排通行，兩側高聳的金屬牆面上，每隔十公尺就鑲嵌著一面早已龜裂的厚重防彈玻璃窗，窗外是一片令人窒息的漆黑海面與翻滾的風暴。頂部錯綜複雜的通風管道如同巨獸的腸子般蜿蜒，冷光燈管在積水與機油混雜的地面上，拉出長長的光暈。</p>
                     <p>凌晏邁出步伐，順手在牆角碎裂的急救箱裡撿起了一卷高效止血繃帶和一支軍用快速凝血劑。就在這時，他的手環突然發出尖銳的蜂鳴。</p>
@@ -564,7 +570,7 @@
                     <p>一聲震耳之聾的巨響在凌晏正上方炸開。楚戈憑藉著那非人的直覺與爆發力，直接原地起跳，徒手硬生生扯下了天花板上厚重的鋁合金百葉窗！</p>
                     <p>一團巨大的黑影帶著腥臭的狂風被粗暴地拽了下來。楚戈沒有使用任何武器，一拳精準地砸穿了第一隻狼人的胸腔。緊接著又是一腳，第二隻從通風管躍下的狼人甚至還沒落地，就被踹斷了脊椎，砸在牆上沒了動靜。</p>
                     <p>然而，第三隻狼人察覺到了楚戈的不可戰勝。牠悄無聲息地從十米外的另一個排氣孔滑落，直奔角落裡氣息最微弱的凌晏而去！</p>
-                    <p>腥風撲面。楚戈遠在十米開外，根本來不及回防。「凌晏！！」通訊頻道裡傳來楚戈目眥欲裂的狂吼。</p>
+                    <p>腥風撲面.楚戈遠在十米開外，根本來不及回防。「凌晏！！」通訊頻道裡傳來楚戈目眥欲裂的狂吼。</p>
                     <p>但凌晏沒有驚慌。在黑暗降臨前，他的大腦就已經像掃描儀一樣，將這條走廊的每一個細節刻在了記憶裡——包括左後方兩步距離外，那幾根正劈啪作響冒著火花的高壓裸露電線。</p>
                     <p>在怪物撲過來的那一瞬間，凌晏精準地向右側身滑步。狼人撲了個空，巨大的慣性讓牠重重撞向了高壓電線！</p>
                     <p>「滋啦——！！」<br>強大的電流直接貫穿了怪物的軀體，藍白色電弧爆發，狼人被電得渾身麻痺，攻勢瞬間停滯。</p>
@@ -583,9 +589,9 @@
                     <p>十五分鐘後。兩人來到了一個較為寬敞的十字路口，找到了系統提到的【物資販賣機】。<br>這是一台充滿賽博龐克風格的黑色金屬機器。螢幕上顯示著：</p>
                     <ul class="list-disc pl-5 mb-4 opacity-90">
                         <li><strong>【初級補給盲盒】</strong> - 售價：100 積分</li>
-                        <li><strong>【指定基因覺醒劑】</strong> - 售價：10,000 積分</li>
+                        <li><strong>【專屬天賦製作配方自選】</strong> - 售價：10,000 積分</li>
                     </ul>
-                    <p>看著那高達一萬積分的覺醒劑，凌晏微微挑眉。看來在遊戲初期，想要覺醒神職天賦完全是紙人說夢。</p>
+                    <p>看著那高達一萬積分的配方，凌晏微微挑眉。看來在遊戲初期，想要不靠材料直接購買配方覺醒天賦完全是紙人說夢。</p>
                     <p>「盲盒本質上是利用人類的賭徒心理，但在資訊嚴重匱乏的開局，我們必須購買。」凌晏冷靜下達指令，「我們有300積分，買兩個初級盲盒，剩下的100積分作為應急備用。」</p>
                     <p>楚戈立刻按下按鈕，機器的出口處滾出兩個銀色金屬球。<br>楚戈捏碎第一個。白光一閃，手裡多了一包東西。</p>
                     <p><strong>【獲得物品：極效除菌濕紙巾（100抽）】</strong><br><span class="thought-msg">物品描述：能瞬間擦除任何頑固血漬。請做個愛乾淨的乖孩子。</span></p>
@@ -622,7 +628,7 @@
                     <p>「老大，我不能揍他嗎？」楚戈在小隊語音裡咬牙切齒。<br>「安全模式下物理攻擊無效。」凌晏冷靜地回答，「而且，對付蠢貨，用不著拳頭。」</p>
                     <p>凌晏不慌不忙地啟動了手環的公共通訊功能，平穩、且帶著強烈壓迫感的聲音傳遍了全艦：</p>
                     <p>「上市公司CEO？看來你的危機處理能力跟你的智商一樣，都停留在草履蟲的水平。」</p>
-                    <p>凌晏直視著西裝男，語氣如手術刀般精準剖析：「第一，這是一場死亡遊戲，收起你那套可笑的頭銜。第二，我身邊的同伴滿身是黑色的狼血，稍微有點觀察力的人都看得出來我們剛剛在清剿怪物。」</p>
+                    <p>凌晏直視著西裝男，語氣如手術刀般精準剖析：「第一，這是一場死亡遊戲，收起你那套可笑的頭銜。第二，我身邊的同伴滿身是黑色的狼血，稍微有點觀察力的人都看得作業我們剛剛在清剿怪物。」</p>
                     <p>他稍微停頓了一下，銳利的目光越過人群，精準地砸在那個躲在最後面、體溫異常的連帽衫男人身上。既然現在沒有真正的預言家技能，那就用物理邏輯來編織一場完美的「驗人報告」。</p>
                     <p>「第三，與其把票浪費在我們這兩個高戰力的『清道夫』身上……不如請那位躲在角落裡、穿著灰色連帽衫的先生解釋一下。」</p>
                     <p>凌晏的嘴角勾起一抹危險的弧度：「在剛才黑夜模式降臨、暖氣系統停止運作的十五分鐘裡，這裡的氣溫已經降到了攝氏十度以下。所有人都在本能地發抖、呼吸產生白霧。為什麼只有你，既沒有禦寒動作，呼吸也沒有一絲白霧？除非……你體內的恆溫系統根本不是人類，而是一隻不需要靠肺部呼吸凡人空氣的『潛伏者』。」</p>
@@ -673,7 +679,7 @@
                     <p>周圍的其他玩家見狀，也紛紛反應過來，立刻朝著凌晏湧了過來，七嘴八舌地乞求庇護。</p>
                     <p>面對這群人，凌晏推了推左眼上的熱成像單片鏡，嘴角的弧度降至冰點。</p>
                     <p>「楚戈。」<br>「收到！」</p>
-                    <p>楚戈早就看這個姓趙的不順眼了。他一步跨出，高大的身軀宛如一尊煞神般擋在凌晏身前。他什麼也沒說，只是單手捏住了趙大偉手裡那把左輪手槍的槍管，隨後肌肉猛地發力——</p>
+                    <p>楚戈早就看這個姓趙的不順眼了。他一步跨出，高大的身軀宛如一尊煞神般擋在凌晏身前。他什麼也沒說，飾單手捏住了趙大偉手裡那把左輪手槍的槍管，隨後肌肉猛地發力——</p>
                     <p>「嘎吱！」<br>堅硬的精鋼槍管，竟被他硬生生捏扁了！</p>
                     <p>楚戈居高臨下地投視著趙大偉，漆黑的眼眸裡透著毫不掩飾的暴戾與野性，語氣森冷：<br>「離我老大遠一點。再敢靠近一步，我就把你的腦袋捏成這把破槍的形狀。」</p>
                     <p>西裝男嚇得一屁股跌坐在地，連連後退，周圍那些想靠過來的人也瞬間噤若寒蟬，恐懼地退開了三步遠。</p>
@@ -681,7 +687,7 @@
                     <p>他轉過身，連多看這群人一眼的興趣都沒有，徑直朝著中庭廣場另一側的幽暗通道走去。<br>楚戈立刻像隻得勝的猛犬一樣，乖巧地跟在凌晏身後，臨走前還不忘對著那群人呲了呲牙，發出警告的低吼。</p>
                     <p>兩人重新走入冰冷深邃的金屬走廊。</p>
                     <p>「老大，我們接下來去哪？」楚戈透過小隊語音問道，語氣裡滿是期待。</p>
-                    <p>凌晏看著單片鏡裡不斷閃爍的區域地圖。這艘「深淵方舟」的廣闊程度遠超常理，全息地圖上不僅標示著他們目前所在的『金屬工業板塊』，周圍更拼接著大片標記為『迷霧森林』、『赤紅惡地』、『極寒冰原』等廣袤的生態模擬地形。</p>
+                    <p>凌晏的大腦飛速運轉。這艘「深淵方舟」的廣闊程度遠超常理，根據剛才終端機洩漏的底層數據，這裡不僅有他們目前所在的『金屬工業板塊』，甚至還連接著『迷霧森林』、『赤紅惡地』、『極寒冰原』等龐大的生態模擬地形。</p>
                     <p>他眼神深邃。<br>「去『動力室』。」凌晏冷靜地分析，「黑夜模式已經持續了快半個小時，怪物的活動頻率卻沒有減少。這艘方舟的能源供給一定有問題。要想掌控這場遊戲的節奏，我們必須先拿到整艘船的硬體控制權。」</p>
                     <p>就在這時，凌晏的手環突然震動了一下。<br>一條只有他能看見的血紅色私人訊息，突兀地彈射在半空中：</p>
                     
@@ -697,9 +703,9 @@
                     <p>「沒什麼，一隻自以為躲在暗處的狼，試圖用資訊差來製造猜忌。」凌晏修長的手指在虛空中一劃，冷漠地將這條血紅色的訊息拉入屏蔽名單。他嘴角勾起一抹玩味的弧度，「不過，這條挑釁訊息倒是幫我證實了這場遊戲更底層的『人數機制』。」</p>
                     <p>「人數機制？」楚戈有些疑惑地歪了歪頭。</p>
                     <p>凌晏一邊邁開長腿繼續前行，一邊以極其清晰的邏輯向這個「物理系隊友」拆解這場殘酷的生存遊戲：</p>
-                    <p>「系統開局就宣布，這場遊戲總共有 <strong>2000 名人類菁英</strong> 共同登入。楚戈，你想過沒有，如果每次拍響警報，都要這兩千人同時進入同一個公共頻道進行發言和投票，會發生什麼事？」</p>
+                    <p>「系統開局就宣布，這場遊戲總共有 <strong>2000 名人類菁英</strong> 共同登入。楚戈，你想過沒有，如果每次拍響警報，都要這兩千人同時進入同一個公共頻道進行發言 and 投票，會發生什麼事？」</p>
                     <p>楚戈認真地想了想，隨後搖搖頭：「那場面肯定比菜市場還亂，兩千人一起吵架，估計十分鐘過去了，連第一個發言的人都還沒講完。」</p>
-                    <p>「沒錯。這就是關鍵。」凌晏推了推左眼上的熱成像單片鏡，鏡片在黑暗中閃爍著幽綠的光芒：<br>「所以，系統絕對採用了<strong>『分區動態計票』</strong>的規則。說整艘深淵方舟被劃分成了無數個獨立的區域。只有當某個區域的『警報終端』被拍響時，<strong>身處該區域及周邊通道的玩家</strong>，才會被強制拉入那一輪的裁決會議。」</p>
+                    <p>「沒錯。這就是關鍵。」凌晏推了推左眼上的熱成像單片鏡，鏡片在黑暗中閃爍著幽綠的光芒：<br>「所以，系統絕對採用了<strong>『分區動態計票』</strong>的規則。整艘深淵方舟被劃分成了無數個獨立的區域。只有當某個區域的『警報終端』被拍響時，<strong>身處該區域及周邊通道的玩家</strong>，才會被強制拉入那一輪的裁決會議。」</p>
                     <p>凌晏伸出兩根手指：<br>「剛才在中庭，加上你、我，以及那隻偽裝成連帽衫的狼人，我們那個區域總共聚集了 <strong>15 個人</strong>。」<br>「因為那隻狼人是被指控的目標，失去了投票權，所以最終的有效票數是 <strong>14 票</strong>。我只需要用大白話撕開怪物的偽裝，把這 14 票的絕對多數拿到手，就能利用系統的規則將牠當場抹殺。」</p>
                     <p>楚戈聽得眼睛發亮，忍不住崇拜地低呼：「也就是說，老大你剛才不是在跟兩千人玩遊戲，你只是把中庭那 14 個人當成了手裡的籌碼？」</p>
                     <p>「可以這麼理解。」凌晏眼中閃過一抹冷冽的微光，「而發訊息挑釁我的這隻狼，顯然當時也站在中庭的 14 人之中。牠看穿了我沒有真正的『預言家驗人天賦』，而是利用物理規律強行抓出了牠的同伴。牠在試探我的底牌。」</p>
@@ -793,7 +799,7 @@
                         既然語言會延遲，那就放棄所有的廢話！凌晏一瞬間將大腦的計算率壓榨到極致，左眼單片鏡的運算格網幾乎化為一片綠色洪流。他不再說出任何具有語法的句子，而是將戰術推演直接凝聚成極限的「單音節發音」！
                     </p>
                     <p>
-                        零點一秒的預判，零點零一秒的單字吐息。
+                        零點一秒의預判，零點零一秒的單字吐息。
                     </p>
                     <p>
                         「左！」<br>
@@ -859,7 +865,7 @@
                         震耳猶聾的爆炸聲響徹整個動力室，狂暴的衝擊波夾雜著高溫火焰席捲而來。楚戈一個飛撲將凌晏死死護在身下，背後的作戰服被飛濺的金屬碎片劃出數道焦痕。
                     </p>
                     <p>
-                        當一切歸於平靜，白狼王自爆的中心已經被炸出了一個直徑數公尺的焦黑大坑，連帶周圍的金屬牆壁都被高溫熔化變形。若不是躲避及時，那威力足以讓兩人在瞬間汽化。
+                        當一切歸於平靜，白狼王自爆的中心已經被炸出了一個直徑數公尺的焦黑大坑，周圍的金屬牆壁都被高溫熔化變形。若不是躲避及時，那威力足以讓兩人在瞬間汽化。
                     </p>
 
                     <div class="system-msg">
@@ -874,10 +880,70 @@
                         <p class="text-sm text-red-500 font-bold mt-3 bg-red-900/10 inline-block px-3 py-1 rounded">請所有存活的修復者於十分鐘內前往『中央甲板廣場』，真正的『第一夜狼人獵殺與神職判定』即將全面開啟……</p>
                     </div>
                 `
+            },
+            'ch5': {
+                title: '第五章：所謂的暴君，不過是懦夫的遮羞布',
+                html: `
+                    <h3>第五章：所謂的暴君，不過是懦夫的遮羞布</h3>
+                    <p>廢土般的動力室內，濃烈的焦糊味與尚未散去的冰屑混合在一起，形成了一種極度刺鼻的氣味。</p>
+                    <p>楚戈咳嗽了兩聲，隨手將作戰服上被燒焦的碎片扯下，露出底下結實、線條分明的肌肉。他拍了拍身上的金屬灰燼，轉過身，像一隻忠心耿耿的護衛犬般，伸手將半蹲在地上的凌晏拉了起來。</p>
+                    <p>「老大，你沒受傷吧？」楚戈漆黑的眼睛上下打量著凌晏，確認他除了白襯衫沾了點灰塵外毫髮無損，這才滿意地咧嘴一笑。</p>
+                    <p>「我沒事。」凌晏優雅地拍了拍衣袖，隨後彎下腰，從白狼王自爆後留下的焦黑深坑中，撿起了一枚散發著幽藍色光芒的菱形晶體——正是系統播報的關鍵劇情道具【冷卻核心修復模組】。</p>
+                    <p>他推了推左眼上的熱成像單片鏡，深邃的眼眸中閃過一絲精算的光芒。「這東西既然是全艦級別的『主線道具』，就代表著某種特權。在這種資源極度匱乏的死亡遊戲裡，特權，往往能換來決定性的籌碼。」</p>
+                    <p>凌晏將模組收入口袋，轉頭看向動力室深處那台通往上層的重型工業電梯。<br>「走吧，去『中央甲板廣場』。真正的群體博弈，現在才要開始。」</p>
+
+                    <div class="text-center my-8 opacity-40">❖ ❖ ❖</div>
+
+                    <p>十分鐘後。<br>伴隨著工業電梯沉重的鋼纜摩擦聲，巨大的金屬柵門在兩人面前緩緩向兩側拉開。</p>
+                    <p>迎面撲來的，不是預想中混亂的喧鬧，而是一股由無數人的汗水、血腥味以及極度恐懼混合而成的……<strong>死寂</strong>。</p>
+                    <p>這是一個大到令人窒息的巨大環形空間，規模足以容納兩三個標準足球場。這裡正是方舟的中央腹地——由官方自動化交易終端與玩家自發地攤共同組成的<strong>「中央甲板廣場」</strong>。平日裡，玩家們在這裡以方舟積分或材料，自由交易天賦製作配方、稀有金屬與生存物資。但此刻，這座全艦最大的交易所，卻籠罩在死一般的寂靜中。</p>
+                    <p>上千名修復者此刻竟然沒有一個人敢發出聲音。<br>他們全部以一種極度屈辱且恐懼的姿態，雙手抱頭，整整齊齊地跪坐在冰冷的金屬甲板上。交易所周圍，多個官方交易終端螢幕被強行砸毀、鎖定。不遠處的地板上，赫然躺著幾具被強烈雷射高溫汽化、只剩下黑炭般能量餘燼的殘骸，散發著令人作嘔的焦味。</p>
+                    <p>凌晏和楚戈剛踏出電梯，腳步便微微一頓。兩人的身形完美地隱沒在邊緣的巨大鋼柱陰影中。</p>
+                    <p>「老大……這情況有點不對勁啊。」楚戈壓低了聲音，渾身的肌肉瞬間緊繃，野獸般的直覺讓他嗅到了極度危險的信號。他漆黑的眼眸死死盯著廣場的正中央。</p>
+                    <p>在廣場中央、那排唯一的官方主控制終端機前，用廢棄的金屬貨箱堆疊起了一個簡陋的「王座」。</p>
+                    <p>一個穿著破爛保全制服、雙眼布滿血絲的瘦弱男人，正大馬金刀地坐在上面。他腳下踩著一個正在瑟瑟發抖的女白領的頭顱，而他的手裡，竟然端著一把散發著耀眼藍藍色雷射光芒、長達一米五的重型科幻狙擊槍！</p>
+                    <p>那絕對不是從什麼「初級補給盲盒」裡能開出來的破銅爛鐵，那是一把帶著系統法則之力的**神職專屬武器**。</p>
+                    <p>就在這時，刺耳的系統廣播聲在整個廣場的穹頂轟然炸響！</p>
+
+                    <div class="system-msg">
+                        「叮咚！倒數計時結束。歡迎各位倖存的觀測樣本，來到方舟的核心——『中央交易所』！」<br>
+                        「第一夜的狂歡，現在正式進入第二階段：【神職覺醒與公投】！」<br>
+                        「隱藏在暗處的神明們，請善用你們的權柄；而凡人們，請擦亮你們的雙眼，辨別真偽。」
+                    </div>
+
+                    <p>廣播聲一出，王座上的保全男人發出了極度癲狂的尖笑聲。<br>「聽到了嗎？！聽到了嗎你們這群自命不凡的社會菁英！」他猛地站起身，將那把沉重的雷射狙擊槍指向跪在地上的人群，槍口散發的恐怖熱量讓空氣都微微扭曲。</p>
+                    <p>「在外面，你們是老闆、是教授、是高管！我只是一個看門的臭保全，每個月領那點連飯都吃不飽的死工資，還要被你們這群西裝狗指著鼻子罵！」保全男人的臉部肌肉因為極度的興奮而扭曲，「但現在呢？在這裡，我買到了【獵人天賦配方】，我做出了神職武器！我是這裡的神！只要我扣下扳機，你們的肉體就會像剛才那兩個白痴一樣瞬間汽化成黑炭！」</p>
+                    <p>「規矩很簡單！」保全男人一腳踢開腳下的女白領，朝著被他用武力鎖死的主控制終端機一指，大吼道：<br>「你們這群西裝狗想要活命，就得覺醒天賦對吧？想要天賦，就得來這個交易所購買『天賦配方』對吧？從現在開始，我佔領了所有的交易終端！誰想要過來查閱、購買天賦配方或是交易材料，就必須給我轉讓 <strong>1,000 方舟積分</strong>，或者交出兩件盲盒道具！不給的，我就請他吃雷射！」</p>
+                    <p>這是一場徹頭徹尾的暴政。一個在現實中處於社會底層、長期遭受壓迫的靈魂，在突然獲得了凌駕於所有人之上的絕對武力後，徹底崩潰異化成了一個嗜血的暴君。他霸佔了官方的交易系統，企圖強行壟斷天賦配方的購買權，壓榨所有同類的生存資源。</p>
+                    <p>而更諷刺的是，一千六百多名各行各業的頂尖菁英，在面對這把不講道理的系統武器時，竟然被「旁觀者效應」死死按在地上，沒有一個人敢站出來反抗。因為誰先站出來，誰就會成為槍下的第一隻出頭鳥。</p>
+                    <p>「這傢伙瘋了。」楚戈咬著牙，右手緩緩摸向背後的沾血鋼管，「老大，他的槍有系統加持，威力很大。但我可以利用周圍的掩體，三秒內衝過去扭斷他的脖子。只要你一句话。」</p>
+                    <p>「冷靜，楚戈。把武器放下。」<br>凌晏的聲音依舊平穩得像一潭死水，沒有絲毫波瀾。他站在陰影中，左手的食指輕輕推了推熱成像單片鏡的鏡框。</p>
+                    <p>「他的心理防線早就崩潰了，現在處於極度的被害妄想與攻擊性代償狀態。你現在衝出去，他絕對會毫不猶豫地開槍。而且……你沒發現嗎？真正危險的，根本不是那個拿槍的瘋子。」</p>
+                    <p>楚戈愣了一下，順著凌晏的目光看去。<br>在保全男人的身後，站著四個看起來像是主動投誠、幫他管理這個交易關卡的「狗腿子」。他們正狐假虎威地拿著鐵棍，恐嚇著地上的人群。</p>
+                    <p>在凌晏的熱成像視野裡，這四個人中，有三個散發著人類正常的橘紅色體溫。<br>但站在最左邊、那個一直低著頭、看起來最不起眼的瘦高個男人，他的體溫卻呈現出宛如死屍般的**深藍色**。他的體溫只有不到攝氏十五度，心跳慢得幾乎停滯。</p>
+                    <p>那是一隻高階潛伏者。<br>牠完美地混入了「暴君」的親衛隊中。牠甚至不需要自己動手殺人，只需要偶爾在保全耳邊煽風點火，這個被權力沖昏頭腦的人類，就會心甘情願地用手裡的槍，幫狼人把其他同類一個一個屠殺殆盡。而牠自己，則能不費吹灰之力地在交易所的終端上，獲得所有死者的資源與天賦配方。</p>
+                    <p>「借刀殺人，兵不血刃。這隻狼的智商，比之前那隻白狼王高出了一個維度。」凌晏的嘴角緩緩勾起一抹極度冰冷的、充滿戰意的微笑。「走吧，楚戈。我們去給這位『神明』大人，看點魔術。」</p>
+                    <p>在全場一千六百人死寂的注視下，凌晏從容地從鋼柱的陰影中邁開了長腿。<br>他沒有舉起雙手，也沒有展現出任何恐懼。他就這樣雙手插在西裝褲口袋裡，踏著優雅而平穩的步伐，一步一步走向廣場中央的王座。</p>
+                    <p>「什麼人？！」保全男人立刻宛如驚弓之鳥般猛地轉過身，那把恐怖的雷射狙擊槍瞬間鎖定了凌晏的眉心。「跪下！我叫你跪下沒聽到嗎！」</p>
+                    <p>「轟！」<br>就在保全舉槍的瞬間，楚戈高大如鐵塔般的身軀瞬間擋在了凌晏身前！他雙腳微微下沉，金屬甲板甚至被他踩出了兩聲悶響，一雙漆黑的眼眸如同盯著死物般死死盯著保全，渾身上下散發出令人膽寒的狂暴殺氣。</p>
+                    <p>楚戈沒有說話，但那姿態已經表達得清清楚楚：你敢扣扳機，我就敢在雷射貫穿我的瞬間，把你的脊椎連根拔起。</p>
+                    <p>保全被楚戈那非人的氣勢震懾了一下，拿槍的手不自覺地抖了抖，但他隨即惱羞成怒地咆哮：「你們以為兩個人就了不起嗎？我這是系統武器！是神職！我一槍就能把你們兩個一起打穿！」</p>
+                    <p>「是嗎？」<br>凌晏從楚戈身後緩緩走出，他微微揚起下巴，隔著三十公尺的距離，用一種看透一切的、極度輕蔑的眼神俯視著坐在王座上的男人。</p>
+                    <p>「一個在現實世界裡只能對著監視器發呆、靠幻想來滿足自尊心的失敗者，偶然用積分買到了天賦配方，就以為自己成了主宰生殺大權的神。」凌晏的聲音不大，卻透過完美的共鳴，清晰地傳遍了整個死寂的廣場。</p>
+                    <p>「你剛才殺那兩個人，手抖得很厲害吧？你甚至不敢看他們爆開汽化的模樣，所以你才要這四個人站在你前面擋住你的視線。」</p>
+                    <p>保全的臉色瞬間變得慘白，彷彿被扒光了衣服般，歇斯底里地吼道：「你閉嘴！給我閉嘴！信不信我現在就殺了你！」</p>
+                    <p>「你不敢。」凌晏精準地踏前一步，語氣如手術刀般一層層剖開對方的心理防線：「因為你知道，那把槍的『獵人審判子彈』是有限的。你剛才已經浪費了兩發在平民身上，你現在不敢確定，如果把最後的子彈浪費在我們身上，等一下真正的狼人撲過來時，你該拿什麼防身？」</p>
+                    <p>全場譁然！<br>所有人都震驚地看著這個突然出現、穿著白襯衫的男人。他居然僅憑觀察，就看穿了獵人技能的限制，甚至把這個暴君心底最深處的恐懼赤裸裸地揭露了出來！</p>
+                    <p>保全男人的呼吸變得極度急促，槍口開始劇烈搖晃。他被凌晏完全說中了，他之所以要大家把積分與道具交出來，就是因為他的審判子彈快沒了，他需要強行搶奪大家的物資去官方終端兌換彈藥！</p>
+                    <p>「而且，最可悲的是……」<br>凌晏的眼神突然變得無比銳利，他猛地抬起手，修長的手指越過保全的肩膀，精準無誤地指向了站在他身後，那個體溫只有十五度的瘦高個男人。</p>
+                    <p>「你手裡握著能殺死任何怪物的神兵利器，卻用它來指著手無寸鐵的同類。而你甚至蠢到沒有發現，一隻真正的深淵狼人，就站在距離你脊椎不到一公尺的地方，正笑著看你這隻跳梁小丑為牠表演人類的自相殘殺。牠正等著你打空最後一發子彈，然後，輕易地扭斷你的脖子。」</p>
+                    <p>凌晏的話音剛落，保全男人渾身一僵，不可置信地轉過頭。<br>而他身後那個一直低著頭的瘦高個男人，臉上的諂媚與懦弱瞬間消失不見。<br>「咯咯……咯咯咯……」</p>
+                    <p>瘦高個的喉嚨裡發出了一陣令人毛骨悚然的詭異笑聲，他的雙眼瞬間變成了毫無人性的豎瞳，嘴角以一個極度誇張的弧度，朝著兩側的耳根，緩緩撕裂開來……</p>
+                `
             }
         };
 
-        const chapterOrder = ['intro', 'ch1', 'ch2', 'ch3', 'ch4'];
+        const chapterOrder = ['intro', 'ch1', 'ch2', 'ch3', 'ch4', 'ch5'];
         let currentChapterIndex = 0;
 
         let app, auth, db, appId;
@@ -921,7 +987,8 @@
             'ch1': { likes: 95, comments: [{ user: '純愛戰士', text: '楚戈真的是大狗狗屬性！', time: '2026-06-08 11:30' }] },
             'ch2': { likes: 142, comments: [] },
             'ch3': { likes: 215, comments: [{ user: '邏輯推演者', text: '凌晏好帥啊啊啊！這算計太強了。', time: '2026-06-08 14:30' }] },
-            'ch4': { likes: 388, comments: [{ user: '戰鬥狂', text: '楚戈盲打那段畫面感好強！', time: '2026-06-08 16:45' }] }
+            'ch4': { likes: 388, comments: [{ user: '戰鬥狂', text: '楚戈盲打那段畫面感好強！', time: '2026-06-08 16:45' }] },
+            'ch5': { likes: 620, comments: [{ user: '心理學大師', text: '凌教授這段話根本是降維打擊！把那個暴君的底褲都扒光了！', time: '2026-06-08 18:20' }, { user: '吃瓜群眾', text: '楚戈擋槍那下太有安全感了吧！！！', time: '2026-06-08 18:25' }] }
         };
 
         let interactionsData = { ...initialInteractions }; 
@@ -967,11 +1034,15 @@
         window.cancelSocialAuth = cancelSocialAuth;
 
         function initSettings() {
-            bodyContainer.classList.remove('text-sm', 'text-base', 'text-lg', 'font-sans', 'font-serif');
-            bodyContainer.classList.add(userSettings.fontSize, userSettings.fontFamily);
-            
-            readArea.classList.remove('theme-dark', 'theme-sepia', 'theme-light');
-            readArea.classList.add(userSettings.theme || 'theme-dark');
+            // 字體大小與字體樣式直接應用於 readArea 內，確保不會被其他元素干擾且優先級最高
+            if(readArea) {
+                readArea.classList.remove('text-sm', 'text-base', 'text-lg', 'font-sans', 'font-serif', 'theme-dark', 'theme-sepia', 'theme-light');
+                readArea.classList.add(
+                    userSettings.fontSize || 'text-base', 
+                    userSettings.fontFamily || 'font-sans', 
+                    userSettings.theme || 'theme-dark'
+                );
+            }
         }
 
         function showChapter(chapterId) {
@@ -1017,8 +1088,11 @@
             setupChapterListener(chapterId);
             renderInteractions(chapterId);
 
-            readArea.scrollTo(0, 0);
-            document.getElementById('reading-progress').style.width = '0%';
+            if(readArea) {
+                readArea.scrollTo(0, 0);
+            }
+            const progressBar = document.getElementById('reading-progress');
+            if(progressBar) progressBar.style.width = '0%';
             
             // 換章節時停止自動閱讀
             stopAutoScroll();
@@ -1030,65 +1104,81 @@
             }
         }
 
-        readArea.addEventListener('scroll', () => {
-            const scrollTop = readArea.scrollTop;
-            const scrollHeight = readArea.scrollHeight - readArea.clientHeight;
-            const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
-            document.getElementById('reading-progress').style.width = `${progress}%`;
-        });
+        if(readArea) {
+            readArea.addEventListener('scroll', () => {
+                const scrollTop = readArea.scrollTop;
+                const scrollHeight = readArea.scrollHeight - readArea.clientHeight;
+                const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+                const progressBar = document.getElementById('reading-progress');
+                if(progressBar) progressBar.style.width = `${progress}%`;
+            });
+        }
 
         // --- 閱讀設定邏輯 ---
         function toggleSettings() {
             const panel = document.getElementById('settings-panel');
-            panel.classList.toggle('hidden');
+            if(panel) panel.classList.toggle('hidden');
         }
 
         function changeFontSize(sizeClass) {
-            bodyContainer.classList.remove('text-sm', 'text-base', 'text-lg');
-            bodyContainer.classList.add(sizeClass);
+            if(readArea) {
+                readArea.classList.remove('text-sm', 'text-base', 'text-lg');
+                readArea.classList.add(sizeClass);
+            }
             userSettings.fontSize = sizeClass;
-            localStorage.setItem('novelSettings', JSON.stringify(userSettings));
+            saveUserSettings();
         }
 
         function changeFontFamily(familyClass) {
-            bodyContainer.classList.remove('font-sans', 'font-serif');
-            bodyContainer.classList.add(familyClass);
+            if(readArea) {
+                readArea.classList.remove('font-sans', 'font-serif');
+                readArea.classList.add(familyClass);
+            }
             userSettings.fontFamily = familyClass;
-            localStorage.setItem('novelSettings', JSON.stringify(userSettings));
+            saveUserSettings();
         }
 
         function changeTheme(themeClass) {
-            readArea.classList.remove('theme-dark', 'theme-sepia', 'theme-light');
-            readArea.classList.add(themeClass);
+            if(readArea) {
+                readArea.classList.remove('theme-dark', 'theme-sepia', 'theme-light');
+                readArea.classList.add(themeClass);
+            }
             userSettings.theme = themeClass;
-            localStorage.setItem('novelSettings', JSON.stringify(userSettings));
+            saveUserSettings();
         }
 
         document.addEventListener('click', (e) => {
             const panel = document.getElementById('settings-panel');
             const header = document.querySelector('header');
-            if (panel && !panel.classList.contains('hidden') && !panel.contains(e.target) && !header.contains(e.target)) {
+            if (panel && !panel.classList.contains('hidden') && !panel.contains(e.target) && header && !header.contains(e.target)) {
                 panel.classList.add('hidden');
             }
         });
 
         // --- 自動閱讀功能 ---
         function startAutoScroll() {
-            toggleSettings(); 
+            const panel = document.getElementById('settings-panel');
+            if(panel && !panel.classList.contains('hidden')) toggleSettings(); 
+            
             if (autoScrollInterval) return;
             
-            const panel = document.getElementById('autoscroll-panel');
-            panel.classList.remove('hidden');
-            setTimeout(() => panel.classList.remove('translate-y-20'), 10);
+            const autoPanel = document.getElementById('autoscroll-panel');
+            if(autoPanel) {
+                autoPanel.classList.remove('hidden');
+                setTimeout(() => autoPanel.classList.remove('translate-y-20'), 10);
+            }
             
             isPaused = false;
-            document.getElementById('scroll-status-text').textContent = '閱讀中';
+            const statusText = document.getElementById('scroll-status-text');
+            if(statusText) statusText.textContent = '閱讀中';
 
-            readArea.classList.remove('scroll-smooth');
-            exactScrollTop = readArea.scrollTop;
+            if(readArea) {
+                readArea.classList.remove('scroll-smooth');
+                exactScrollTop = readArea.scrollTop;
+            }
 
             const step = () => {
-                if (!isPaused) {
+                if (!isPaused && readArea) {
                     exactScrollTop += scrollSpeed;
                     
                     if (Math.abs(readArea.scrollTop - exactScrollTop) > Math.max(scrollSpeed * 5, 5)) {
@@ -1113,7 +1203,7 @@
                 autoScrollInterval = null;
             }
             
-            readArea.classList.add('scroll-smooth');
+            if(readArea) readArea.classList.add('scroll-smooth');
 
             const panel = document.getElementById('autoscroll-panel');
             if(panel) {
@@ -1124,16 +1214,17 @@
 
         function togglePauseScroll() {
             isPaused = !isPaused;
-            document.getElementById('scroll-status-text').textContent = isPaused ? '已暫停' : '閱讀中';
+            const statusText = document.getElementById('scroll-status-text');
+            if(statusText) statusText.textContent = isPaused ? '已暫停' : '閱讀中';
         }
 
         function changeScrollSpeed(delta) {
             scrollSpeed = Math.max(0.2, Math.min(5.0, Number((scrollSpeed + delta).toFixed(1))));
             
-            document.getElementById('scroll-status-text').textContent = `速度 ${scrollSpeed.toFixed(1)}x`;
+            const statusText = document.getElementById('scroll-status-text');
+            if(statusText) statusText.textContent = `速度 ${scrollSpeed.toFixed(1)}x`;
             if(!isPaused) {
                 setTimeout(() => { if(!isPaused) {
-                    const statusText = document.getElementById('scroll-status-text');
                     if (statusText) statusText.textContent = '閱讀中';
                 } }, 1000);
             }
@@ -1278,20 +1369,42 @@
             }
 
             if (comments.length > 0) {
-                comments.forEach(comment => {
+                comments.forEach((comment, index) => {
                     const avatarHtml = comment.avatar 
                         ? `<img src="${comment.avatar}" class="w-8 h-8 rounded-full object-cover border border-slate-600">`
                         : `<div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-slate-400 text-xs font-bold border border-slate-600">${comment.user.substring(0,1)}</div>`;
 
+                    // 計算樓層樣式
+                    const floorNum = index + 1;
+                    let floorBadge = '';
+                    let badgeColor = '';
+                    
+                    if (floorNum === 1) {
+                        floorBadge = '🥇 頭香';
+                        badgeColor = 'text-amber-400 border-amber-400/30 bg-amber-400/10';
+                    } else if (floorNum === 2) {
+                        floorBadge = '🥈 2樓';
+                        badgeColor = 'text-slate-300 border-slate-300/30 bg-slate-300/10';
+                    } else if (floorNum === 3) {
+                        floorBadge = '🥉 3樓';
+                        badgeColor = 'text-orange-400 border-orange-400/30 bg-orange-400/10';
+                    } else {
+                        floorBadge = `${floorNum}樓`;
+                        badgeColor = 'text-slate-400 border-slate-600/50 bg-slate-700/30';
+                    }
+
                     commentList.innerHTML += `
-                        <div class="bg-black/10 p-4 rounded-lg border border-slate-700/30 shadow-sm flex gap-3 animate-fade-in">
+                        <div class="bg-black/10 p-4 rounded-lg border border-slate-700/30 shadow-sm flex gap-3 animate-fade-in relative">
                             <div class="flex-shrink-0 mt-1">${avatarHtml}</div>
                             <div class="flex-1">
                                 <div class="flex justify-between items-center mb-1">
-                                    <span class="font-bold text-sky-500 text-sm">${comment.user}</span>
+                                    <div class="flex items-center gap-2">
+                                        <span class="font-bold text-sky-500 text-sm">${comment.user}</span>
+                                        <span class="text-[10px] px-1.5 py-0.5 rounded border ${badgeColor} font-bold">${floorBadge}</span>
+                                    </div>
                                     <span class="text-xs opacity-50">${comment.time}</span>
                                 </div>
-                                <p class="text-sm whitespace-pre-wrap leading-relaxed opacity-90">${comment.text}</p>
+                                <p class="text-sm whitespace-pre-wrap leading-relaxed opacity-90 mt-1">${comment.text}</p>
                             </div>
                         </div>
                     `;
@@ -1600,6 +1713,7 @@
             const localSettings = localStorage.getItem('novelSettings');
             if(localSettings) userSettings = JSON.parse(localSettings);
             
+            // 讀取 URL Hash 來決定要跳轉到哪一章 (用於分享連結)
             const hashChapter = window.location.hash.replace('#', '');
             if (chapterOrder.includes(hashChapter)) {
                 lastRead = hashChapter;
