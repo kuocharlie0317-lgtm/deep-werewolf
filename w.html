@@ -135,6 +135,9 @@
                     <button onclick="showChapter('ch6')" id="btn-ch6" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-150">
                         第六章：官方領域的降維規則
                     </button>
+                    <button onclick="showChapter('ch7')" id="btn-ch7" class="nav-link w-full text-left px-3 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-150">
+                        第七章：標價八千的未知殘卷
+                    </button>
                 </nav>
             </div>
             <div class="p-4 border-t border-slate-800 text-xs text-slate-500 text-center">
@@ -163,6 +166,7 @@
                             <option value="ch4">第四章：抓到你了，躲在暗處的小狼崽</option>
                             <option value="ch5">第五章：披著神職外衣的跳梁小丑</option>
                             <option value="ch6">第六章：官方領域的降維規則</option>
+                            <option value="ch7">第七章：標價八千的未知殘卷</option>
                         </select>
                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-400">
                             <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -999,10 +1003,84 @@
                     <p>凌晏推了推單片鏡，一抹深邃的微光在左眼閃過。</p>
                     <p>「現在，秩序拿回來了。楚戈，過來。讓我們看看這些所謂的『神職配方』，到底需要一些什麼奇怪的材料。」</p>
                 `
+            },
+            'ch7': {
+                title: '第七章：標價八千的未知殘卷',
+                html: `
+                    <h3>第七章：標價八千的未知殘卷</h3>
+                    <p>中央交易所的霓虹燈光重新亮起，不再是先前那種令人不安的血紅色，而是充滿科技感的柔和湛藍。隨著「暴君」的倒台與高階狼人的死亡，那些原本逃竄的玩家們躲在遠處的通道口，探頭探腦地向廣場中央張望，卻沒有一個人敢輕易靠近。</p>
+                    <p>畢竟，剛才那道從天而降、將兩米高的狼人瞬間汽化的重力光束，實在太過震撼。而站在終端機前那個看似斯文的白襯衫男人，在他們眼中，已經成了比怪物還要深不可測的存在。</p>
+                    <p>凌晏完全沒有理會周圍那些敬畏的目光。他修長的手指在全息螢幕上快速滑動，調出了深淵方舟的【神職配方交易區】。</p>
+                    <p>「唰——」</p>
+                    <p>幾張散發著燦爛金光的虛擬卡牌，在凌晏與楚戈面前的全息投影中緩緩旋轉展開。</p>
+
+                    <div class="bg-black/20 border border-sky-900/50 p-5 rounded-lg mb-6 shadow-sm">
+                        <h4 class="font-bold mb-3 border-b border-sky-900/30 pb-2 text-sky-400">【官方配方清單（公開版）】</h4>
+                        <ul class="list-none space-y-3 text-sm opacity-90">
+                            <li class="flex justify-between items-center"><span class="text-amber-400 font-bold">▶ 【預言家】天賦配方</span> <span class="bg-slate-800 px-2 py-1 rounded">售價：10,000 積分</span></li>
+                            <li class="text-xs text-slate-400 pl-4 mb-2">所需合成材料：<span class="italic opacity-60">【購買解析後解鎖查閱權限】</span></li>
+                            
+                            <li class="flex justify-between items-center"><span class="text-purple-400 font-bold">▶ 【女巫】天賦配方</span> <span class="bg-slate-800 px-2 py-1 rounded">售價：10,000 積分</span></li>
+                            <li class="text-xs text-slate-400 pl-4 mb-2">所需合成材料：<span class="italic opacity-60">【購買解析後解鎖查閱權限】</span></li>
+                            
+                            <li class="flex justify-between items-center"><span class="text-rose-400 font-bold">▶ 【獵人】天賦配方</span> <span class="bg-slate-800 px-2 py-1 rounded">售價：10,000 積分</span></li>
+                            <li class="text-xs text-slate-400 pl-4">所需合成材料：<span class="italic opacity-60">【購買解析後解鎖查閱權限】</span></li>
+                        </ul>
+                    </div>
+
+                    <p>「一萬積分……」楚戈看著螢幕上的價格，眉頭緊緊皺成了一團。他打開小隊共享帳戶確認了一下餘額：</p>
+                    <p>在走廊擊殺三隻初階狼人獲得 300 點（花費 200 點買盲盒），擊殺白狼王獲得 3000 點，剛才擊殺暗影狼王獲得 5000 點。</p>
+                    
+                    <div class="system-msg text-center font-bold">
+                        【戰術小隊當前總積分：8,100 點】
+                    </div>
+
+                    <p>「老大，我們還差一千九百點。」楚戈有些洩氣地抓了抓頭髮，「那個瘋子保全估計是殺了很多人才湊夠一萬點的。而且這系統也太坑了吧，一萬積分買個配方，居然連需要什麼材料都不標示，萬一傾家蕩產買了，結果材料根本找不到怎麼辦？」</p>
+                    <p>「這就是系統的惡意。」凌晏雙手抱胸，冷靜地分析著這套機制的底層邏輯，「它故意把配方定價得極高，逼迫玩家去獵殺怪物，甚至互相殘殺來掠奪積分。而當你千辛萬苦買下配方、解鎖了材料清單後，它絕對會透過那些極度稀缺的合成材料，逼迫你離開相對安全的金屬板塊，前往那些極度危險的生態模擬地形。」</p>
+                    <p>凌晏的目光在螢幕上停留了片刻。「系統不是在舉辦遊戲，它是在養蠱。只有經歷了無數次生死搏殺的個體，才有資格承載所謂的『神職』。」</p>
+                    <p>「那我們現在怎麼辦？去外面抓幾隻落單的狼人刷點積分？」楚戈握緊了手裡的精鋼管，一副躍躍欲試的模樣。</p>
+                    <p>「效率太低，而且常規的神職，對我來說意義不大。」凌晏搖了搖頭。</p>
+                    <p>他伸出手指，在交易終端的螢幕上飛速點擊，繞過了首頁那些金光閃閃的常規配方，直接切換到了交易系統最底層的**【數據殘片/黑市區】**。</p>
+                    <p>與首頁的精美介面不同，這裡充斥著各種亂碼與灰敗的圖標。這裡存放著方舟在過去無數次演繹中，產生過數據錯誤、或者合成失敗的廢棄物。</p>
+                    <p>凌晏的目光迅速在一堆電子垃圾中掃過，最終停留在了一個散發著微弱、不穩定灰色電流的代碼包上。</p>
+
+                    <div class="bg-slate-900 border border-slate-700 p-4 rounded mb-4">
+                        <p class="text-slate-300 font-bold flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                            【破損的未知神職配方殘卷】
+                        </p>
+                        <p class="text-xs text-slate-500 mt-2">描述：從上一世代演繹中遺留的損壞數據。無法判定所屬神職陣營，合成成功率極低。若合成失敗，將引發精神反噬。</p>
+                        <p class="text-sm font-bold text-sky-400 mt-2">清倉售價：8,000 積分</p>
+                    </div>
+
+                    <p>「8000積分……剛好在我們的預算內。」凌晏的嘴角勾起一抹極致理智的微笑。在犯罪心理學與機率學中，當一個未知變量的收益上限可能打破現有規則體系時，這場賭局就值得下注。</p>
+                    <p>「老大，這上面寫著合成失敗會精神反噬啊！」楚戈看著那灰撲撲的圖標，本能地感覺到一絲不舒服。</p>
+                    <p>「我最不怕的，就是精神對抗。」凌晏毫不猶豫地按下了【確認購買】。</p>
+
+                    <div class="system-msg">
+                        「叮咚！扣除 8,000 積分。交易成功。」<br>
+                        「獲得道具：【破損的未知神職配方殘卷】×1。當前小隊餘額：100 積分。」
+                    </div>
+
+                    <p>隨著光芒一閃，一卷看起來隨時會碎裂的全息數據卷軸出現在凌晏的手環儲存空間中。凌晏立刻點擊了解析。</p>
+                    <p>無數綠色的數據流在單片鏡中瘋狂閃爍，最終定格為一行材料清單：</p>
+                    
+                    <p class="thought-msg font-medium pl-4 border-l-2 border-slate-600 mb-6">
+                        解析完成。<br>
+                        修復該殘卷所需唯一核心材料：【高階迷霧核心】×1。<br>
+                        材料獲取地點警告：方舟東側生態板塊——『迷霧森林』。
+                    </p>
+
+                    <p>「迷霧森林。」凌晏抬起頭，目光穿過空曠的廣場，看向了遠處那一扇高達百米、門縫中正不斷滲出詭異白霧的巨大生態區閘門。</p>
+                    <p>他將單片鏡的掃描模式調整到環境探測，只見那扇大門後方的熱成像，呈現出一片令人不安的深綠色漩渦，彷彿有什麼龐然大物正在濃霧中緩緩呼吸。</p>
+                    <p>「剛好把剩下的 100 積分花掉。」凌晏轉向自動販賣機，熟練地兌換了兩支基礎抗毒血清丟給楚戈。</p>
+                    <p>「楚戈，檢查你的武器。」凌晏將雙手重新插回口袋，邁開長腿朝著那扇滲著白霧的巨門走去，語氣中透著一絲期待已久的戰意，「我們準備去森林裡，打獵了。」</p>
+                    <p>「遵命，老大！」楚戈雙眼放光，將沉重的精鋼鐵管往肩膀上一扛，像是一頭準備進入獵場的狂獅，大步跟上了凌晏的背影。</p>
+                `
             }
         };
 
-        const chapterOrder = ['intro', 'ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6'];
+        const chapterOrder = ['intro', 'ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6', 'ch7'];
         let currentChapterIndex = 0;
 
         let app, auth, db, appId;
@@ -1069,6 +1147,10 @@
             'ch6': { likes: 890, comments: [
                 { user: '駭客本客', text: '拔插頭這招真的絕了！神明也怕斷電哈哈哈', time: '2026-06-08 19:10' },
                 { user: '萬物皆可駭', text: '拿著最高權限的保全：我是神！ \n凌晏：不好意思，我是拔神電源的網管。', time: '2026-06-08 19:15' }
+            ]},
+            'ch7': { likes: 1024, comments: [
+                { user: '精算師在此', text: '8100點剛剛好！凌教授這算計跟執行力真的絕了，一點資源都不浪費。', time: '2026-06-08 20:05' },
+                { user: '盲盒愛好者', text: '破損的未知卷軸？按照主角光環定律，這絕對會覺醒出最變態的隱藏天賦！期待迷霧森林篇！', time: '2026-06-08 20:12' }
             ]}
         };
 
